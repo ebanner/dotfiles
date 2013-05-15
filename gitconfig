@@ -1,0 +1,9 @@
+[user]
+	name = Edward Banner
+	email = edward.banner@gmail.com
+[core]
+	editor = vim
+[push]
+	default = simple
+[color]
+	ui = true

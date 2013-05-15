@@ -1,0 +1,41 @@
+URxvt.font: -windows-dina-medium-r-normal--15-*-*-*-*-*-*-*
+
+! Save 8327 lines of history
+URxvt.saveLines: 8327
+
+! Double click to select a word
+URxvt.charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48,35:48
+
+Xcursor.theme:    Vanilla-DMZ-AA
+
+!urxvt color scheme:
+
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
+
+URxvt*colorUL: #86a2b0
+
+! black
+URxvt*color0  : #2E3436
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+URxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #009ACD
+URxvt*color12 : #009ACD
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #96CDCD
+URxvt*color14 : #96CDCD
+! white
+URxvt*color7  : #D3D7CF
+URxvt*color15 : #EEEEEC

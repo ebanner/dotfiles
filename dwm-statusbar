@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# ~/bin/dwm-statusbar
+#
+# Status bar for dwm. Expanded from:
+# https://bitbucket.org/jasonwryan/eeepc/src/73dadb289dead8ef17ef29a9315ba8f1706927cb/Scripts/dwm-status
+
+# Colour codes from dwm/config.h
+colour_gry="\x01" # grey on black
+colour_wht="\x02" # white on black
+colour_dgry="\x04" # darkgrey on black
+colour_blk="\x05" # black on darkgrey
+colour_red="\x06" # colour_red on black
+colour_grn="\x07" # green on black
+colour_dylw="\x08" # orange on black
+colour_ylw="\x09" # yellow on black
+colour_blu="\x0A" # colour_blue on darkgrey
+colour_mag="\x0B" # colour_magenta on darkgrey
+colour_cyn="\x0C" # cyan on darkgrey
+
+# Icon glyphs from font xbmicons.pcf
+glyph_msc="\uE00E"
+glyph_cpu="\uE00F"
+glyph_mem="\uE010"
+glyph_dl="\uE011"
+glyph_ul="\uE012"
+glyph_com="\uE013"
+glyph_eml="\uE014"
+glyph_vol="\uE015"
+glyph_tim="\uE016"
+glyph_tor="\uE017"
+sep_solid="\uE01A"
+sep_line="\uE01B"
+
+
+print_volume() {
+  volume="$(amixer get Master | tail -n 1 | cut -d' ' -f6 | sed 's/\[//' | sed 's/\]//')"
+  echo -ne "${colour_dgry}${sep_solid}${colour_mag} ${glyph_vol} ${volume}% "
+}
+
+print_datetime() {
+  datetime="$(date "+%a %d %b ${sep_line} %H:%M")"
+  echo -ne "${colour_blk}${sep_solid}${colour_wht} ${glyph_tim} ${datetime} "
+}
+
+# network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
+# cpu (from: https://bbs.archlinux.org/viewtopic.php?pid=661641#p661641)
+rx_old=$(cat /sys/class/net/eth0/statistics/rx_bytes)
+tx_old=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+
+while true; do
+  # Pipe to status bar, not indented due to printing extra spaces/tabs
+  xsetroot -name "$(print_song_info)\
+$(print_torrent_status)\
+$(print_email_unread)\
+$(print_last_msg)\
+$(print_cpu_used)$(print_mem_used)\
+$(print_rx_rate)$(print_tx_rate)\
+$(print_volume)\
+$(print_datetime)"
+
+  # reset old rates
+  rx_old=$rx_now
+  tx_old=$tx_now
+  cpu_idle_old=$cpu_idle_now
+  cpu_total_old=$cpu_total_now
+  # loop stats every 1 second
+  sleep 1
+done
