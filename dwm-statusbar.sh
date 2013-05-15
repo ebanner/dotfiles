@@ -19,8 +19,8 @@ colour_mag="\x0B" # colour_magenta on darkgrey
 colour_cyn="\x0C" # cyan on darkgrey
 
 # Icon glyphs from font xbmicons.pcf
-glyph_dl="\uE011"
-glyph_ul="\uE012"
+glyph_dl="Ú"
+glyph_ul="Û"
 glyph_vol_mute="ë"
 glyph_vol_quiet="ì"
 glyph_vol_loud="í"
@@ -49,7 +49,7 @@ print_volume() {
 
 print_datetime() {
   datetime="$(date "+%a %d %b %H:%M")"
-  echo -ne "${sep_solid} ${glyph_tim} ${datetime}"
+  echo -ne "${colour_wht}${sep_solid} ${glyph_tim} ${datetime}"
 }
 
 print_battery() {
@@ -70,9 +70,31 @@ print_battery() {
 
 while true
 do
+  # Get new rx/tx counts
+  rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
+  tx_now=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+  # Calculate the rate (K)
+  let rx_rate=($rx_now-$rx_old)/1024
+  let tx_rate=($tx_now-$tx_old)/1024
+
+  print_rx_rate() {
+    # Prints download rate
+    printf "%-11b" "${colour_blk}${sep_solid}${colous_grn} ${glyph_dl} ${rx_rate}K"
+  }
+  print_tx_rate() {
+    # Prints upload rate
+    printf "%-12b" "${colour_gry}${sep_line}${colour_red} ${glyph_ul} ${tx_rate}K"
+  }
+
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_battery)\
 $(print_volume)\
+$(print_rx_rate)$(print_tx_rate)\
 $(print_datetime)"
 
+  # Reset old values
+  rx_old=$rx_now
+  tx_old=$tx_now
+
+  sleep 1
 done
