@@ -24,10 +24,13 @@ glyph_ul="\uE012"
 glyph_vol_mute="ë"
 glyph_vol_quiet="ì"
 glyph_vol_loud="í"
-glyph_tim="\uE016"
+glyph_tim="É"
+glyph_batt_empty="ñ"
+glyph_batt_partial="ò"
+glyph_batt_full="ó"
 glyph_tor="\uE017"
-sep_solid="\uE01A"
-sep_line="\uE01B"
+sep_solid="\x19"
+sep_line="\x19"
 
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
@@ -41,48 +44,35 @@ print_volume() {
     vol+=${glyph_vol_loud}
   fi
 
-  echo -ne "${vol} ${volume}%"
+  echo -ne "${vol} ${volume}% "
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b ${sep_line} %H:%M")"
-  echo -ne "${colour_blk}${sep_solid}${colour_wht} ${glyph_tim} ${datetime}"
+  datetime="$(date "+%a %d %b %H:%M")"
+  echo -ne "${sep_solid} ${glyph_tim} ${datetime}"
 }
 
-battery_percentage_remaining() {
-  state=$(acpi -a | cut -d' ' -f3)
+print_battery() {
+  # Get the percentage of battery remaining
+  perc+=$(acpi -b | cut -d' ' -f4 | sed 's/[%,]//g')
+  batt="${colour_wht}"
 
-  case $state in
-    on-line)
-      #acpi -b
-      percentage=$(acpi -b | cut -d' ' -f4 | sed 's/[%,]//g')
-      echo $percentage
-      ;;
-    off-line)
-      #acpi -b
-      percentage=$(acpi -b | cut -d' ' -f4 | sed 's/[%,]//g')
-      echo $percentage
-      ;;
-    *)
-      echo "Don't know what happened!"
-      ;;
-  esac
+  if (( $perc < 15 )) ; then
+    batt+=${glyph_batt_empty}
+  elif (( $perc < 75 )) ; then
+    batt+=${glyph_batt_partial}
+  else
+    batt+=${glyph_batt_full}
+  fi
+
+  echo -e "${batt} ${perc}% ${sep_solid} "
 }
-
-#perc=$(battery_percentage_remaining)
-#
-#if [[ $perc -lt 15 ]]; then
-#  echo "Percentage is less than 5!"
-#elif [[ $perc -lt 75 ]]; then
-#  echo "Percentage is less than 75!"
-#else
-#  echo "Percentage is greater than 75!"
-#fi
 
 while true
 do
   # Pipe to status bar, not indented due to printing extra spaces/tabs
-  xsetroot -name "$(print_volume)"
-#$(print_datetime)"
+  xsetroot -name "$(print_battery)\
+$(print_volume)\
+$(print_datetime)"
 
 done
