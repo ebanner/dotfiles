@@ -5,7 +5,7 @@
 
 dotfiles=dotfiles            # Dotfiles directory
 old_dir=.dotfiles.old        # Old dotfiles backup directory
-files='bashrc vimrc Xresources dwm-statusbar.sh gitconfig inputrc xinitrc'
+files='bashrc vimrc Xresources dwm-statusbar.sh gitconfig inputrc xinitrc fehbg'
 
 # Create dotfiles.old in homedir
 echo "Creating $old_dir for backup of any existing dotfiles in $HOME"
@@ -25,5 +25,8 @@ done
 
 echo "Creating symlinks..."
 for file in $files; do
+  if [[ ! -h $HOME/.$file ]]
+  then
     ln -s $HOME/$dotfiles/$file $HOME/.$file
+  fi
 done
