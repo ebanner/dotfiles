@@ -1,3 +1,5 @@
+" Vim configurations
+
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set ignorecase          " Do case insensitive matching
@@ -15,8 +17,6 @@ set autoindent
 set textwidth=80        " Maximum width of text that is being inserted.
 set formatoptions=q,r,t,c
 set ruler               " Show the line and column number of the cursor position.
-
-colorscheme peachpuff
 
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
@@ -36,7 +36,6 @@ map <C-n> <Esc>:tabnew
 set listchars=tab:▸\ ,eol:¬
 
 " Set tabstop, softtabstop and shiftwidth to the same value
-" Invoke this command with :Stab
 command! -nargs=* Stab call Stab()
 function! Stab()
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')

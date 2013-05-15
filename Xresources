@@ -1,6 +1,4 @@
-! X checks here every time its fired up to find out how to display things
-! Currently, Im using urxvt for my main terminal, so most of my configurations
-! involve only that ;)
+! User-level configurations
 
 URxvt.saveLines: 8327
 URxvt.font: -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso8859-16
@@ -38,14 +36,3 @@ URxvt.matcher.button:   1
 *color13: #AD7FA8
 *color14: #fcaf3e
 *color15: #EEEEEC
-
-! x11-ssh-askpass -----------------------------------------------------------
-x11-ssh-askpass*font:                   -*-dina-medium-r-*-*-12-*-*-*-*-*-*-*
-x11-ssh-askpass*background:             #000000
-x11-ssh-askpass*foreground:             #ffffff
-x11-ssh-askpass.Button*background:      #000000
-x11-ssh-askpass.Indicator*foreground:   #ff9900
-x11-ssh-askpass.Indicator*background:   #090909
-x11-ssh-askpass*topShadowColor:         #000000
-x11-ssh-askpass*bottomShadowColor:      #000000
-x11-ssh-askpass.*borderWidth:           1
