@@ -51,18 +51,8 @@ function short_dir {
 # call function set_prompt_style to set the prompt
 set_prompt_style
 
-# make reciever think i'm using xterm instead of urxvt for rendering
 export TERM='xterm'
-
-# vim
 export EDITOR="vim"
-
-# use syntax highlighting while viewing in less
-export LESS='-R'
-
-# allows tab completion for sudo and man
-complete -c -f sudo
-complete -c -f man
-
-# set vi-like editing mode of commands
-set -o vi
+complete -c -f sudo # tab completion
+complete -c -f man  # tab completion
+set -o vi # set vi-like editing mode of commands

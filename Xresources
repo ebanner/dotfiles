@@ -1,0 +1,108 @@
+! X checks here every time its fired up to find out how to display things
+! Currently, Im using urxvt for my main terminal, so most of my configurations
+! involve only that ;)
+
+! save 2000 lines of history
+URxvt.saveLines: 8327
+
+! double click to select a word
+URxvt.charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48,35:48
+
+! terminus font size 16 (?)  beautiful!!
+URxvt.font: -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso8859-16
+! off-white foreground
+URxvt.foreground: #ebebeb
+! black background
+URxvt.background: #000000
+! dont show the scrollbar
+URxvt.scrollBar: off
+
+! colored man pages
+URxvt.colorIT: #87af5f
+URxvt.colorBD: red
+URxvt.colorUL: cyan
+
+!-----------------------------------------------------------------------------!
+
+! use terminus for other terminals also
+Rxvt.font: -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso8859-16
+xterm.font: -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso8859-16
+
+
+! xterm settings
+xterm*foreground:#ebebeb
+xterm*background:#000000
+
+xterm*color0: rgb:00/00/00
+xterm*color1: rgb:a8/00/00
+xterm*color2: rgb:00/a8/00
+!xterm*color3: rgb:a8/54/00
+xterm*color4: rgb:00/00/a8
+xterm*color5: rgb:a8/00/a8
+xterm*color6: rgb:00/a8/a8
+xterm*color7: rgb:a8/a8/a8
+xterm*color8: rgb:54/54/54
+xterm*color9: rgb:fc/54/54
+xterm*color10: rgb:54/fc/54
+!xterm*color11: rgb:fc/fc/54
+xterm*color12: rgb:54/54/fc
+xterm*color13: rgb:fc/54/fc
+xterm*color14: rgb:54/fc/fc
+xterm*color15: rgb:fc/fc/fc
+
+! alternate color scheme for urxvt
+
+URxvt*color0: rgb:00/00/00
+URxvt*color1: rgb:a8/00/00
+URxvt*color2: rgb:00/a8/00
+URxvt*color3: rgb:a8/54/00
+URxvt*color4: rgb:00/00/a8
+URxvt*color5: rgb:a8/00/a8
+URxvt*color6: rgb:00/a8/a8
+URxvt*color7: rgb:a8/a8/a8
+URxvt*color8: rgb:54/54/54
+URxvt*color9: rgb:fc/54/54
+URxvt*color10: rgb:54/fc/54
+URxvt*color11: rgb:fc/fc/54
+URxvt*color12: rgb:54/54/fc
+URxvt*color13: rgb:fc/54/fc
+URxvt*color14: rgb:54/fc/fc
+URxvt*color15: rgb:fc/fc/fc
+
+!!colors
+!!black
+!xterm*color0:                           !171717
+!xterm*color8:                           !737373
+!!red
+!xterm*color1:                           !FF5E5E
+!xterm*color9:                           !FF7878
+!!green
+!xterm*color2:                           !9CE82B
+!xterm*color10:                          !9ACD32
+!!yellow
+!xterm*color3:                           !F0E68C
+!xterm*color11:                          !EEE8AA
+!blue
+!xterm*color4:                           !008AFF
+!xterm*color12:                          !4F98FF
+!!magenta
+!xterm*color5:                           !E88CFF
+!xterm*color13:                          !EDA6FF
+!!cyan
+!xterm*color6:                           !87CEFA
+!xterm*color14:                          !B0E2FF
+!!white
+!xterm*color7:                           !DCDCCC
+!xterm*color15:                          !FFFFFF
+
+
+
+!xterm*font: -windows-dina-medium-r-normal--13-80-96-96-c-70-microsoft-cp1252
+!xterm*font: -misc-ubuntu-bold-i-normal--0-0-0-0-p-0-iso8859-15
+!xterm*font: -windows-dina-medium-r-normal--15-90-96-96-c-70-microsoft-cp1252
+!xterm*font: -windows-dina-medium-r-normal--0-0-96-96-c-0-microsoft-cp1252
+
+
+! for a pink foreground text color!
+!URxvt.foreground: rgb: a8/a8/a8
+!xterm*foreground: rgb:a8/a8/a8
