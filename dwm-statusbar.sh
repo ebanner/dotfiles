@@ -28,9 +28,36 @@ glyph_tim="É"
 glyph_batt_empty="ñ"
 glyph_batt_partial="ò"
 glyph_batt_full="ó"
-glyph_tor="\uE017"
+glyph_no_internets="×"
+glyph_ethernet="¡"
+glyph_wireless_poor="¢"
+glyph_wireless_good="£"
+glyph_wireless_excellent="¤"
 sep_solid="\x19"
 sep_line="\x19"
+
+
+print_internets() {
+  if [[ $(ifconfig eth0 | grep -w inet) ]]; then  # Check for an Ethernet connection
+    echo -ne "${glyph_ethernet} ${sep_solid} "
+  elif [[ ! $(iwconfig wlan0 | grep 'Not-Associated') ]]; then  # Check for a Wirelss connection
+    ESSID=$(iwconfig wlan0 | grep ESSID | cut -d\" -f2)
+    strength=$(iwconfig wlan0 | grep 'Link Quality' | awk '{ print $2}' | cut -d= -f2 | cut -d/ -f1)
+    signal="${ESSID}: "
+
+    if (( $strength < 40 )); then
+      signal+="${glyph_wireless_poor} "
+    elif (( $strength < 60 )); then
+      signal+="${glyph_wireless_good} "
+    else
+      signal+="${glyph_wireless_excellent} "
+    fi
+
+    echo -ne "${signal} ${sep_solid} "
+  else
+    echo -ne "${glyph_no_internets} ${sep_solid} "
+  fi
+}
 
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
@@ -87,7 +114,8 @@ do
   }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
-  xsetroot -name "$(print_battery)\
+  xsetroot -name "$(print_internets)\
+$(print_battery)\
 $(print_volume)\
 $(print_rx_rate)$(print_tx_rate)\
 $(print_datetime)"
