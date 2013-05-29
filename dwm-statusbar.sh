@@ -18,7 +18,7 @@ colour_blu="\x0A" # colour_blue on darkgrey
 colour_mag="\x0B" # colour_magenta on darkgrey
 colour_cyn="\x0C" # cyan on darkgrey
 
-# Icon glyphs from font xbmicons.pcf
+# Icon glyphs from ohsnap icon font
 glyph_dl="Ú"
 glyph_ul="Û"
 glyph_vol_mute="ë"

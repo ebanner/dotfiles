@@ -8,10 +8,6 @@ setxkbmap dvorak
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
 case $1 in
-  xfce4)
-    exec dbus-launch startxfce4
-    ;;
-
   dwm)
     # Inform the X server of new font directories and force a rescan
     xset +fp /usr/share/fonts/local
@@ -27,11 +23,11 @@ case $1 in
     # Fn volume controls
     xbindkeys
 
-    exec dbus-launch dwm
+    exec dwm
     ;;
 
-  *)
-    # Fallback to xfce for now
-    exec dbus-launch startxfce4
+  xfce4|*)
+    # Fall back to xfce
+    exec startxfce4
     ;;
 esac
