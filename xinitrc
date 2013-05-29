@@ -14,6 +14,9 @@ xset fp rehash
 # Fn volume controls
 xbindkeys
 
+# Set keyboard layout to dvorak
+setxkbmap dvorak
+
 exec dbus-launch dwm
 #exec ck-launch-session dbus-launch dwm
 #exec gnome-session
