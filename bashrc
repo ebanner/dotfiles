@@ -15,6 +15,8 @@ alias sudo='sudo '
 alias poweroff='systemctl poweroff'
 alias halt='systemctl poweroff'
 alias clear='echo No.'
+# Easier to type `dir' than `ls' with dvorak
+alias dir='ls'
 
 # Defines colors and sets the PS1 variable
 function set_prompt_style {
@@ -51,4 +53,4 @@ export TERM='xterm'
 export EDITOR="vim"
 complete -c -f sudo # tab completion
 complete -c -f man  # tab completion
-set -o vi # set vi-like editing mode of commands
+set -o vi # Set vi-like editing mode of commands
