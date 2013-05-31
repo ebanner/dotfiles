@@ -62,8 +62,9 @@ print_internets() {
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
   vol=${colour_wht}
+  state=$(amixer get Master | tail -n 1 | cut -d' ' -f8 | sed -r 's/\[(.*)\]/\1/')
 
-  if (( $volume == 0 )) ; then
+  if (( $volume == 0 )) || [[ $state -eq "off" ]] ; then
     vol+=${glyph_vol_mute}
   elif (( $volume < 50 )) ; then
     vol+=${glyph_vol_quiet}
