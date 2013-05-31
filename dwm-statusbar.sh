@@ -6,17 +6,15 @@
 # https://bitbucket.org/jasonwryan/eeepc/src/73dadb289dead8ef17ef29a9315ba8f1706927cb/Scripts/dwm-status
 
 # Colour codes from dwm/config.h
-colour_gry="\x01" # grey on black
-colour_wht="\x02" # white on black
-colour_dgry="\x04" # darkgrey on black
-colour_blk="\x05" # black on darkgrey
-colour_red="\x06" # colour_red on black
-colour_grn="\x07" # green on black
-colour_dylw="\x08" # orange on black
-colour_ylw="\x09" # yellow on black
-colour_blu="\x0A" # colour_blue on darkgrey
-colour_mag="\x0B" # colour_magenta on darkgrey
-colour_cyn="\x0C" # cyan on darkgrey
+GREY="\x01"
+WHITE="\x02"
+RED="\x03"
+GREEN="\x04"
+YELLOW="\x05"
+BLUE="\x06"
+CYAN="\x07"
+MAGENTA="\x08"
+ORANGE="\x09"
 
 # Icon glyphs from ohsnap icon font
 glyph_dl="Ú"
@@ -33,67 +31,66 @@ glyph_ethernet="¡"
 glyph_wireless_poor="¢"
 glyph_wireless_good="£"
 glyph_wireless_excellent="¤"
-sep_solid="\x19"
-sep_line="\x19"
 
+SEP="${GREY}\x19"
 
+# Functions for printing taskbar information
 print_internets() {
   if [[ $(ifconfig eth0 | grep -w inet) ]]; then  # Check for an Ethernet connection
-    echo -ne "${glyph_ethernet} ${sep_solid} "
-  elif [[ ! $(iwconfig wlan0 | grep 'Not-Associated') ]]; then  # Check for a Wirelss connection
+    echo -ne "${GREEN}${glyph_ethernet} ${SEP} "
+  elif [[ ! $(iwconfig wlan0 | grep 'Not-Associated') ]]; then  # Check for a Wireless connection
     ESSID=$(iwconfig wlan0 | grep ESSID | cut -d\" -f2)
     strength=$(iwconfig wlan0 | grep 'Link Quality' | awk '{ print $2}' | cut -d= -f2 | cut -d/ -f1)
-    signal="${ESSID}: "
+    signal="${SEP} ${WHITE}${ESSID}: "
 
+    # Determine signal strength
     if (( $strength < 40 )); then
-      signal+="${glyph_wireless_poor} "
+      signal+="${GREEN}${glyph_wireless_poor} "
     elif (( $strength < 60 )); then
-      signal+="${glyph_wireless_good} "
+      signal+="${GREEN}${glyph_wireless_good} "
     else
-      signal+="${glyph_wireless_excellent} "
+      signal+="${GREEN}${glyph_wireless_excellent} "
     fi
 
-    echo -ne "${signal} ${sep_solid} "
+    echo -ne "${signal} ${SEP} "
   else
-    echo -ne "${glyph_no_internets} ${sep_solid} "
+    echo -ne "${RED}${glyph_no_internets} ${SEP} "
   fi
-}
-
-print_volume() {
-  volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  vol=${colour_wht}
-  state=$(amixer get Master | tail -n 1 | cut -d' ' -f8 | sed -r 's/\[(.*)\]/\1/')
-
-  if (( $volume == 0 )) || [[ $state -eq "off" ]] ; then
-    vol+=${glyph_vol_mute}
-  elif (( $volume < 50 )) ; then
-    vol+=${glyph_vol_quiet}
-  else
-    vol+=${glyph_vol_loud}
-  fi
-
-  echo -ne "${vol} ${volume}% "
-}
-
-print_datetime() {
-  datetime="$(date "+%a %d %b %H:%M")"
-  echo -ne "${colour_wht}${sep_solid} ${glyph_tim} ${datetime}"
 }
 
 print_battery() {
   # Get the percentage of battery remaining
   perc+=$(acpi -b | cut -d' ' -f4 | sed 's/[%,]//g')
-  batt="${colour_wht}"
 
   if (( $perc < 15 )) ; then
-    batt+=${glyph_batt_empty}
+    batt="${RED}${glyph_batt_empty}"
   elif (( $perc < 75 )) ; then
-    batt+=${glyph_batt_partial}
+    batt="${YELLOW}${glyph_batt_partial}"
   else
-    batt+=${glyph_batt_full}
+    batt="${GREEN}${glyph_batt_full}"
   fi
 
-  echo -e "${batt} ${perc}% ${sep_solid} "
+  echo -e "${batt} ${WHITE}${perc}% ${SEP} "
+}
+
+print_volume() {
+  volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+  state=$(amixer get Master | tail -n 1 | cut -d' ' -f8 | sed -r 's/\[(.*)\]/\1/')
+
+  if (( $volume == 0 )) || [[ $state == "off" ]] ; then
+    vol="${RED}${glyph_vol_mute}"
+  elif (( $volume < 50 )) ; then
+    vol="${ORANGE}${glyph_vol_quiet}"
+  else
+    vol="${ORANGE}${glyph_vol_loud}"
+  fi
+
+  echo -ne "${vol} ${WHITE}${volume}% ${SEP} "
+}
+
+print_datetime() {
+  datetime="$(date "+%a %d %b %H:%M")"
+  echo -ne "${SEP} ${CYAN}${glyph_tim} ${WHITE}${datetime}"
 }
 
 while true
@@ -107,18 +104,19 @@ do
 
   print_rx_rate() {
     # Prints download rate
-    printf "%-11b" "${colour_blk}${sep_solid}${colous_grn} ${glyph_dl} ${rx_rate}K"
+    printf "%-11b" "${BLUE}${glyph_dl} ${WHITE}${rx_rate}K"
   }
   print_tx_rate() {
     # Prints upload rate
-    printf "%-12b" "${colour_gry}${sep_line}${colour_red} ${glyph_ul} ${tx_rate}K"
+    printf "%-14b" "${SEP} ${MAGENTA}${glyph_ul} ${WHITE}${tx_rate}K"
   }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_internets)\
 $(print_battery)\
 $(print_volume)\
-$(print_rx_rate)$(print_tx_rate)\
+$(print_rx_rate)\
+$(print_tx_rate)\
 $(print_datetime)"
 
   # Reset old values
