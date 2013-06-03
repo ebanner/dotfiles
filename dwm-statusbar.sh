@@ -61,6 +61,10 @@ print_internets() {
 print_battery() {
   # Get the percentage of battery remaining
   perc+=$(acpi -b | cut -d' ' -f4 | sed 's/[%,]//g')
+  time_remaining=$(acpi -b | cut -d' ' -f5)  # e.g. 02:34:02
+  hour=$(echo ${time_remaining} | cut -d' ' -f5 | cut -d: -f1)
+  hour=${hour:1} # Strip off trailing 0
+  minute=$(echo ${time_remaining} | cut -d' ' -f5 | cut -d: -f2)
 
   if (( $perc < 15 )) ; then
     batt="${RED}${glyph_batt_empty}"
@@ -70,7 +74,7 @@ print_battery() {
     batt="${GREEN}${glyph_batt_full}"
   fi
 
-  echo -e "${batt} ${WHITE}${perc}% ${SEP} "
+  echo -e "${batt} ${WHITE}${perc}% ${hour}h ${minute}m ${SEP} "
 }
 
 print_volume() {
