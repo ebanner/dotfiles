@@ -6,14 +6,40 @@ add Lock = Escape
 keycode 9 = Caps_Lock
 keycode 66 = Escape
 
-! Move aroud keys on the top row
-keycode 24 = comma less comma less dead_cedilla dead_caron dead_cedilla
-keycode 25 = period greater period greater dead_abovedot periodcentered dead_abovedot
-keycode 26 = c C c C
-keycode 31 = l L l L
-keycode 33 = slash question slash question
-keycode 34 = apostrophe quotedbl apostrophe quotedbl dead_acute dead_diaeresis dead_acute
+! Top Row
+keycode  24 = z Z z Z
+keycode  25 = y Y y Y
+keycode  26 = c C c C
+!keycode 27 = p P p P
+keycode  28 = period greater period greater dead_abovedot periodcentered dead_abovedot
+keycode  29 = comma less comma less dead_cedilla dead_caron dead_cedilla
+!keycode 30 = g G g G
+keycode  31 = l L l L
+!keycode 32 = r R r R
+keycode  33 = f F f F
+keycode  34 = apostrophe quotedbl apostrophe quotedbl dead_acute dead_diaeresis dead_acute
 
-! Swap i and u
-keycode  41 = i I i I i I i I
-keycode  42 = u U u U u U u U
+! Middle row
+!keycode 38 = a A a A
+!keycode 39 = o O o O
+!keycode 40 = e E e E
+keycode  41 = i I i I
+keycode  42 = u U u U
+!keycode 43 = d D d D
+!keycode 44 = h H h H
+!keycode 45 = t T t T
+!keycode 46 = n N n N
+!keycode 47 = s S s S
+!keycode 48 = minus underscore minus underscore
+
+! Bottom Row
+!keycode 52 = semicolon colon semicolon colon dead_ogonek dead_doubleacute dead_ogonek
+!keycode 53 = q Q q Q
+keycode  54 = k K k K
+keycode  55 = j J j J
+!keycode 56 = x X x X
+!keycode 57 = b B b B
+!keycode 58 = m M m M
+!keycode 59 = w W w W
+!keycode 60 = v V v V
+keycode  61 = slash question slash question
