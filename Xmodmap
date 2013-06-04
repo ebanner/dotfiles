@@ -1,0 +1,19 @@
+! Swap caps lock and escape
+keycode 66 = Caps_Lock
+keycode 9 = Escape
+remove Lock = Caps_Lock
+add Lock = Escape
+keycode 9 = Caps_Lock
+keycode 66 = Escape
+
+! Move aroud keys on the top row
+keycode 24 = comma less comma less dead_cedilla dead_caron dead_cedilla
+keycode 25 = period greater period greater dead_abovedot periodcentered dead_abovedot
+keycode 26 = c C c C
+keycode 31 = l L l L
+keycode 33 = slash question slash question
+keycode 34 = apostrophe quotedbl apostrophe quotedbl dead_acute dead_diaeresis dead_acute
+
+! Swap i and u
+keycode  41 = i I i I i I i I
+keycode  42 = u U u U u U u U

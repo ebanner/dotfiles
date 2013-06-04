@@ -2,8 +2,8 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Remap keyboard to dvorak
-setxkbmap dvorak
+# Remap keyboard to dvorak and swap a few additional keys
+setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session

@@ -5,7 +5,7 @@
 
 dotfiles=dotfiles            # Dotfiles directory
 old_dir=.dotfiles.old        # Old dotfiles backup directory
-files='bashrc vimrc Xresources dwm-statusbar.sh gitconfig inputrc xinitrc fehbg'
+files='bashrc vimrc Xresources dwm-statusbar.sh gitconfig inputrc xinitrc fehbg Xmodmap'
 
 # Create dotfiles.old in homedir
 echo "Creating $old_dir for backup of any existing dotfiles in $HOME"
