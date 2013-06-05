@@ -1,3 +1,10 @@
+! Modified dvorak layout
+!
+! I felt the need to modify Dvorak's layout due to the strain his layout was
+! putting on my right pinky. All other modifications were made (with the
+! exception of switching the i and u keys) to make my life at the shell or in
+! vim easier.
+
 ! Swap caps lock and escape
 keycode 66 = Caps_Lock
 keycode 9 = Escape
