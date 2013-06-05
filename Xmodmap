@@ -25,6 +25,7 @@ keycode  31 = l L l L
 !keycode 32 = r R r R
 keycode  33 = z Z z Z
 keycode  34 = apostrophe quotedbl apostrophe quotedbl dead_acute dead_diaeresis dead_acute
+!keycode 35 = equal plus equal plus equal plus equal plus
 
 ! Middle row
 !keycode 38 = a A a A
