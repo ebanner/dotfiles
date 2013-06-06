@@ -1,9 +1,8 @@
 ! Modified dvorak layout
 !
 ! I felt the need to modify Dvorak's layout due to the strain his layout was
-! putting on my right pinky. All other modifications were made (with the
-! exception of switching the i and u keys) to make my life at the shell or in
-! vim easier.
+! putting on my right pinky. Other modifications were made for comfort and ease
+! of typing.
 
 ! Swap caps lock and escape
 keycode 66 = Caps_Lock
@@ -38,13 +37,13 @@ keycode  42 = u U u U
 !keycode 45 = t T t T
 !keycode 46 = n N n N
 !keycode 47 = s S s S
-keycode 48 = semicolon colon semicolon colon dead_ogonek dead_doubleacute dead_ogonek
+keycode  48 = semicolon colon semicolon colon dead_ogonek dead_doubleacute dead_ogonek
 
 ! Bottom Row
 keycode  52 = apostrophe quotedbl apostrophe quotedbl dead_acute dead_diaeresis dead_acute
 !keycode 53 = q Q q Q
-!keycode  54 = j J j J
-!keycode  55 = k K k K
+!keycode 54 = j J j J
+!keycode 55 = k K k K
 !keycode 56 = x X x X
 !keycode 57 = b B b B
 !keycode 58 = m M m M
