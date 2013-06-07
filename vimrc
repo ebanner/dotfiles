@@ -66,5 +66,5 @@ endfunction
 filetype plugin indent on
 syntax on
 
-" Swap j and k keys for navigating, but leave them the same for typing
-set langmap=jkJKKJkj
+" Swap navigation keys
+set langmap=jkJKKJkjlhLhHLhl
