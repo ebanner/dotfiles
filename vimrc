@@ -65,6 +65,3 @@ endfunction
 
 filetype plugin indent on
 syntax on
-
-" Swap navigation keys
-set langmap=jkJKKJkjlhLhHLhl

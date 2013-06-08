@@ -2,7 +2,7 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Remap keyboard to dvorak and swap a few additional keys
+# Set layout to dvorak and switch caps lock & escape
 setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
