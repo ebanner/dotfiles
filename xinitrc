@@ -2,8 +2,8 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Set layout to dvorak and switch caps lock & escape
-setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+# Set layout to colemak
+setxkbmap us -variation colemak
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
