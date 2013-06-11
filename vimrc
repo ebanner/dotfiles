@@ -65,3 +65,18 @@ endfunction
 
 filetype plugin indent on
 syntax on
+
+" Treat all numerals as decimal, regardless of whether they are padded with
+" zeros
+set nrformats=
+
+" Set zsh-like autocomlete menu behavior
+set wildmenu
+set wildmode=full
+
+" Set ex history to 200
+set history=200
+
+" Have <C-p> and <C-n> behave like up and down respectively in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
