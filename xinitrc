@@ -2,8 +2,8 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Map keyboard to colemak
-setxkbmap us -variant colemak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+# Reverse dvorak and fix some of the punctuation keys & Caps Lock
+setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
@@ -18,9 +18,9 @@ case $1 in
     feh --bg-scale /usr/share/slim/themes/default/background.jpg &
 
     # Launch statusbar script
-    $HOME/.dwm-statusbar.sh &
+    ~/.dwm-statusbar.sh &
 
-    # Fn volume controls
+    # Fix Fn volume controls
     xbindkeys
 
     exec dwm

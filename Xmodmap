@@ -1,7 +1,8 @@
 ! Reverse Dvorak
 
 ! Make Caps Lock a Control key
-keycode  66 = Control_L
+remove Lock = Caps_Lock
+keycode  66 = Control_L NoSymbol Control_L
 add Control = Control_L
 
 ! Put += and -_ back where they belong
