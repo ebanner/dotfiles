@@ -2,7 +2,7 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Reverse dvorak and fix some of the punctuation keys & Caps Lock
+# Set layout to dvorak with a few modifications
 setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
