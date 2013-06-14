@@ -1,49 +1,17 @@
-! Reverse Dvorak
+! Minor modifications to the dvorak layout
 
 ! Make Caps Lock a Control key
 remove Lock = Caps_Lock
-keycode  66 = Control_L NoSymbol Control_L
+keycode  66 = Control_L
 add Control = Control_L
 
-! Put += and -_ back where they belong
+! Put -_ and =+ back in their QWERTY positions
 keycode  20 = minus underscore
 keycode  21 = equal plus
 
-! Top row
-keycode  24 = l L 
-keycode  25 = r R 
-keycode  26 = c C 
-keycode  27 = g G 
-keycode  28 = f F 
-keycode  29 = y Y 
-keycode  30 = p P 
-keycode  31 = comma less
-keycode  32 = period greater
-keycode  33 = slash question
+! Put { and } back in their QWERTY positions
 keycode  34 = bracketleft braceleft
 keycode  35 = bracketright braceright
 
-! Middle Row
-keycode  38 = s S
-keycode  39 = n N
-keycode  40 = t T
-keycode  41 = h H
-keycode  42 = d D
-keycode  43 = i I
-keycode  44 = u U
-keycode  45 = e E
-keycode  46 = o O
-keycode  47 = a A
-keycode  48 = apostrophe quotedbl
-
-! Bottom Row
-keycode  52 = z Z
-keycode  53 = v V
-keycode  54 = w W
-keycode  55 = m M
-keycode  56 = b B
-keycode  57 = x X
-keycode  58 = k K
-keycode  59 = j J
-keycode  60 = q Q
-keycode  61 = semicolon colon
+! Put /? on the home row so it's easier to reach
+keycode  48 = slash question

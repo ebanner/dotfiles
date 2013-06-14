@@ -80,6 +80,3 @@ set history=200
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-
-" Swap h and l for navigation that makes more sense
-set langmap=hllhHLLH
