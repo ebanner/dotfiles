@@ -71,6 +71,7 @@ syntax on
 set nrformats=
 
 " Set zsh-like autocomlete menu behavior
+set wildchar=<Tab>
 set wildmenu
 set wildmode=full
 

@@ -5,9 +5,6 @@ remove Lock = Caps_Lock
 keycode  66 = Control_L BackSpace
 add Control = Control_L
 
-! Use Shift + Caps Lock instead of BackSpace
-keycode  22 =
-
 ! Put -_ and =+ back in their QWERTY positions
 keycode  20 = minus underscore
 keycode  21 = equal plus
