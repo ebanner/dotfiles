@@ -1,17 +1,7 @@
-! Minor modifications to the dvorak layout
+! Minor modifications to the colemak layout
 
 ! Make Caps Lock a Control key
-remove Lock = Caps_Lock
 keycode  66 = Control_L BackSpace
-add Control = Control_L
 
-! Put -_ and =+ back in their QWERTY positions
-keycode  20 = minus underscore
-keycode  21 = equal plus
-
-! Put { and } back in their QWERTY positions
-keycode  34 = bracketleft braceleft
-keycode  35 = bracketright braceright
-
-! Put /? on the home row so it's easier to reach
-keycode  48 = slash question
+! Reinitialize the right alt key
+keycode 108 = Alt_R Meta_R Alt_R Meta_R

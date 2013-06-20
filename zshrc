@@ -28,7 +28,7 @@ alias wli='wicd-curses'
 alias sftpme='sftp bannerem195@lab.cs.potsdam.edu'
 alias poweroff='systemctl poweroff'
 alias clear='echo No.'
-alias dir='ls'
+alias cf='cd'
 
 # Set prompt
 prompt bart
