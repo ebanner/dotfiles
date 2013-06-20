@@ -1,7 +1,16 @@
 ! Minor modifications to the colemak layout
 
 ! Make Caps Lock a Control key
-keycode  66 = Control_L BackSpace
+keycode  66 = Control_L
+add Control = Control_L
 
-! Reinitialize the right alt key
-keycode 108 = Alt_R Meta_R Alt_R Meta_R
+! Swap b and l
+keycode  33 = b B
+keycode  57 = l L
+
+! Put { and } back in their QWERTY positions
+keycode  34 = bracketleft braceleft
+keycode  35 = bracketright braceright
+
+! Put /? on the home row so it's easier to reach
+keycode  48 = slash question
