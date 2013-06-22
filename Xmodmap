@@ -1,12 +1,13 @@
 ! Minor modifications to the colemak layout
 
 ! Make Caps Lock a Control key
+remove Lock = Caps_Lock
 keycode  66 = Control_L
 add Control = Control_L
 
-! Swap b and l
-keycode  33 = b B
-keycode  57 = l L
+! Put -_ and =+ back in their QWERTY positions
+keycode  20 = minus underscore
+keycode  21 = equal plus
 
 ! Put { and } back in their QWERTY positions
 keycode  34 = bracketleft braceleft
