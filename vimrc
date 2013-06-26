@@ -81,3 +81,6 @@ set history=200
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+" Remap Control-h to Escape
+inoremap <C-h> <Esc><Esc>
