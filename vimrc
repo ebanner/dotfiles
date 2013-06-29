@@ -17,6 +17,17 @@ set autoindent
 set textwidth=80        " Maximum width of text that is being inserted.
 set formatoptions=q,r,t,c
 set ruler               " Show the line and column number of the cursor position.
+set wildchar=<Tab>      " Set zsh-like autocomlete menu behavior
+set wildmenu
+set wildmode=full
+set listchars=tab:▸\ ,eol:¬ " Use the same symbols as TextMate for tabstops and EOLs
+set hidden              " Silence vim when changing between buffers with unsaved changes
+set nrformats=          " Treat all numerals as decimal, regardless of whether
+                        " they are padded with zeros
+set history=200         " Set ex history to 200
+set wildcharm=<C-Z>
+nnoremap <F10> :b <C-Z>
+
 
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
@@ -31,9 +42,6 @@ nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 map <C-Left> <Esc>:tabprev<CR>
 map <C-Right> <Esc>:tabnext<CR>
 map <C-n> <Esc>:tabnew
-
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
 
 " Set tabstop, softtabstop and shiftwidth to the same value
 command! -nargs=* Stab call Stab()
@@ -66,21 +74,10 @@ endfunction
 filetype plugin indent on
 syntax on
 
-" Treat all numerals as decimal, regardless of whether they are padded with
-" zeros
-set nrformats=
-
-" Set zsh-like autocomlete menu behavior
-set wildchar=<Tab>
-set wildmenu
-set wildmode=full
-
-" Set ex history to 200
-set history=200
-
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Remap Control-h to Escape
-inoremap <C-h> <Esc><Esc>
+imap <C-t> <Esc>
+vmap <C-t> <Esc>
