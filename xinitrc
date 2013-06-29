@@ -2,8 +2,8 @@
 
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Set layout to dvorak with a few modifications
-setxkbmap dvorak && [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+# Set layout to dvorak
+setxkbmap dvorak
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
@@ -23,10 +23,16 @@ case $1 in
     # Fix Fn volume controls
     xbindkeys
 
+    # Make all the modifications, but don't swap the number keys
+    [[ -s ~/.Xmodmap.dwm ]] && xmodmap ~/.Xmodmap.dwm
+
     exec dwm
     ;;
 
   xfce4|*)
+    # Make all the modifications, including swapping the number keys
+    [[ -s ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
     # Fall back to xfce
     exec startxfce4
     ;;
