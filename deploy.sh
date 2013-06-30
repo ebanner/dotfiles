@@ -17,16 +17,10 @@ echo "...done"
 # in $files
 echo "Moving any existing dotfiles from $HOME to $old_dir..."
 for file in $files; do
-  if [[ -e $HOME/.$file ]]
-  then
-    mv $HOME/.$file $HOME/$old_dir
-  fi
+  [[ -e $HOME/.$file ]] && mv $HOME/.$file $HOME/$old_dir
 done
 
 echo "Creating symlinks..."
 for file in $files; do
-  if [[ ! -h $HOME/.$file ]]
-  then
-    ln -s $HOME/$dotfiles/$file $HOME/.$file
-  fi
+  [[ ! -h $HOME/.$file ]] && ln -s $HOME/$dotfiles/$file $HOME/.$file
 done
