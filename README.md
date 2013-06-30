@@ -11,6 +11,8 @@ Configuration for the following \*nix utilities:
 * git
 * vim
 
+## Wide Dvorak
+
 The most interesing thing here is probably my modified dvorak layout.
 
 ![Wide Dvorak](https://raw.github.com/ebanner/dotfiles/master/Wide_Dvorak.png "Wide Dvorak")
