@@ -100,8 +100,14 @@ print_datetime() {
 while true
 do
   # Get new rx/tx counts
-  rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
-  tx_now=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+  if [[ $(ifconfig eth0 | grep -w inet) ]]; then  # Check for an Ethernet connection
+    rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
+    tx_now=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+  elif [[ ! $(iwconfig wlan0 | grep 'Not-Associated') ]]; then  # Check for a Wireless connection
+    rx_now=$(cat /sys/class/net/wlan0/statistics/rx_bytes)
+    tx_now=$(cat /sys/class/net/wlan0/statistics/tx_bytes)
+  fi
+
   # Calculate the rate (K)
   let rx_rate=($rx_now-$rx_old)/1024
   let tx_rate=($tx_now-$tx_old)/1024
