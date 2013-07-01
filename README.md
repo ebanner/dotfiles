@@ -42,4 +42,4 @@ I drew inspiration from the Programmer Dvorak layout and some of the
 modifications from DreymaR on the [Colemak
 forums](http://forum.colemak.com/viewtopic.php?pid=12302). As you can probably
 tell, my biggest motivation for making these changes came from excess strain on
-the right wrist by hitting the leftmost keys on the keyboard.
+the right wrist by hitting the rightmost keys on the keyboard.
