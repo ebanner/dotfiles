@@ -17,17 +17,29 @@ The most interesing thing here is probably my modified dvorak layout.
 
 ![Wide Dvorak](https://raw.github.com/ebanner/dotfiles/master/Wide_Dvorak.png "Wide Dvorak")
 
-The inspiration came from DreymaR on the [Colemak
-forums](http://forum.colemak.com/viewtopic.php?pid=12302). Basically my right
-wrist was hurting because of how I had to turn my right wrist to reach Right
-Shift and Enter. Now they're perfectly reachable with the right pinky without
-even moving my right hand!
+### Notable features
 
-You get a nice straightening out of the wrists, too. I also found BackSpace
-painful to reach, so I swapped it with BackSpace. I find BackSpace on the left
-side more natural anyway.
+* The letters from the dvorak layout remain almost completely untouched. Thus
+  you still get the complete dvorak experience with almost no learning curve.
 
-One of the greatest things I've done is turn Caps Lock into a Control key. I
-can't even keep track of how often I use it now. A very nice side effect is
-scrolling up and down with &lt;C-u&gt; and &lt;C-d&gt; in vim.
+* Right Shift and Enter are now accesible with the right pinky without having to
+  turn the right hand at an uncomfortable angle. This was my major source of
+  pain while typing.
 
+* " remains reachable with the left hand so common contractions (e.g. I'm, it's,
+  can't, you're, etc.) are still typed smoothly with the left then right hand.
+
+* BackSpace, and \ are now typed with the left hand, cutting down on the right
+  handed lopsidedness you get with dvorak.
+
+* Since the right hand rests one more column to the right, the keyboard has a
+  more symmetrical feel and the wrists are more straightened.
+
+* The braces are in a more convenient location. Coupled with Caps Lock becoming
+  another Control modifier, this makes hitting &lt;C-\[&gt; a snap in vim.
+
+I drew inspiration from the Programmer Dvorak layout and some of the
+modifications from DreymaR on the [Colemak
+forums](http://forum.colemak.com/viewtopic.php?pid=12302). As you can probably
+tell, my biggest motivation for making these changes came from excess strain on
+the right wrist by hitting the leftmost keys on the keyboard.
