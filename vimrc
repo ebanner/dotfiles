@@ -1,5 +1,8 @@
 " Vim configurations
 
+filetype plugin indent on
+syntax on
+
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
 set ignorecase          " Do case insensitive matching
@@ -71,13 +74,6 @@ function! SummarizeTabs()
   endtry
 endfunction
 
-filetype plugin indent on
-syntax on
-
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-
-" Remap Control-h to Escape
-imap <C-t> <Esc>
-vmap <C-t> <Esc>
