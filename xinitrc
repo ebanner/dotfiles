@@ -3,7 +3,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 # Use wide colemak for a layout
-setxkbmap colemak && [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+setxkbmap us -variant colemak && [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
