@@ -19,6 +19,7 @@ keycode  51 = bracketright braceright
 
 keycode  66 = Control_L
 add Control = Control_L
+
 keycode  38 = a A
 keycode  39 = r R
 keycode  40 = s S
@@ -42,3 +43,6 @@ keycode  58 = k K
 keycode  59 = m M
 keycode  60 = comma less
 keycode  61 = period greater
+
+! Fix Right Alt
+keycode 204 = Alt_L
