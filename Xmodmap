@@ -8,3 +8,7 @@ keycode  43 = h H h H
 keycode  44 = n N j J
 keycode  45 = e E k K
 keycode  46 = i I l L
+
+! Fix right alt
+
+keycode 108 = Alt_L
