@@ -1,12 +1,8 @@
-! Make Caps Lock a Control key
+! Make Caps Lock a Mode Switch key
 
-keycode  66 = Control_L
-add Control = Control_L
+keycode  66 = Mode_switch
 
-! Allow vim H J K L navigation with Windows key
-
-remove mod4 = Super_L
-keycode 133 = Mode_switch
+! Allow vim H J K L navigation with the help of Caps Lock
 
 keycode  43 = h H h H
 keycode  44 = n N j J
