@@ -15,8 +15,7 @@ alias sudo='sudo '
 alias poweroff='systemctl poweroff'
 alias halt='systemctl poweroff'
 alias clear='echo No.'
-# Easier to type `dir' than `ls' with dvorak
-alias dir='ls'
+alias ch='cd'
 
 # Defines colors and sets the PS1 variable
 function set_prompt_style {

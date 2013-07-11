@@ -1,13 +1,7 @@
-! Make Caps Lock a Mode Switch key
+! Make Caps Lock a Control
 
-keycode  66 = Mode_switch
-
-! Allow vim H J K L navigation with the help of Caps Lock
-
-keycode  43 = h H h H
-keycode  44 = n N j J
-keycode  45 = e E k K
-keycode  46 = i I l L
+keycode  66 = Control_L
+add Control = Control_L
 
 ! Fix right alt
 

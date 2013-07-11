@@ -77,3 +77,6 @@ endfunction
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+" Make a nicer navigation block than the one currently there
+set langmap=jnJNnlNLljLJ
