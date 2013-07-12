@@ -3,7 +3,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
 # Set layout to colemak
-setxkbmap us -variant colemak && [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+setxkbmap us -variant colemak #&& [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 # Slim calls this script like this:
 #   $ exec /bin/bash -login ~/.xinitrc %session
@@ -26,8 +26,12 @@ case $1 in
     exec dwm
     ;;
 
-  xfce4|*)
+  xfce4)
     # Fall back to xfce
     exec startxfce4
+    ;;
+
+  *)
+    # Do nothing
     ;;
 esac
