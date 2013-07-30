@@ -26,8 +26,12 @@ case $1 in
     exec dwm
     ;;
 
-  xfce4|*)
+  xfce4)
     # Fall back to xfce
     exec startxfce4
+    ;;
+
+  *)
+    # Do nothing
     ;;
 esac
