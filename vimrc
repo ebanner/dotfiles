@@ -29,6 +29,7 @@ set nrformats=          " Treat all numerals as decimal, regardless of whether
                         " they are padded with zeros
 set history=200         " Set ex history to 200
 set wildcharm=<C-Z>
+set paste               " Don't let vim try and format text from the system clipboard
 nnoremap <F10> :b <C-Z>
 
 
@@ -77,6 +78,3 @@ endfunction
 " Have <C-p> and <C-n> behave like up and down respectively in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-
-" Make a nicer navigation block than the one currently there
-set langmap=jnJNnlNLljLJ
