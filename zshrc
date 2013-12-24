@@ -34,18 +34,6 @@ alias wli='wicd-curses'
 # Set prompt
 prompt bart
 
-# Emulates ksh-style two argument form of the cd command
-# 
-# This function relaces every occurrence of dir1 with dir2, unlike its ksh counterpart
-function cd {
-    # Use the builtin cd in the normal case
-    if [[ "$#" != "2" ]] ; then 
-        builtin cd $*
-    else 
-        builtin cd ${PWD/$1/$2}
-    fi
-}
-
 # cd's up to the directory into your current path
 function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
