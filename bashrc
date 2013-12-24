@@ -8,48 +8,54 @@
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias sshme='ssh bannerem195@lab.cs.potsdam.edu'
-alias wli='wicd-curses'
-alias sftpme='sftp bannerem195@lab.cs.potsdam.edu'
+alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias sudo='sudo '
 alias poweroff='systemctl poweroff'
 alias halt='systemctl poweroff'
-alias clear='echo No.'
-alias ch='cd'
+alias wli='wicd-curses'
 
 # Defines colors and sets the PS1 variable
 function set_prompt_style {
-  local WHITE='\[\e[0m\]'
-  local CYAN='\[\e[0;36m\]'    
-  local BOLD_GREEN='\[\e[1;32m\]'    
-  local GREEN='\[\e[0;92m\]'
-  local RED='\[\e[0;91m\]'
-	local BOLD_RED='\[\e[1;91m\]'
+    local WHITE='\[\e[0m\]'
+    local CYAN='\[\e[0;36m\]'
+    local BOLD_GREEN='\[\e[1;32m\]'
+    local GREEN='\[\e[0;92m\]'
+    local RED='\[\e[0;91m\]'
+    local BOLD_RED='\[\e[1;91m\]'
+    local YELLOW='\e[0;33m'
+    local HOST_COLOR=$CYAN
+    local PATH_COLOR=$BOLD_GREEN
+    local SYMBOL='$'
+    local SYMBOL_COLOR=$GREEN
 
-	local HOST_COLOR=$CYAN
-	local PATH_COLOR=$BOLD_GREEN
-	local SYMBOL='$'
-  local SYMBOL_COLOR=$GREEN
-
-	if [ `whoami` == 'root' ] ; then
-		HOST_COLOR=$RED
-		PATH_COLOR=$BOLD_RED
-		SYMBOL='#'
+    if [ `whoami` == 'root' ] ; then
+        HOST_COLOR=$RED
+        PATH_COLOR=$BOLD_RED
+        SYMBOL='#'
         SYMBOL_COLOR=$RED
-	fi
+    fi
 
-  export PS1="[${HOST_COLOR}\h$WHITE][${PATH_COLOR}\$(short_dir)$WHITE] ${SYMBOL_COLOR}${SYMBOL}$WHITE "
+    export PS1="[${HOST_COLOR}\h$WHITE][${PATH_COLOR}${PWD}$WHITE] ${SYMBOL_COLOR}
+${SYMBOL}$WHITE "
 }
 
-# Returns tildified version of pwd
-function short_dir {
-    echo $PWD | sed "s#$HOME#~#" | awk -F'/' '{ if (NF>3) print $1 "/.../" $(NF-1) "/" $(NF); else print $0 }'
+# Emulates ksh-style two argument form of the cd command
+function cd {
+    # Use the builtin cd in the normal case
+    if [[ "$#" != "2" ]] ; then 
+        builtin cd $*
+    else 
+        builtin cd ${PWD/$1/$2}
+    fi
 }
 
+# cd's up to the directory into your current path
+function up {
+    [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
+}
+
+# Set the prompt
 set_prompt_style
 
-export TERM='xterm'
-export EDITOR="vim"
-complete -c -f sudo # tab completion
 complete -c -f man  # tab completion
 set -o vi # Set vi-like editing mode of commands

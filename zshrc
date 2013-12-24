@@ -1,8 +1,13 @@
+# zshrc
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory autocd extendedglob nomatch notify
+HISTSIZE=10000000 # Number of lines to save in $HISTFILE
+SAVEHIST=10000000 # Number of lines of history to load up at invocation
+setopt autocd extendedglob nomatch notify append_history share_history
 unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
@@ -21,13 +26,30 @@ autoload -U promptinit
 promptinit
 
 # Aliases
-alias ls='ls --color=auto -F'
+alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias sshme='ssh bannerem195@lab.cs.potsdam.edu'
+alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias wli='wicd-curses'
-alias sftpme='sftp bannerem195@lab.cs.potsdam.edu'
-alias poweroff='systemctl poweroff'
-alias clear='echo No.'
 
 # Set prompt
 prompt bart
+
+# Emulates ksh-style two argument form of the cd command
+# 
+# This function relaces every occurrence of dir1 with dir2, unlike its ksh counterpart
+function cd {
+    # Use the builtin cd in the normal case
+    if [[ "$#" != "2" ]] ; then 
+        builtin cd $*
+    else 
+        builtin cd ${PWD/$1/$2}
+    fi
+}
+
+# cd's up to the directory into your current path
+function up {
+    [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
+}
+
+complete -c -f man  # tab completion
+set -o vi # Set vi-like editing mode of commands
