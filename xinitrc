@@ -5,33 +5,37 @@
 # Bind Caps Lock to Control
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
-# Slim calls this script like this:
-#   $ exec /bin/bash -login ~/.xinitrc %session
-case $1 in
-  dwm)
-    # Inform the X server of new font directories and force a rescan
-    xset +fp /usr/share/fonts/local
-    xset +fp /home/edward/.fonts
-    xset fp rehash
+# Inform the X server of new font directories and force a rescan
+xset +fp /usr/share/fonts/local
+xset +fp /home/edward/.fonts
+xset fp rehash
 
-    # Set a background image
-    feh --bg-scale /usr/share/slim/themes/default/background.jpg &
+slim=$1
+session=$1
 
-    # Launch statusbar script
-    ~/.dwm-statusbar.sh &
+# This script may have been called by slim like this:
+#  $ exec /bin/bash -login ~/.xinitrc %session
+[[ -z $slim ]] && return
 
-    # Fix Fn volume controls
-    xbindkeys
+case $session in
+    dwm)
+        # Set a background image
+        feh --bg-scale /usr/share/slim/themes/default/background.jpg &
 
-    exec dwm
-    ;;
+        # Launch statusbar script
+        ~/.dwm-statusbar.sh &
 
-  xfce4)
-    # Fall back to xfce
-    exec startxfce4
-    ;;
+        # Fix Fn volume controls
+        xbindkeys
 
-  *)
-    # Do nothing
-    ;;
+        exec dwm
+        ;;
+
+    xfce4)
+        exec startxfce4
+        ;;
+
+    *)
+        logger "$0: invoked with invalid desktop evironment: $desktop_env"
+        ;;
 esac

@@ -35,8 +35,13 @@ function set_prompt_style {
         SYMBOL_COLOR=$RED
     fi
 
-    export PS1="[${HOST_COLOR}\h$WHITE][${PATH_COLOR}${PWD}$WHITE] ${SYMBOL_COLOR}
-${SYMBOL}$WHITE "
+    export PS1="${HOST_COLOR}\u@\h:${WHITE} ${PATH_COLOR}\w$WHITE $YELLOW\$(_jobs)$WHITE
+ ${SYMBOL_COLOR}\$$WHITE "
+}
+
+function _jobs {
+    num_jobs=$(jobs -l | wc -l)
+    [[ num_jobs -gt 0 ]] && echo " +${num_jobs}"
 }
 
 # Emulates ksh-style two argument form of the cd command
