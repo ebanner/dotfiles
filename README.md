@@ -5,7 +5,8 @@ Configuration for the following \*nix utilities:
 
 * xmodmap
 * X11
-* bash and zsh
+* bash
+* zsh
 * dwm statusbar
 * feh
 * git
