@@ -20,7 +20,7 @@ set smarttab
 set number              " Show line numbers.
 set hlsearch            " When there is a previous search pattern, highlight all
 set autoindent smartindent          
-set expandtab=80        " Maximum width of text that is being inserted.
+set expandtab           " Maximum width of text that is being inserted.
 set textwidth=80        " Maximum width of text that is being inserted.
 set tabstop=4           " Number of columns a Tab character accounts for
 set expandtab           " Allows spaces to be used for tab characters
