@@ -11,32 +11,29 @@ alias grep='grep --color=auto'
 alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias sudo='sudo '
 alias poweroff='systemctl poweroff'
-alias halt='systemctl poweroff'
 alias wli='wicd-curses'
 
 # Defines colors and sets the PS1 variable
 function set_prompt_style {
-    local WHITE='\[\e[0m\]'
-    local CYAN='\[\e[0;36m\]'
-    local BOLD_GREEN='\[\e[1;32m\]'
-    local GREEN='\[\e[0;92m\]'
-    local RED='\[\e[0;91m\]'
-    local BOLD_RED='\[\e[1;91m\]'
-    local YELLOW='\e[0;33m'
-    local HOST_COLOR=$CYAN
-    local PATH_COLOR=$BOLD_GREEN
-    local SYMBOL='$'
-    local SYMBOL_COLOR=$GREEN
+    local white='\[\e[0m\]'
+    local cyan='\[\e[0;36m\]'
+    local bold_green='\[\e[1;32m\]'
+    local green='\[\e[0;92m\]'
+    local red='\[\e[0;91m\]'
+    local bold_red='\[\e[1;91m\]'
+    local yellow='\e[0;33m'
+    local host_color=$cyan
+    local path_color=$bold_green
+    local symbol_color=$green
 
     if [ `whoami` == 'root' ] ; then
-        HOST_COLOR=$RED
-        PATH_COLOR=$BOLD_RED
-        SYMBOL='#'
-        SYMBOL_COLOR=$RED
+        host_color=$red
+        path_color=$bold_red
+        symbol_color=$red
     fi
 
-    export PS1="${HOST_COLOR}\u@\h:${WHITE} ${PATH_COLOR}\w$WHITE $YELLOW\$(_jobs)$WHITE
- ${SYMBOL_COLOR}\$$WHITE "
+    export PS1="${host_color}\u@\h:${white} ${path_color}\w${white} ${yellow}\$(_jobs)${white}
+ ${symbol_color}\$$white "
 }
 
 function _jobs {

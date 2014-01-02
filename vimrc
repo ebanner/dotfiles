@@ -63,6 +63,10 @@ noremap <C-Left> <Esc>:tabprev<CR>
 noremap <C-Right> <Esc>:tabnext<CR>
 noremap <C-n> <Esc>:tabnew
 
+" Avoid cursor keys when recalling commands from history
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " F7 to toggle NERDTree
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
 
@@ -78,6 +82,10 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " Y yanks until the end of the current line
 nnoremap Y y$
+
+" Use Virtural Replace mode instead of Replace mode
+nnoremap R gR
+nnoremap r gr
 
 " }}}
 
@@ -143,7 +151,7 @@ augroup END
 
 let Tlist_Auto_Open = 1
 let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
+let Tlist_USE_rIGHT_Window = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_Highlight_Tag_On_BufEnter = 1
 let Tlist_File_Fold_Auto_Close = 1
@@ -164,4 +172,39 @@ let g:NERDTreeDirArrows=0
 " Have vim display a friendly ASCII cat whenever we start vim
 echo ">^.^<"
 
+" }}}
+
+
+" Tips from ``Practical Vim - Edit Text at the Speed of Thought" ----------- {{{
+"
+" Insert-normal mode (<C-o>)
+" Repeat last substitution (&)
+" Look up the man page for the word under the cursor (K)
+" Paste the contents of a register while in Insert Mode (<C-r>{register} or <C-r><C-p>{register})
+"   e.g. The Expression Register (<C-r>=)
+" Insert character by its character code in Insert Mode
+"   e.g. <C-v>{123} -- Insert character by decimal code
+"   e.g. <C-v>u{1234} -- Insert character by hex code
+"   e.g. <C-v>{nondigit} -- Insert nondigit literally
+"   e.g. <C-k>{char1}{char2} -- Insert nondigit literally
+" Find out the code for the character under the cursor (ga)
+" Reselect the last visual selection (gv)
+" Go to other end of highlighted text while in Visual Mode (o)
+" Inner tag text object (it)
+" `.' represents the current line in an Ex command range
+"   e.g. :.,$ print
+" Patterns can be used in Ex ranges
+"   e.g. :/<html>/,/<\/html>/ print
+" Use relative Ex addressing in ranges to execute a command
+"   e.g. :.,.+3 print
+" Use :copy (:t) to copy a distant line
+"   e.g. :copy . (:t .) to duplicate the current line
+" Use :move (:m) to move a line under Visual selection
+"   e.g. :'<'> move $ (:'<'> m $)
+" Use :normal to apply a normal command to a range of contiguous lines
+"   e.g. :'<'> normal A; (append a semicolon to the end of each line in Visual mode)
+" Get the word (<C-r><C-w>) or WORD (<C-r><C-a>) under cursor
+" Filter lines through an external program ([range] !{cmd} or use !{motion} operator)
+" Execute {cmd} in the shell with [range] lines as standard input ([range] write !{cmd})
+"
 " }}}

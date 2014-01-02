@@ -32,12 +32,11 @@ alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias wli='wicd-curses'
 
 # Set prompt
-prompt bart
+autoload -U colors && colors
+PROMPT="$fg[yellow]%n@%m $fg[cyan]%U%~%u
+ $fg[green]%#$fg[white] "
 
 # cd's up to the directory into your current path
 function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
-
-complete -c -f man  # tab completion
-set -o vi # Set vi-like editing mode of commands
