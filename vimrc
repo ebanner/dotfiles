@@ -6,6 +6,11 @@ syntax on
 filetype plugin indent on
 
 
+var foo = 1;
+bar = 'a'
+foobar = foo + bar
+
+
 " Basic Settings ----------------------------------------------------------- {{{
 
 set nocompatible        " Do not accomodate vi
@@ -39,15 +44,8 @@ set wildcharm=<C-Z>
 set nocscopeverbose     " Don't alert us when another cscope database already exists
 set ruler               " Display column number at the bottom of the buffer
 set makeprg=build       " Set the make program to build
-set background=light
-
-" }}}
-
-
-" Leaders ------------------------------------------------------------------ {{{
-
-let mapleader = ","
-let maplocalleader = ","
+set background=dark
+set pastetoggle=<f8>
 
 " }}}
 
@@ -67,11 +65,11 @@ noremap <C-n> <Esc>:tabnew
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
+" %% Expands to the path of the active buffer
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
 " F7 to toggle NERDTree
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
-
-" F8 to toggle paste mode
-noremap <F8> :set paste!<CR>
 
 " F9 to toggle Taglist
 nnoremap <silent> <F9> :TlistToggle<CR>
@@ -79,6 +77,9 @@ nnoremap <silent> <F9> :TlistToggle<CR>
 " Source and edit vimrc on the fly
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Save changes to a read-only file without permissions
+nnoremap <leader>w :write !sudo tee % > /dev/null<CR>
 
 " Y yanks until the end of the current line
 nnoremap Y y$
@@ -160,13 +161,6 @@ highlight MyTagListTagName guifg=red ctermfg=red
 " }}}
 
 
-" NERDTree ----------------------------------------------------------------- {{{
-
-let g:NERDTreeDirArrows=0
-
-" }}}
-
-
 " Misc --------------------------------------------------------------------- {{{
 
 " Have vim display a friendly ASCII cat whenever we start vim
@@ -175,7 +169,7 @@ echo ">^.^<"
 " }}}
 
 
-" Tips from ``Practical Vim - Edit Text at the Speed of Thought" ----------- {{{
+" ``Practical Vim - Edit Text at the Speed of Thought" by Drew Neil tips --- {{{
 "
 " Insert-normal mode (<C-o>)
 " Repeat last substitution (&)
@@ -207,4 +201,52 @@ echo ">^.^<"
 " Filter lines through an external program ([range] !{cmd} or use !{motion} operator)
 " Execute {cmd} in the shell with [range] lines as standard input ([range] write !{cmd})
 "
+" Use ** to recurse down directories when specifying the arglist
+"   e.g. args **/*.c **/*.h
+" Divide the window horizontally (<C-w>s) and vertically (<C-w>v)
+" Close the active window (:close or <C-w>c) and keep only the active window (:only or <C-w>o)
+" Use tabs if I need to edit something totally unrelated
+"   e.g. Use :lcd to change the directory of the new tab
+" Easily edit a file in the same directory as the present window (:edit " %:h<Tab>)
+" Configure path for easier file searching
+"   e.g. set path+=src/**
+" Use netrw for built-in file exploring (:Explore or :Sexplore or :Vexplore)
+"   e.g. Use <C-^> to get back to the last buffer
+"   e.g. Create new files (%)
+"   e.g. Use netrw to edit files over scp
+" 
+" Prefix movement keys (jk^0$) with `g' to act on display lines instead of real lines
+" Move backward to end of previous word (ge)
+"   e.g. ea (append at the end of a word) and gea (append at end of previous word)
+" Target low-frequency characters when using f{char} and F{char}
+" Text object mnemonic `i' (inside) and `a' (around)
+"   e.g. ab (around pair of parenthesis) iB (inside a pair of Braces)
+" Bounded Text Objects
+"   e.g. Use around (a) with `d' and inside (i) with `c'
+"   e.g. Sentences (das) -- delete a sentence
+" Use `{mark} instead of '{mark} to jump back to the row AND column position
+" Builtin marks
+"   e.g. `. jumps to the location of the last change
+" Use surround.vim for surrounding text with different characters
+" Use vim-matchit to jump from between `if' and `else' clauses
+" Jump to the file name under the cursor (gf)
+" Use the changelist to jump to recent modifications (g; or `.)
+" Enter into Insert mode at marker `^ (gi)
+" Use global markers to snap back to a position in another file
+"   e.g. mM before traversing the quick list populated by :vimgrep
+" Black hole register ("_), Yank register ("0)
+" X11 clipboard ("+) and primary ("*) registers
+"
+" Mute beep (:visualbell)
+" A macro aborts when a beep is encountered
+"   e.g. Play macros back with a high count
+" Know the difference between different kinds of macros
+"   e.g. Series - Go to the next line (j) and repeat with count ([num]@{reg})
+"       e.g.g. Have the last command of a macro be :next and then issue [num]@{reg}
+"   e.g. Parallel - Stay on current line, select target lines with Visual Line mode, and execute :normal @{reg}
+"       e.g.g. :argdo normal @{reg}
+" Use uppercase version of register to append a macro to it (qQ for qq)
+" Edit macros by pasting its contents (:put {reg}) into the file, editing it, and then yanking it back into the register
+"
 " }}}
+
