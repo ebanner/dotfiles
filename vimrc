@@ -9,74 +9,45 @@ filetype plugin indent on
 " Basic Settings ----------------------------------------------------------- {{{
 
 set nocompatible        " Do not accomodate vi
-set showcmd             " Show (partial) command in status line.
-set showmatch           " Show matching brackets.
-set ignorecase          " Case insensitive searching
-set smartcase           " Do smart case matching
-set incsearch           " Incremental search
-set mouse=a             " Enable mouse usage (all modes)
+set ignorecase          " Ignore case as long as all characters are lowercase
+set smartcase           " Respect case once an uppercase letter enters the search
+set incsearch           " Highlight search as it is formed
+set mouse=a             " Enable mouse usage for resizing widows
 set expandtab           " Insert appropriate number of spaces to fill a tab.
-set smarttab            
 set number              " Show line numbers.
-set hlsearch            " When there is a previous search pattern, highlight all
-set autoindent smartindent          
-set expandtab           " Maximum width of text that is being inserted.
-set textwidth=80        " Maximum width of text that is being inserted.
-set tabstop=4           " Number of columns a Tab character accounts for
-set expandtab           " Allows spaces to be used for tab characters
-set softtabstop=4       " How many whitespace characters are removed on a BS
-set shiftwidth=4        " Amount of whitespace for the indentation command
+set hlsearch            " Highlight active search string
+set autoindent smartindent
+set textwidth=80
+set tabstop=4           " Width of a tab character
+set softtabstop=4       " Number of whitespace characters are removed on <BS>
+set shiftwidth=4        " Number of whitespace used in indentation (> and <) commands
+set expandtab           " Use spaces in place of tab characters
 set formatoptions=q,r,t,c
 set ruler               " Show the line and column number of the cursor position.
-set wildmenu            " Set zsh-like autocomlete menu behavior
+set wildmenu            " zsh-like auto-comlete menu behavior
 set wildmode=full
-set listchars=tab:>\ ,eol:. " Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:>\ ,eol:.
 set hidden              " Silence vim when changing between buffers with unsaved changes
 set nrformats=          " Treat all numerals as decimal, regardless of whether
                         " they are padded with zeros
 set history=200         " Set ex history to 200
-set wildcharm=<C-Z>
 set nocscopeverbose     " Don't alert us when another cscope database already exists
-set ruler               " Display column number at the bottom of the buffer
-set makeprg=build       " Set the make program to build
 set background=dark
-set pastetoggle=<f8>
+set pastetoggle=<F8>
 
 " }}}
 
 
 " Mappings ----------------------------------------------------------------- {{{
 
-" Move Gvim tabs with alt + left|right
-nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
-
-" Switch between Gvim tabs easily
-noremap <C-Left> <Esc>:tabprev<CR>
-noremap <C-Right> <Esc>:tabnext<CR>
-noremap <C-n> <Esc>:tabnew
-
-" Avoid cursor keys when recalling commands from history
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-
-" %% Expands to the path of the active buffer
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-
-" F7 to toggle NERDTree
-nnoremap <silent> <F7> :NERDTreeToggle<CR>
-
 " F9 to toggle Taglist
 nnoremap <silent> <F9> :TlistToggle<CR>
 
-" Source and edit vimrc on the fly
+" Source vimrc on the fly
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " Save changes to a read-only file without permissions
 nnoremap <Leader>w :write !sudo tee % > /dev/null<CR>
-
-" Y yanks until the end of the current line
-nnoremap Y y$
 
 " Use Virtural Replace mode instead of Replace mode
 nnoremap R gR
@@ -99,53 +70,18 @@ iabbrev sysout System.out.println
 " }}}
 
 
-" Functions ---------------------------------------------------------------- {{{
-
-" Have Vim jump to the last position when reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" Set tabstop, softtabstop and shiftwidth to the same value
-command! -nargs=* Stab call Stab()
-function! Stab()
-  let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
-  if l:tabstop > 0
-    let &l:sts = l:tabstop
-    let &l:ts = l:tabstop
-    let &l:sw = l:tabstop
-  endif
-  call SummarizeTabs()
-endfunction
-
-" Helper function for Stab
-function! SummarizeTabs()
-  try
-    echohl ModeMsg
-    echon 'tabstop='.&l:ts
-    echon ' shiftwidth='.&l:sw
-    echon ' softtabstop='.&l:sts
-    if &l:et
-      echon ' expandtab'
-    else
-      echon ' noexpandtab'
-    endif
-  finally
-    echohl None
-  endtry
-endfunction
-
-" }}}
-
-
 " Autogroups --------------------------------------------------------------- {{{
 
 if has("autocmd")
+  " Have Vim jump to the last position when reopening a file
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
+
   " Fold groups of related code in vimrc by special markers
   augroup vimrc
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
   augroup END
+
 endif
 
 " }}}
@@ -155,7 +91,7 @@ endif
 
 let Tlist_Auto_Open = 1
 let Tlist_Exit_OnlyWindow = 1
-let Tlist_USE_rIGHT_Window = 1
+let Tlist_USE_RIGHT_Window = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_Highlight_Tag_On_BufEnter = 1
 let Tlist_File_Fold_Auto_Close = 1

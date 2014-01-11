@@ -17,6 +17,9 @@ session=$1
 #  $ exec /bin/bash -login ~/.xinitrc %session
 [[ -z $slim ]] && return
 
+# Pipe display to extermal monitor
+xrandr --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal --output LVDS1 --off
+
 case $session in
     dwm)
         # Set a background image

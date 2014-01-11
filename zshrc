@@ -32,9 +32,7 @@ alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias wli='wicd-curses'
 
 # Set prompt
-autoload -U colors && colors
-PROMPT="$fg[yellow]%n@%m $fg[cyan]%U%~%u
- $fg[green]%#$fg[white] "
+prompt bart
 
 # cd's up to the directory into your current path
 function up {
