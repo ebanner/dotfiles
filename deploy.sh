@@ -54,13 +54,11 @@ fi
 if [[ ! -d $HOME/$dotfiles/vim/bundle ]]
 then
     echo 'Installing vim plugins...'
-    cd $HOME/$dotfiles/vim || exit 2
-    mkdir -p bundle
+
+    mkdir -p $HOME/$dotfiles/vim/bundle
+    cd $HOME/$dotfiles/vim/bundle || exit 3
 
     while read repo
-    do
-        echo "Installing plugin ${plugin}..."
-
-        git clone $repo
-    done < plugins
+    do git clone $repo
+    done < $HOME/$dotfiles/vim/plugins
 fi
