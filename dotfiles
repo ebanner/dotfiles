@@ -1,0 +1,14 @@
+Xmodmap
+Xresources
+bash_profile
+bashrc
+dwm-statusbar.sh
+fehbg
+gitconfig
+inputrc
+tmux.conf
+vimrc
+vim
+xinitrc
+zprofile
+zshrc
