@@ -72,6 +72,7 @@ if __name__ == '__main__':
 
     for repo in repos:
         plugin = repo.split('/')[-1].replace('.git', '')
+
         if not os.path.isdir(plugin):
             # Install plugin
             print('Installing {0}'.format(plugin))
