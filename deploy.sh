@@ -38,3 +38,29 @@ echo "Creating dir symlinks..."
 for dir in $dirs; do
   [[ ! -h $HOME/.$dir ]] && ln -s $HOME/$dotfiles/$dir $HOME/.$dir
 done
+
+if [[ ! -d $HOME/$dotfiles/vim/autoload ]]
+then
+    echo 'Installing pathogen...'
+
+    cd $HOME/$dotfiles/vim || exit 2
+    mkdir -p autoload
+    echo "curl -Sso $HOME/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim"
+    curl -Sso $HOME/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+    echo "Done!"
+fi
+
+# Install vim plugins
+if [[ ! -d $HOME/$dotfiles/vim/bundle ]]
+then
+    echo 'Installing vim plugins...'
+    cd $HOME/$dotfiles/vim || exit 2
+    mkdir -p bundle
+
+    while read repo
+    do
+        echo "Installing plugin ${plugin}..."
+
+        git clone $repo
+    done < plugins
+fi
