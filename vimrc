@@ -27,7 +27,6 @@ set hidden
 set background=dark
 set pastetoggle=<F8>
 set formatoptions+=r
-set visualbell
 
 if 703 <# v:version
     set formatoptions+=j
