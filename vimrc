@@ -1,8 +1,7 @@
-" Vim configurations
+" vim: foldmethod=marker :
 
 execute pathogen#infect()
 call pathogen#helptags()
-
 
 " Basic Settings not included in sensible.vim ------------------------------ {{{
 
@@ -70,14 +69,7 @@ iabbrev sysout System.out.println
 
 if has("autocmd")
   " Have Vim jump to the last position when reopening a file
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
-
-  " Fold groups of related code in vimrc by special markers
-  augroup vimrc
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-  augroup END
-
+  autocmd BufReadPost * if 1 < line("'\"") && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 endif
 
 " }}}
