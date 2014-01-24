@@ -93,7 +93,7 @@ print_volume() {
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b %H:%M")"
+  datetime="$(date "+%a %d %b %I:%M")"
   echo -ne "${SEP} ${CYAN}${glyph_tim} ${WHITE}${datetime}"
 }
 
