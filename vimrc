@@ -62,7 +62,7 @@ nnoremap Q gq
 " Y yanks until the end of the current line. Just like C and D.
 nnoremap Y y$
 
-" Visually select a character character-wise
+" Visually select a line character-wise
 nnoremap <Leader>s v^o$h
 
 " Toggle folding of current fold with <Space>
