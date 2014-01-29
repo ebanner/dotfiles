@@ -74,11 +74,9 @@ nnoremap gm :call SetCursorHalfway()<CR>
 
 " Functions -- {{{1
 
-" Function is progress
 function! SetCursorHalfway()
     let halfway = len(getline(line('.'))) / 2
     execute 'normal' . halfway . '|'
-    unlet halfway
 endfunction
 
 
@@ -122,8 +120,7 @@ endif
 "  :undolist to get a snapshot of the undo tree
 "  :earlier/:later to restore the active buffer to an earlier point in time
 "
-" Macros:: {{{2
-" Subsititution & Searching:
+" Subsititution & Searching: {{{2
 "  Substitute the contents of a register by using the \= item
 "    e.g. %s//\=@a/g
 "  Repeat the last subsitution over the whole file (g&)
@@ -133,18 +130,18 @@ endif
 "  \_s matches whitespace & newlines (/foo\_sbar/ matches foo separated by any
 "    number of spaces including newlines then bar)
 "
-" Spelling:: {{{2
+" Spelling: {{{2
 "  Remove current word from spell file (zw)
 "  Undo whatever spelling action has been taken against the word under the cursor (zug)
 "  Source spell files that don't consist of English words for specialized purposes
 "    e.g. :setlocal spellfile+=~/Foo/Bar/foobar.utf-8.add
 "    e.g.g. Hit Nzg where N is the Nth spell file you want to add the word to
 "
-" Inserting Text:: {{{2
+" Inserting Text: {{{2
 "   <C-u> to delete everything to the left of the cursor
 "   <C-e> and <C-y> insert text directly overhead of below
 
-" Vimscript:: {{{2
+" Vimscript: {{{2
 "   @{register} and &{option} are expressions themselves (i.e. they can be used
 "       in any place a number or string can be used)
 "   :next $VIMRUNTIME/compiler/*.vim to check out compiler plugins
