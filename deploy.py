@@ -62,18 +62,5 @@ if __name__ == '__main__':
         os.makedirs('autoload')
         subprocess.call(['curl', '-Sso', 'autoload/pathogen.vim', PATHOGEN_URL])
 
-    with open('plugins.repos') as f:
-        repos = [ line.strip() for line in f.readlines() ]
-
-    if not os.path.isdir('bundle'):
-        os.makedirs('bundle')
-
-    cd('bundle')
-
-    for repo in repos:
-        plugin = repo.split('/')[-1].replace('.git', '')
-
-        if not os.path.isdir(plugin):
-            # Install plugin
-            print('Installing {0}'.format(plugin))
-            subprocess.call(['git', 'clone', repo], stderr=open(os.devnull, 'wb'))
+    # Pull in plugins as submodules
+    subprocess.call(['git', 'submodule', 'update', '--init'])
