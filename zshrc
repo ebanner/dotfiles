@@ -26,10 +26,7 @@ autoload -U promptinit
 promptinit
 
 # Aliases
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
-alias wli='wicd-curses'
+alias grep=ack
 
 # Set prompt
 prompt bart
