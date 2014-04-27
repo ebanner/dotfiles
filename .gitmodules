@@ -3,7 +3,7 @@
 	url = https://github.com/tpope/vim-surround.git
 [submodule "vim/bundle/sensible"]
 	path = vim/bundle/sensible
-	url = https://github.com/tpope/vim-surround.git
+	url = https://github.com/tpope/vim-sensible.git
 [submodule "vim/bundle/scriptease"]
 	path = vim/bundle/scriptease
 	url = https://github.com/tpope/vim-scriptease.git
