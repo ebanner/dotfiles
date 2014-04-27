@@ -59,8 +59,8 @@ if __name__ == '__main__':
 
     if not os.path.isdir('autoload'):
         # Install pathogen
-        os.makedirs('autoload')
-        subprocess.call(['curl', '-Sso', 'autoload/pathogen.vim', PATHOGEN_URL])
+        os.makedirs('~/.vim/autoload')
+        subprocess.call(['curl', '-LSso', '~/.vim/autoload/pathogen.vim', PATHOGEN_URL])
 
     # Pull in plugins as submodules
     subprocess.call(['git', 'submodule', 'update', '--init'])
