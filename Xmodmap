@@ -1,5 +1,2 @@
-! Make Caps Lock a Left-Control key
-
-remove Lock = Caps_Lock
-keysym Caps_Lock = Control_L
-add Control = Control_L
+! Invert mouse clicks for left handed mouse
+pointer = 3 2 1
