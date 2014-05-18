@@ -10,5 +10,6 @@ Configuration for the following \*nix utilities:
 * dwm statusbar
 * feh
 * git
+* emacs
 * vim
 * tmux
