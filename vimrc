@@ -37,6 +37,7 @@ endif
 
 if has('persistent_undo')
     set undofile
+    set undodir=/tmp
 endif
 
 
