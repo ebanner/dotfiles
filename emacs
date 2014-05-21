@@ -8,9 +8,6 @@
 
 ; Use C-M-l instead of C-l sometimes to check out the difference
 
-; Give up C-<Space> if we've gone and mapped it to Ctrl
-(global-unset-key (kbd "C-SPC"))
-
 ; `M-o M-s' centers a line
 
 ; Have help mode behave a tiny bit more like info mode
@@ -25,13 +22,24 @@
 			   (lambda ()
 			     (electric-indent-mode t))))
 
-
-; Always turn auto fill mode on
+;; Always turn auto fill mode on
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
-; Add a nice highlighted line when viewing packages
+;; Add a nice highlighted line when viewing packages
 (add-hook 'package-menu-mode-hook (lambda ()
-				  (hl-line-mode t)))
+				    (hl-line-mode t)))
+
+(keyboard-translate ?\C-j ?\C-x)
+
+;;; Paredit
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -40,7 +48,9 @@
  '(menu-bar-mode t)
  '(next-screen-context-lines 5)
  '(package-archives (quote (("melpa" . "http://melpa.milkbox.net/packages/") ("gnu" . "http://elpa.gnu.org/packages/"))))
- '(scroll-conservatively 101)
+ '(quack-default-program "guile")
+ '(quack-pretty-lambda-p t)
+ '(scheme-program-name "guile")
  '(scroll-margin 1)
  '(sentence-end-double-space nil)
  '(tool-bar-mode nil))
