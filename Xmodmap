@@ -1,18 +1,20 @@
-!!! Mapping for a Japanese keyboard !!!
+!!! Japanese Keyboard with Key Overlay winnage
+!!!
+!!! Thanks to the At Home Modifier (https://gitorious.org/at-home-modifier) for
+!!! such a great hack :)
 
-! Turn caps lock into a Control key
-clear Lock
-keycode 66 = Control_L
-add Control = Control_L
+! Turn caps lock into an Escape key (overlaid with Control in xorg.conf)
+clear  Lock
+keycode  66 = Escape
 
 ! Turn ghetto key next to Space into BackSpace
 keycode 100 = BackSpace
 
-! Turn keys surrounding would-be Space into Enter
+! Turn keys surrounding would-be Space into Enter (overlaid with Control in xorg.conf)
 keycode 101 = KP_Enter
 keycode 102 = KP_Enter
 
 ! Turn Right Windows key into right Shift
 keycode 134 = Shift_R
 remove mod4 = Shift_R
-add Shift = Shift_R
+add   Shift = Shift_R
