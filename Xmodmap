@@ -1,2 +1,18 @@
-! Invert mouse clicks for left handed mouse
-pointer = 3 2 1
+!!! Mapping for a Japanese keyboard !!!
+
+! Turn caps lock into a Control key
+clear Lock
+keycode 66 = Control_L
+add Control = Control_L
+
+! Turn ghetto key next to Space into BackSpace
+keycode 100 = BackSpace
+
+! Turn keys surrounding would-be Space into Enter
+keycode 101 = KP_Enter
+keycode 102 = KP_Enter
+
+! Turn Right Windows key into right Shift
+keycode 134 = Shift_R
+remove mod4 = Shift_R
+add Shift = Shift_R
