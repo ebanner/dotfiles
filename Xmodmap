@@ -10,9 +10,9 @@ keycode  66 = Escape
 ! Turn ghetto key next to Space into BackSpace
 keycode 100 = BackSpace
 
-! Turn keys surrounding would-be Space into Enter (overlaid with Control in xorg.conf)
-keycode 101 = KP_Enter
-keycode 102 = KP_Enter
+! Turn keys surrounding would-be Space into Enter and BackSpace (overlaid with Control in xorg.conf)
+keycode 102 = Return
+keycode 101 = Alt_L
 
 ! Turn Right Windows key into right Shift
 keycode 134 = Shift_R
