@@ -10,11 +10,6 @@ keycode  66 = Escape
 ! Turn ghetto key next to Space into BackSpace
 keycode 100 = BackSpace
 
-! Turn keys surrounding would-be Space into Enter and BackSpace (overlaid with Control in xorg.conf)
-keycode 102 = Return
-keycode 101 = Alt_L
-
-! Turn Right Windows key into right Shift
-keycode 134 = Shift_R
-remove mod4 = Shift_R
-add   Shift = Shift_R
+! Turn keys surrounding would-be Space into Tab and Enter (overlaid with Control and Alt in xorg.conf)
+keycode 102 = Tab
+keycode 101 = Return
