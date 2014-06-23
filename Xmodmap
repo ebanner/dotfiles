@@ -3,13 +3,15 @@
 !!! Thanks to the At Home Modifier (https://gitorious.org/at-home-modifier) for
 !!! such a great hack :)
 
-! Turn caps lock into an Escape key (overlaid with Control in xorg.conf)
+! Caps Lock (overlaid with Control_L)
 clear  Lock
 keycode  66 = Escape
 
-! Turn ghetto key next to Space into BackSpace
+! Henkan (overlaid with Control_R)
 keycode 100 = BackSpace
 
-! Turn keys surrounding would-be Space into Tab and Enter (overlaid with Control and Alt in xorg.conf)
+! Muhenkan (overlaid with Control_L)
 keycode 102 = Tab
+
+! Hiragana-Katakana (overlaid with Alt_R)
 keycode 101 = Return
