@@ -5,9 +5,13 @@
 
 ;;; Visual
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;; Docview mode reload PDFs automatigically when they change on disk
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -26,6 +30,15 @@
 ;;; Programming
 (add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
 
+;;; Text Mode
+(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
+
+;;; org mode
+(setq org-todo-keywords
+      '((sequence "TODO" "WORKING" "|" "DONE")))
+(setq org-log-done 'time)
+
 ;;; Tags
 (defun create-tags (dir-name)
   "Create tags file."
@@ -38,11 +51,17 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-PDF-mode t)
+ '(TeX-electric-escape t)
+ '(auto-revert-interval 1)
  '(dired-isearch-filenames t)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/")))))
+ '(doc-view-continuous t)
+ '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(sentence-end-double-space nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'narrow-to-region 'disabled nil)
