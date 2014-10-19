@@ -29,15 +29,37 @@
 
 ;;; Programming
 (add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (whole-line-or-region-mode 1)))
 
 ;;; Text Mode
 (add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'text-mode-hook (lambda () (whole-line-or-region-mode 1)))
 
 ;;; org mode
 (setq org-todo-keywords
       '((sequence "TODO" "WORKING" "|" "DONE")))
 (setq org-log-done 'time)
+(add-hook 'org-mode (lambda () (auto-fill-mode 1)))
+(setq org-default-notes-file "~/org/Notes.org")
+(define-key global-map "\C-cc" 'org-capture)
+(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+(org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
+
+;;; org-present
+(add-hook 'org-present-mode-hook
+	  (lambda ()
+	    (org-present-big)
+	    (org-display-inline-images)))
+
+(add-hook 'org-present-mode-quit-hook
+	  (lambda ()
+	    (org-present-small)
+	    (org-remove-inline-images)))
+
+;;; Plugins installed by hand
+;; (add-to-list 'load-path "~/.emacs.d/elisp/org-presie")
+;; (require 'org-presie)
 
 ;;; Tags
 (defun create-tags (dir-name)
@@ -63,5 +85,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(region ((t (:background "DarkGoldenrod1" :foreground "gtk_selection_fg_color")))))
 (put 'narrow-to-region 'disabled nil)
