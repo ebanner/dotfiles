@@ -37,17 +37,39 @@
 (add-hook 'text-mode-hook (lambda () (whole-line-or-region-mode 1)))
 
 ;;; org mode
+(defun zin/org-cycle-current-headline ()
+  (interactive)
+  (outline-previous-heading)
+  (org-cycle))
 (setq org-todo-keywords
       '((sequence "TODO" "WORKING" "|" "DONE")))
 (setq org-log-done 'time)
 (add-hook 'org-mode (lambda () (auto-fill-mode 1)))
 (setq org-default-notes-file "~/Dropbox/org/Notes.org")
-(define-key global-map "\C-cc" 'org-capture)
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
 (add-to-list 'org-structure-template-alist '("T" "#+TITLE: ?" "<title>?</title>"))
 (add-to-list 'org-structure-template-alist '("A" "#+AUTHOR: Edward Banner\n?" "<author>\n?</author>"))
 (add-to-list 'org-structure-template-alist '("D" "#+DATE: ?" "<date>?</date>"))
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (auto-fill-mode 1)
+	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
+(define-key global-map (kbd "C-c c") 'org-capture)
+
+
+
+
+;;; org-present
+(add-hook 'org-present-mode-hook
+	  (lambda ()
+	    (org-present-big)
+	    (org-display-inline-images)))
+
+(add-hook 'org-present-mode-quit-hook
+	  (lambda ()
+	    (org-present-small)
+	    (org-remove-inline-images)))
 
 ;;; Tags
 (defun create-tags (dir-name)
@@ -73,5 +95,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Ubuntu Mono"))))
  '(region ((t (:background "DarkGoldenrod1" :foreground "gtk_selection_fg_color")))))
 (put 'narrow-to-region 'disabled nil)
