@@ -78,6 +78,10 @@
   (eshell-command 
    (format "find %s -type f -name \"*.py\" | etags -" dir-name)))
 
+;;; SimpleMDE mode
+(add-to-list 'load-path "~/.emacs.d/elisp")
+(require 'simple-mde)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,6 +99,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Ubuntu Mono"))))
  '(region ((t (:background "DarkGoldenrod1" :foreground "gtk_selection_fg_color")))))
 (put 'narrow-to-region 'disabled nil)
