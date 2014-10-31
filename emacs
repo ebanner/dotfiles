@@ -41,7 +41,7 @@
       '((sequence "TODO" "WORKING" "|" "DONE")))
 (setq org-log-done 'time)
 (add-hook 'org-mode (lambda () (auto-fill-mode 1)))
-(setq org-default-notes-file "~/org/Notes.org")
+(setq org-default-notes-file "~/Dropbox/org/Notes.org")
 (define-key global-map "\C-cc" 'org-capture)
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
