@@ -45,6 +45,9 @@
 (define-key global-map "\C-cc" 'org-capture)
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
+(add-to-list 'org-structure-template-alist '("T" "#+TITLE: ?" "<title>?</title>"))
+(add-to-list 'org-structure-template-alist '("A" "#+AUTHOR: Edward Banner\n?" "<author>\n?</author>"))
+(add-to-list 'org-structure-template-alist '("D" "#+DATE: ?" "<date>?</date>"))
 
 ;;; Tags
 (defun create-tags (dir-name)
