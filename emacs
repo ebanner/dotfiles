@@ -46,21 +46,6 @@
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
 
-;;; org-present
-(add-hook 'org-present-mode-hook
-	  (lambda ()
-	    (org-present-big)
-	    (org-display-inline-images)))
-
-(add-hook 'org-present-mode-quit-hook
-	  (lambda ()
-	    (org-present-small)
-	    (org-remove-inline-images)))
-
-;;; Plugins installed by hand
-;; (add-to-list 'load-path "~/.emacs.d/elisp/org-presie")
-;; (require 'org-presie)
-
 ;;; Tags
 (defun create-tags (dir-name)
   "Create tags file."
