@@ -7,6 +7,17 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;;; Mac OS X-specific settings
+(when (memq window-system '(mac ns))
+  ;; Fix default directory
+  (setq command-line-default-directory "/Users/ebanner")
+  ;; Flyspell
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+  (setq exec-path (append exec-path '("/usr/local/bin")))
+  ;;; LaTeX
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+  (setq exec-path (append exec-path '("/usr/texbin"))))
+
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -56,20 +67,6 @@
 	    (auto-fill-mode 1)
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
-
-
-
-
-;;; org-present
-(add-hook 'org-present-mode-hook
-	  (lambda ()
-	    (org-present-big)
-	    (org-display-inline-images)))
-
-(add-hook 'org-present-mode-quit-hook
-	  (lambda ()
-	    (org-present-small)
-	    (org-remove-inline-images)))
 
 ;;; Tags
 (defun create-tags (dir-name)
