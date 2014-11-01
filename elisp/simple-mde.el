@@ -58,12 +58,12 @@
   (let ((start (point))
 	end)
     (cond ((equal type-of-SU *statement*)
-	   (when (equal (char-after) 46) ; Period
+	   (when (looking-at "[[:punct:]]")
 	     (delete-char 1))
 	   (insert " /.")
 	   (setq start (+ start 1)))
 	  ((equal type-of-SU *question*)
-	   (when (equal (char-after) 63) ; Question Mark
+	   (when (looking-at "[[:punct:]]")
 	     (delete-char 1))
 	   (insert " /?")
 	   (setq start (+ start 1)))
@@ -73,7 +73,7 @@
 	   (insert " /&")
 	   (setq start (+ start 1)))
 	  ((equal type-of-SU *clausal*)
-	   (when (equal (char-after) 44) ; Comma
+	   (when (looking-at "[[:punct:]]")
 	     (delete-char 1))
 	   (insert " /,")
 	   (setq start (+ start 1))))
@@ -115,21 +115,46 @@
   (insert-SU-break *clausal*)
   (message "Clausal SU Break"))
 
+;;; Delreg ;;;
+(defun mark-delreg ()
+  "Marks the region as a delreg"
+  (let (start end bounds)
+    (if (use-region-p)
+	(setq start (region-beginning)
+	      end (region-end))
+      (progn
+	(setq bounds (bounds-of-thing-at-point 'symbol))
+	(setq start (car bounds)
+	      end (cdr bounds))))
+    (goto-char start)
+    (insert "[ ")
+    (goto-char (+ end 2))
+    (insert " ]")
+    (goto-char start)
+    (push-mark (+ end 4))
+    (setq mark-active t)))
+
+(defun delreg ()
+  (interactive)
+  (mark-delreg)
+  (message "Delreg"))
+
 (define-minor-mode simple-mde-mode
   "Minor mode for annotating a transcript with SimpleMDE convention"
   :lighter " SimpleMDE"
   :keymap (let ((map (make-sparse-keymap)))
+	    (define-key map (kbd "C-c d e") 'delreg)	    
             (define-key map (kbd "C-c d m") 'discourse-marker)
             (define-key map (kbd "C-c f p") 'filled-pause)
             (define-key map (kbd "C-c e e t") 'explicit-editing-term)
             (define-key map (kbd "C-c d r") 'discourse-response)
             (define-key map (kbd "C-c a p") 'aside/parenthetical)
-            (define-key map (kbd "C-c .") 'statement)
-            (define-key map (kbd "C-c ?") 'question)
+            (define-key map (kbd "C-c s") 'statement)
+            (define-key map (kbd "C-c q") 'question)
             (define-key map (kbd "C-c b") 'backchannel)
             (define-key map (kbd "C-c i") 'incomplete)
-            (define-key map (kbd "C-c &") 'coordination)
-            (define-key map (kbd "C-c ,") 'clausal)
+            (define-key map (kbd "C-c c o") 'coordination)
+            (define-key map (kbd "C-c c l") 'clausal)
             map))
 
 (provide 'simple-mde)
