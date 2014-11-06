@@ -41,6 +41,7 @@
 ;;; Programming
 (add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
 (add-hook 'prog-mode-hook (lambda () (whole-line-or-region-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (show-paren-mode 1)))
 
 ;;; Text Mode
 (add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
