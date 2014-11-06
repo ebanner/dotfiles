@@ -16,7 +16,13 @@
   (setq exec-path (append exec-path '("/usr/local/bin")))
   ;;; LaTeX
   (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-  (setq exec-path (append exec-path '("/usr/texbin"))))
+  (setq exec-path (append exec-path '("/usr/texbin")))
+  ;; Pipe
+  (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+  ;; Backslash
+  (define-key key-translation-map (kbd "M-|") (kbd "\\"))
+  ;; Font
+  (set-face-attribute 'default nil :height 100))
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -92,11 +98,4 @@
  '(doc-view-continuous t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(sentence-end-double-space nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Ubuntu Mono"))))
- '(region ((t (:background "DarkGoldenrod1" :foreground "gtk_selection_fg_color")))))
 (put 'narrow-to-region 'disabled nil)
