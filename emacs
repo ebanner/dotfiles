@@ -98,4 +98,3 @@
  '(doc-view-continuous t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(sentence-end-double-space nil))
-(put 'narrow-to-region 'disabled nil)
