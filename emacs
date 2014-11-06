@@ -22,7 +22,9 @@
   ;; Backslash
   (define-key key-translation-map (kbd "M-|") (kbd "\\"))
   ;; Font
-  (set-face-attribute 'default nil :height 100))
+  (set-face-attribute 'default nil :height 100)
+  ;; Frame
+  (set-frame-size (selected-frame) 95 52))
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
