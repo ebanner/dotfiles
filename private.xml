@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<root>
+
+    <appdef>
+        <appname>TERMINAL</appname>
+        <equal>com.apple.Terminal</equal>
+    </appdef>
+    <item>
+        <name>Terminal Keybindings</name>
+        <item>
+            <name>KANA to Right Control in Terminal</name>
+            <identifier>private.kana_to_right_control_in_terminal</identifier>
+            <appendix>Puts right control right under the right thumb</appendix>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_KANA,
+                KeyCode::CONTROL_R
+            </autogen>
+        </item>
+    </item>
+
+    <appdef>
+        <appname>MACVIM</appname>
+        <equal>org.vim.MacVim</equal>
+    </appdef>
+    <item>
+        <name>MacVim</name>
+        <item>
+            <name>KANA to Right Control in MacVim</name>
+            <identifier>private.kana_to_right_control_in_macvim</identifier>
+            <appendix>Puts right control right under the right thumb</appendix>
+            <only>MACVIM</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_KANA,
+                KeyCode::CONTROL_R
+            </autogen>
+        </item>
+    </item>
+
+    <appdef>
+        <appname>EMACS</appname>
+        <equal>org.gnu.Emacs</equal>
+    </appdef>
+    <item>
+        <name>Emacs Keybindings</name>
+        <item>
+            <name>EISUU to Left Control in Emacs</name>
+            <identifier>private.left_control_to_left_control_in_emacs</identifier>
+            <appendix>Tab when pressed in isolation</appendix>
+            <only>EMACS</only>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::JIS_EISUU,
+                KeyCode::CONTROL_L,
+                KeyCode::TAB
+            </autogen>
+        </item>
+        <item>
+            <name>KANA to Right Control in Emacs</name>
+            <identifier>private.kana_to_right_control_in_emacs</identifier>
+            <appendix>Puts right control right under the right thumb</appendix>
+            <only>EMACS</only>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::JIS_KANA,
+                KeyCode::CONTROL_R,
+                KeyCode::DELETE
+            </autogen>
+        </item>
+        <item>
+            <name>Left Command to Left Alt in Emacs</name>
+            <identifier>private.left_command_to_left_alt_in_emacs</identifier>
+            <appendix>Makes Left alt accessible with the left thumb</appendix>
+            <only>EMACS</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::COMMAND_L,
+                KeyCode::OPTION_L
+            </autogen>
+        </item>
+        <item>
+            <name>Right Command to Right Alt in Emacs</name>
+            <identifier>private.right_command_to_right_alt_in_emacs</identifier>
+            <appendix>Makes Right alt accessible with the right thumb</appendix>
+            <only>EMACS</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::COMMAND_R,
+                KeyCode::OPTION_R
+            </autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Leverage Japanese Layout</name>
+        <item>
+            <name>Fix Semicolon</name>
+            <identifier>private.fix_semicolon</identifier>
+            <appendix>Fixes semicolon</appendix>
+            <autogen>__KeyToKey__ KeyCode::SEMICOLON, ModifierFlag::SHIFT_L, KeyCode::SEMICOLON</autogen>
+        </item>
+        <item>
+            <name>Right Shift Awesomeness</name>
+            <identifier>private.right_shift_awesomeness</identifier>
+            <appendix>Right Shift becomes awesome</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::SEMICOLON,
+                KeyCode::SHIFT_R,
+                KeyCode::JIS_COLON
+            </autogen>
+        </item>
+        <item>
+            <name>Control to Escape</name>
+            <identifier>private.control_to_escape</identifier>
+            <appendix>Escape when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::CONTROL_L,
+                KeyCode::CONTROL_L,
+                KeyCode::ESCAPE
+            </autogen>
+        </item>
+        <item>
+            <name>EISUU to Left Command</name>
+            <identifier>private.eisuu_to_left_command</identifier>
+            <appendix>Tab when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::JIS_EISUU,
+                KeyCode::COMMAND_L,
+                KeyCode::TAB
+            </autogen>
+        </item>
+        <item>
+            <name>KANA to Right Command</name>
+            <identifier>private.kana_to_right_command</identifier>
+            <appendix>Backspace when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::JIS_KANA,
+                KeyCode::COMMAND_R,
+                KeyCode::DELETE
+            </autogen>
+        </item>
+    </item>
+    <item>
+        <name>Japanese Layout Idiosyncracies</name>
+        <item>
+            <name>Fix At</name>
+            <identifier>private.fix_at</identifier>
+            <appendix>Fixes At</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_2, ModifierFlag::SHIFT_R, KeyCode::JIS_ATMARK</autogen>
+        </item>
+        <item>
+            <name>Fix Left Bracket</name>
+            <identifier>private.fix_left_bracket</identifier>
+            <appendix>Fixes Left Bracket</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_ATMARK, KeyCode::JIS_BRACKET_LEFT</autogen>
+        </item>
+        <item>
+            <name>Fix Right Bracket</name>
+            <identifier>private.fix_right_bracket</identifier>
+            <appendix>Fixes Right Bracket</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGHT</autogen>
+        </item>
+        <item>
+            <name>Fix Hat</name>
+            <identifier>private.fix_hat</identifier>
+            <appendix>Fixes Hat</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_6, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::JIS_HAT</autogen>
+        </item>
+        <item>
+            <name>Fix Ampersand</name>
+            <identifier>private.fix_ampersand</identifier>
+            <appendix>Fixes Ampersand</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_7, ModifierFlag::SHIFT_L, KeyCode::KEY_6, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Asterisk</name>
+            <identifier>private.fix_asterisk</identifier>
+            <appendix>Fixes Asterisk</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_8, ModifierFlag::SHIFT_L, KeyCode::JIS_COLON, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Left Paren</name>
+            <identifier>private.fix_left_paren</identifier>
+            <appendix>Fixes Left Paren</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_9, ModifierFlag::SHIFT_L, KeyCode::KEY_8, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Right Paren</name>
+            <identifier>private.fix_right_paren</identifier>
+            <appendix>Fixes Right Paren</appendix>
+            <autogen> __KeyToKey__ KeyCode::KEY_0, ModifierFlag::SHIFT_L, KeyCode::KEY_9, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Underscore</name>
+            <identifier>private.fix_underscore</identifier>
+            <appendix>Fixes Underscore</appendix>
+            <autogen> __KeyToKey__ KeyCode::MINUS, ModifierFlag::SHIFT_L, KeyCode::JIS_UNDERSCORE</autogen>
+        </item>
+        <item>
+            <name>Fix Plus</name>
+            <identifier>private.fix_plus</identifier>
+            <appendix>Fixes Plus</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_HAT, ModifierFlag::SHIFT_L, KeyCode::KEYPAD_PLUS</autogen>
+        </item>
+        <item>
+            <name>Fix Equals</name>
+            <identifier>private.fix_equals</identifier>
+            <appendix>Fixes Equals</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_HAT, KeyCode::KEYPAD_EQUAL</autogen>
+        </item>
+        <item>
+            <name>Fix Backslash</name>
+            <identifier>private.fix_backslash</identifier>
+            <appendix>Fixes Backslash</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_RIGHT, KeyCode::JIS_YEN, ModifierFlag::OPTION_L</autogen>
+        </item>
+        <item>
+            <name>Fix Pipe</name>
+            <identifier>private.fix_pipe</identifier>
+            <appendix>Fixes Pipe</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_RIGHT, KeyCode::JIS_YEN, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Tilda</name>
+            <identifier>private.fix_tilda</identifier>
+            <appendix>Fixes Tilda</appendix>
+            <autogen> __KeyToKey__ KeyCode::ESCAPE, ModifierFlag::SHIFT_R, KeyCode::JIS_HAT, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Backtick</name>
+            <identifier>private.fix_backtick</identifier>
+            <appendix>Fixes Backtick</appendix>
+            <autogen> __KeyToKey__ KeyCode::ESCAPE, KeyCode::JIS_ATMARK, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Fix Double Quote</name>
+            <identifier>private.fix_double_quote</identifier>
+            <appendix>Fixes Double Quote</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_COLON, ModifierFlag::SHIFT_L, KeyCode::KEY_2, ModifierFlag::SHIFT_L </autogen>
+        </item>
+        <item>
+            <name>Fix Quote</name>
+            <identifier>private.fix_quote</identifier>
+            <appendix>Fixes Quotes</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_COLON, KeyCode::KEY_7, ModifierFlag::SHIFT_L </autogen>
+        </item>
+    </item>
+    
+
+</root>
