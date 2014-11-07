@@ -16,10 +16,10 @@
     (if (use-region-p)
 	(setq start (region-beginning)
 	      end (region-end))
-      (progn
-	(setq bounds (bounds-of-thing-at-point 'whitespace))
-	(setq start (point)
-	      end (re-search-forward " "))))
+      (setq start (if (looking-at "[[:space:]]")
+		      (+ (point) 1)
+		    (point))
+	    end (- (re-search-forward "[[:space:]]") 1)))
 
     (goto-char start)
     (cond ((equal type-of-filler *discourse-response*) ; /text/
@@ -143,10 +143,10 @@
     (if (use-region-p)
 	(setq start (region-beginning)
 	      end (region-end))
-      (progn
-	(setq bounds (bounds-of-thing-at-point 'symbol))
-	(setq start (car bounds)
-	      end (cdr bounds))))
+      (setq start (if (looking-at "[[:space:]]")
+		      (+ (point) 1)
+		    (point))
+	    end (- (re-search-forward "[[:space:]]") 1)))
     (goto-char start)
     (insert "[ ")
     (goto-char (+ end 2))
