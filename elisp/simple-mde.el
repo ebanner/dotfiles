@@ -17,10 +17,11 @@
 	(setq start (region-beginning)
 	      end (region-end))
       (progn
-	(setq bounds (bounds-of-thing-at-point 'symbol))
-	(setq start (car bounds)
-	      end (cdr bounds))))
+	(setq bounds (bounds-of-thing-at-point 'whitespace))
+	(setq start (point)
+	      end (re-search-forward " "))))
 
+    (goto-char start)
     (cond ((equal type-of-filler *discourse-response*) ; /text/
 	   (push-mark end)
 	   (setq mark-active t)
@@ -33,17 +34,37 @@
 	   (goto-char start)
 	   (setq end (+ end 2)))
 	  (t (message type-of-filler)))
+    (goto-char start)
     (push-mark end)
     (setq mark-active t)
     (facemenu-set-bold)))
 
 ;;; Wrappers for `mark-filler' to pass to `define-key'
 
-(defun discourse-marker () (interactive) (mark-filler *discourse-marker*))
-(defun filled-pause () (interactive) (mark-filler *filled-pause*))
-(defun explicit-editing-term () (interactive) (mark-filler *explicit-editing-term*))
-(defun discourse-response () (interactive) (mark-filler *discourse-response*))
-(defun aside/parenthetical () (interactive) (mark-filler *aside/parenthetical*))
+(defun discourse-marker ()
+  (interactive)
+  (mark-filler *discourse-marker*)
+  (message "Discourse Marker."))
+
+(defun filled-pause ()
+  (interactive)
+  (mark-filler *filled-pause*)
+  (message "Filled Pause."))
+
+(defun explicit-editing-term ()
+  (interactive)
+  (mark-filler *explicit-editing-term*)
+  (message "Explicit Editing Term."))
+
+(defun discourse-response ()
+  (interactive)
+  (mark-filler *discourse-response*)
+  (message "Discourse Response."))
+
+(defun aside/parenthetical ()
+  (interactive)
+  (mark-filler *aside/parenthetical*)
+  (message "Aside/Parenthetical."))
 
 ;;; SUs ;;;
 (defconst *statement* "Statement SU Break")
@@ -116,7 +137,7 @@
   (message "Clausal SU Break"))
 
 ;;; Delreg ;;;
-(defun mark-delreg ()
+(defun mark-disfluency ()
   "Marks the region as a delreg"
   (let (start end bounds)
     (if (use-region-p)
@@ -136,14 +157,37 @@
 
 (defun delreg ()
   (interactive)
-  (mark-delreg)
+  (mark-disfluency)
   (message "Delreg"))
+
+(defun repetition ()
+  (interactive)
+  (mark-disfluency)
+  (message "Repetition"))
+
+(defun revision ()
+  (interactive)
+  (mark-disfluency)
+  (message "Revision"))
+
+(defun restart ()
+  (interactive)
+  (mark-disfluency)
+  (message "Restart"))
+
+(defun complex-disfluency ()
+  (interactive)
+  (mark-disfluency)
+  (message "Complex Disfluency"))
 
 (define-minor-mode simple-mde-mode
   "Minor mode for annotating a transcript with SimpleMDE convention"
   :lighter " SimpleMDE"
   :keymap (let ((map (make-sparse-keymap)))
-	    (define-key map (kbd "C-c d e") 'delreg)	    
+	    (define-key map (kbd "C-c r p") 'repetition)	    
+	    (define-key map (kbd "C-c r v") 'revision)	    
+	    (define-key map (kbd "C-c r s") 'restart)	    
+	    (define-key map (kbd "C-c c d") 'complex-disfluency)	    
             (define-key map (kbd "C-c d m") 'discourse-marker)
             (define-key map (kbd "C-c f p") 'filled-pause)
             (define-key map (kbd "C-c e e t") 'explicit-editing-term)
