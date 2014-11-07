@@ -16,7 +16,15 @@
   (setq exec-path (append exec-path '("/usr/local/bin")))
   ;;; LaTeX
   (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-  (setq exec-path (append exec-path '("/usr/texbin"))))
+  (setq exec-path (append exec-path '("/usr/texbin")))
+  ;; Pipe
+  (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+  ;; Backslash
+  (define-key key-translation-map (kbd "M-|") (kbd "\\"))
+  ;; Font
+  (set-face-attribute 'default nil :height 100)
+  ;; Frame
+  (set-frame-size (selected-frame) 95 52))
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -41,6 +49,7 @@
 ;;; Programming
 (add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
 (add-hook 'prog-mode-hook (lambda () (whole-line-or-region-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (show-paren-mode 1)))
 
 ;;; Text Mode
 (add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
@@ -91,10 +100,3 @@
  '(doc-view-continuous t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(sentence-end-double-space nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(region ((t (:background "DarkGoldenrod1" :foreground "gtk_selection_fg_color")))))
-(put 'narrow-to-region 'disabled nil)
