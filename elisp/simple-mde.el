@@ -180,6 +180,31 @@
   (mark-disfluency)
   (message "Complex Disfluency"))
 
+(defun bold->filler ()
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "<bold>" nil t) (replace-match "<filler>"))
+    (beginning-of-buffer)
+    (while (re-search-forward "</bold>" nil t) (replace-match "</filler>"))))
+
+(defun strip-fillers ()
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "<filler>\\(.\\|
+\\)*?</filler>" nil t) (replace-match ""))))
+
+(defun strip-disfluencies ()
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "\\[\\(.\\|
+\\)*?\\]" nil t) (replace-match ""))))
+
+(defun end-pass-1 ()
+  (interactive)
+  (bold->filler)
+  (strip-fillers)
+  (strip-disfluencies))
+
 (define-minor-mode simple-mde-mode
   "Minor mode for annotating a transcript with SimpleMDE convention"
   :lighter " SimpleMDE"
