@@ -105,6 +105,7 @@
  '(auto-revert-interval 1)
  '(dired-isearch-filenames t)
  '(doc-view-continuous t)
+ '(nxml-sexp-element-flag t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
-
