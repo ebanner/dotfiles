@@ -26,6 +26,13 @@
   ;; Frame
   (set-frame-size (selected-frame) 95 52))
 
+;;; Home-specific settings
+(when (string= system-name "edward-All-Series")
+  ;; Region color
+  (set-face-attribute 'region nil :background "LightGoldenrod2")
+  ;; Frame size
+  (set-frame-size (selected-frame) 87 53))
+
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -100,3 +107,4 @@
  '(doc-view-continuous t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(sentence-end-double-space nil))
+
