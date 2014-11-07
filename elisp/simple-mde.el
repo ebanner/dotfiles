@@ -180,30 +180,40 @@
   (mark-disfluency)
   (message "Complex Disfluency"))
 
-(defun bold->filler ()
+(defun global-search-and-replace (regexp replacement)
   (save-excursion
     (beginning-of-buffer)
-    (while (re-search-forward "<bold>" nil t) (replace-match "<filler>"))
-    (beginning-of-buffer)
-    (while (re-search-forward "</bold>" nil t) (replace-match "</filler>"))))
+    (while (re-search-forward regexp nil t)
+      (replace-match replacement))))
+
+(defun bold->filler ()
+  (global-search-and-replace "<bold>" "<filler>")
+  (global-search-and-replace "</bold>" "<filler>"))
 
 (defun strip-fillers ()
-  (save-excursion
-    (beginning-of-buffer)
-    (while (re-search-forward "<filler>\\(.\\|
-\\)*?</filler>" nil t) (replace-match ""))))
+  (global-search-and-replace "<filler>\\(.\\|
+\\)*?</filler>"
+			     ""))
 
 (defun strip-disfluencies ()
-  (save-excursion
-    (beginning-of-buffer)
-    (while (re-search-forward "\\[\\(.\\|
-\\)*?\\]" nil t) (replace-match ""))))
+  (global-search-and-replace "\\[\\(.\\|
+\\)*?\\]"
+			     ""))
 
 (defun end-pass-1 ()
   (interactive)
   (bold->filler)
   (strip-fillers)
   (strip-disfluencies))
+
+(defun replace-statement-su-breaks ()
+  (interactive)
+  (global-search-and-replace "/\\." "
+"))
+
+(defun strip-clausal-su-breaks ()
+  (interactive)
+  (global-search-and-replace " /," ","))
 
 (define-minor-mode simple-mde-mode
   "Minor mode for annotating a transcript with SimpleMDE convention"
