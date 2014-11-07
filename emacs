@@ -7,31 +7,23 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;;; Mac OS X-specific settings
-(when (memq window-system '(mac ns))
-  ;; Fix default directory
-  (setq command-line-default-directory "/Users/ebanner")
-  ;; Flyspell
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-  (setq exec-path (append exec-path '("/usr/local/bin")))
-  ;;; LaTeX
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-  (setq exec-path (append exec-path '("/usr/texbin")))
-  ;; Pipe
-  (define-key key-translation-map (kbd "M-¥") (kbd "|"))
-  ;; Backslash
-  (define-key key-translation-map (kbd "M-|") (kbd "\\"))
-  ;; Font
-  (set-face-attribute 'default nil :height 100)
-  ;; Frame
-  (set-frame-size (selected-frame) 95 52))
-
-;;; Home-specific settings
-(when (string= system-name "edward-All-Series")
-  ;; Region color
-  (set-face-attribute 'region nil :background "LightGoldenrod2")
-  ;; Frame size
-  (set-frame-size (selected-frame) 87 53))
+;;; Location-specific settings
+(cond ((memq window-system '(mac ns))	; Mac
+       (setq command-line-default-directory "/Users/ebanner")
+       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+       (setq exec-path (append exec-path '("/usr/local/bin")))
+       (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+       (setq exec-path (append exec-path '("/usr/texbin")))
+       (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+       (define-key key-translation-map (kbd "M-|") (kbd "\\"))
+       (set-face-attribute 'default nil :height 100)
+       (set-frame-size (selected-frame) 95 52))
+      ((string= system-name "edward-All-Series") ; Home
+       (set-face-attribute 'region nil :background "LightGoldenrod2")
+       (set-frame-size (selected-frame) 87 53))
+      ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
+       (set-face-attribute 'default nil :height 110)
+       (set-frame-size (selected-frame) 88 58)))
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
