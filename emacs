@@ -79,13 +79,6 @@
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
 
-;;; Tags
-(defun create-tags (dir-name)
-  "Create tags file."
-  (interactive "DDirectory: ")
-  (eshell-command 
-   (format "find %s -type f -name \"*.py\" | etags -" dir-name)))
-
 ;;; SimpleMDE mode
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'simple-mde)
