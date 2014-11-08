@@ -188,7 +188,7 @@
 
 (defun bold->filler ()
   (global-search-and-replace "<bold>" "<filler>")
-  (global-search-and-replace "</bold>" "<filler>"))
+  (global-search-and-replace "</bold>" "</filler>"))
 
 (defun strip-fillers ()
   (global-search-and-replace "<filler>\\(.\\|
@@ -200,18 +200,18 @@
 \\)*?\\]"
 			     ""))
 
-(defun end-pass-1 ()
+(defun pass-1->pass-2 ()
   (interactive)
   (bold->filler)
   (strip-fillers)
   (strip-disfluencies))
 
-(defun replace-statement-su-breaks ()
+(defun transform-statement-su-breaks ()
   (interactive)
   (global-search-and-replace "/\\." "
 "))
 
-(defun strip-clausal-su-breaks ()
+(defun transform-clausal-su-breaks ()
   (interactive)
   (global-search-and-replace " /," ","))
 
