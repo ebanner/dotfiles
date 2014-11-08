@@ -28,6 +28,9 @@
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;;; magit
+(global-set-key (kbd "C-c m") 'magit-status)
+
 ;;; Docview mode reload PDFs automatigically when they change on disk
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
