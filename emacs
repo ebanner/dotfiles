@@ -34,6 +34,9 @@
 ;;; Docview mode reload PDFs automatigically when they change on disk
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
+;;; Registers for jumping to files
+(set-register ?e '(file . "~/.emacs"))
+
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
