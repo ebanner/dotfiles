@@ -94,6 +94,7 @@
  '(TeX-PDF-mode t)
  '(TeX-electric-escape t)
  '(auto-revert-interval 1)
+ '(dired-dwim-target t)
  '(dired-isearch-filenames t)
  '(doc-view-continuous t)
  '(nxml-sexp-element-flag t)
