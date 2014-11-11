@@ -7,30 +7,35 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;;; Mac OS X-specific settings
-(when (memq window-system '(mac ns))
-  ;; Fix default directory
-  (setq command-line-default-directory "/Users/ebanner")
-  ;; Flyspell
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-  (setq exec-path (append exec-path '("/usr/local/bin")))
-  ;;; LaTeX
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
-  (setq exec-path (append exec-path '("/usr/texbin")))
-  ;; Pipe
-  (define-key key-translation-map (kbd "M-¥") (kbd "|"))
-  ;; Backslash
-  (define-key key-translation-map (kbd "M-|") (kbd "\\"))
-  ;; Font
-  (set-face-attribute 'default nil :height 100)
-  ;; Frame
-  (set-frame-size (selected-frame) 95 52))
+;;; Location-specific settings
+(cond ((memq window-system '(mac ns))	; Mac
+       (setq command-line-default-directory "/Users/ebanner")
+       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+       (setq exec-path (append exec-path '("/usr/local/bin")))
+       (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+       (setq exec-path (append exec-path '("/usr/texbin")))
+       (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+       (define-key key-translation-map (kbd "M-|") (kbd "\\"))
+       (set-face-attribute 'default nil :height 100)
+       (set-frame-size (selected-frame) 95 52))
+      ((string= system-name "edward-All-Series") ; Home
+       (set-face-attribute 'region nil :background "LightGoldenrod2")
+       (set-frame-size (selected-frame) 87 53))
+      ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
+       (set-face-attribute 'default nil :height 110)
+       (set-frame-size (selected-frame) 88 58)))
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;;; magit
+(global-set-key (kbd "C-c m") 'magit-status)
+
 ;;; Docview mode reload PDFs automatigically when they change on disk
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+;;; Registers for jumping to files
+(set-register ?e '(file . "~/.emacs"))
 
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -77,13 +82,6 @@
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
 
-;;; Tags
-(defun create-tags (dir-name)
-  "Create tags file."
-  (interactive "DDirectory: ")
-  (eshell-command 
-   (format "find %s -type f -name \"*.py\" | etags -" dir-name)))
-
 ;;; SimpleMDE mode
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'simple-mde)
@@ -96,7 +94,10 @@
  '(TeX-PDF-mode t)
  '(TeX-electric-escape t)
  '(auto-revert-interval 1)
+ '(dired-dwim-target t)
  '(dired-isearch-filenames t)
  '(doc-view-continuous t)
+ '(nxml-sexp-element-flag t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
