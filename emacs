@@ -2,6 +2,7 @@
 
 ;;; Package management
 (require 'package)
+(package-initialize)
 
 ;;; Visual
 (tool-bar-mode -1)
