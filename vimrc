@@ -24,6 +24,7 @@ set pastetoggle=<F8>
 set formatoptions+=r
 set infercase
 set linebreak
+set modelines=1
 
 if 703 <# v:version
     set formatoptions+=j
