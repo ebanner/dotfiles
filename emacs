@@ -45,7 +45,6 @@
 	    (autopair-mode 1)
 	    (electric-indent-mode nil)))
 
-
 ;;; Jedi
 (require 'jedi)
 (add-hook 'python-mode-hook 'jedi:setup)
@@ -54,6 +53,8 @@
 (setq jedi:environment-virtualenv
       (append python-environment-virtualenv
               '("--python" "/usr/bin/python3")))
+(setq jedi:server-args
+      '("--sys-path" "/usr/lib/python3/dist-packages/"))
 
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -117,7 +118,7 @@
  '(doc-view-continuous t)
  '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
+ '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
 
