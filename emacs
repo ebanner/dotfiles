@@ -38,15 +38,22 @@
 ;;; Registers for jumping to files
 (set-register ?e '(file . "~/.emacs"))
 
+;;; Python mode
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (define-key python-mode-map (kbd "RET") 'newline-and-indent)
+	    (autopair-mode 1)
+	    (electric-indent-mode nil)))
+
+
 ;;; Jedi
+(require 'jedi)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-
-;;; Python mode
-(autoload 'python-mode "python-mode" "Python Mode." t)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
-(define-key python-mode-map (kbd "C-c C-c") 'py-execute-buffer-python3)
+(setq jedi:environment-root "jedi")  ; or any other name you like
+(setq jedi:environment-virtualenv
+      (append python-environment-virtualenv
+              '("--python" "/usr/bin/python3")))
 
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -108,10 +115,9 @@
  '(dired-dwim-target t)
  '(dired-isearch-filenames t)
  '(doc-view-continuous t)
+ '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
- '(py-autopair-mode t)
- '(py-smart-indentation nil)
- '(py-split-windows-on-execute-p nil)
  '(search-whitespace-regexp nil)
- '(sentence-end-double-space nil)
+ '(sentence-end-double-space nil))
+
