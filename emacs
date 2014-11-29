@@ -8,6 +8,9 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;;; Make universal argument easier to press
+(define-key key-translation-map (kbd "ESC") (kbd "C-u"))
+
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
        (setq command-line-default-directory "/Users/ebanner")
@@ -38,16 +41,25 @@
 ;;; Registers for jumping to files
 (set-register ?e '(file . "~/.emacs"))
 
-;;; Python mode
+;;; Python
 (add-hook 'python-mode-hook
 	  (lambda ()
 	    (define-key python-mode-map (kbd "RET") 'newline-and-indent)
 	    (autopair-mode 1)
-	    (electric-indent-mode nil)))
+	    (electric-indent-mode nil)
+	    (setq
+	     python-shell-interpreter "ipython3"
+	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+	     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+	     python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+	     python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+	     python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
+(add-hook 'inferior-python-mode-hook (lambda () (autopair-mode 1)))
 
 ;;; Jedi
 (require 'jedi)
 (add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'inferior-python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 (setq jedi:environment-root "jedi")  ; or any other name you like
 (setq jedi:environment-virtualenv
@@ -121,4 +133,3 @@
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
-
