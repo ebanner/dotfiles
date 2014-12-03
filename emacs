@@ -46,7 +46,7 @@
 	  (lambda ()
 	    (define-key python-mode-map (kbd "RET") 'newline-and-indent)
 	    (autopair-mode 1)
-	    (electric-indent-mode nil)
+	    (electric-indent-mode -1)
 	    (setq
 	     python-shell-interpreter "ipython3"
 	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
@@ -112,10 +112,6 @@
 	    (auto-fill-mode 1)
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
-
-;;; SimpleMDE mode
-(add-to-list 'load-path "~/.emacs.d/elisp")
-(require 'simple-mde)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
