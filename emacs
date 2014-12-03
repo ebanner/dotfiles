@@ -1,4 +1,6 @@
 ;;; Edward's emacs configuration file
+;;; 
+;;; Tue Dec  2 21:28:41 CST 2014
 
 ;;; Package management
 (require 'package)
@@ -18,8 +20,8 @@
        (setq exec-path (append exec-path '("/usr/local/bin")))
        (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
        (setq exec-path (append exec-path '("/usr/texbin")))
-       (define-key key-translation-map (kbd "M-¥") (kbd "\\"))
-       (define-key key-translation-map (kbd "M-|") (kbd "|"))
+       (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+       (define-key key-translation-map (kbd "M-|") (kbd "\\"))
        (set-face-attribute 'default nil :height 100)
        (set-frame-size (selected-frame) 95 52))
       ((string= system-name "edward-All-Series") ; Home
