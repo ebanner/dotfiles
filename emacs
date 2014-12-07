@@ -26,7 +26,16 @@
        (set-frame-size (selected-frame) 95 52))
       ((string= system-name "edward-All-Series") ; Home
        (set-face-attribute 'region nil :background "LightGoldenrod2")
-       (set-frame-size (selected-frame) 87 53))
+       (set-frame-size (selected-frame) 87 53)
+       (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
+       (require 'org)
+       (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
+       (setq org-latex-pdf-process
+       '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+       ;; (org-babel-load-file "~/.emacs.d/elisp/org-ref.org")
+       (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+       (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
+       (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations"))))
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
@@ -102,7 +111,7 @@
 (setq org-todo-keywords
       '((sequence "TODO" "WORKING" "|" "DONE")))
 (setq org-log-done 'time)
-(add-hook 'org-mode (lambda () (auto-fill-mode 1)))
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (reftex-mode 1)))
 (setq org-default-notes-file "~/Dropbox/org/Notes.org")
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
@@ -128,9 +137,7 @@
  '(doc-view-continuous t)
  '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
- '(nyan-animate-nyancat t)
- '(nyan-mode t)
- '(nyan-wavy-trail nil)
+ '(org-export-with-email t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
