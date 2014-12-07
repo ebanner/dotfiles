@@ -9,7 +9,7 @@
 (scroll-bar-mode -1)
 
 ;;; Make universal argument easier to press
-(define-key key-translation-map (kbd "ESC") (kbd "C-u"))
+;; (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
 
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
