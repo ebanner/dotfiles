@@ -48,7 +48,7 @@
 	    (autopair-mode 1)
 	    (electric-indent-mode nil)
 	    (setq
-	     python-shell-interpreter "ipython3"
+	     python-shell-interpreter "ipython"
 	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
 	     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
 	     python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
