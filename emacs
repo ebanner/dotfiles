@@ -1,4 +1,6 @@
 ;;; Edward's emacs configuration file
+;;; 
+;;; Tue Dec  2 21:28:41 CST 2014
 
 ;;; Package management
 (require 'package)
@@ -18,13 +20,22 @@
        (setq exec-path (append exec-path '("/usr/local/bin")))
        (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
        (setq exec-path (append exec-path '("/usr/texbin")))
-       (define-key key-translation-map (kbd "M-¥") (kbd "\\"))
-       (define-key key-translation-map (kbd "M-|") (kbd "|"))
+       (define-key key-translation-map (kbd "M-¥") (kbd "|"))
+       (define-key key-translation-map (kbd "M-|") (kbd "\\"))
        (set-face-attribute 'default nil :height 100)
        (set-frame-size (selected-frame) 95 52))
       ((string= system-name "edward-All-Series") ; Home
        (set-face-attribute 'region nil :background "LightGoldenrod2")
-       (set-frame-size (selected-frame) 87 53))
+       (set-frame-size (selected-frame) 87 53)
+       (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
+       (require 'org)
+       (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
+       (setq org-latex-pdf-process
+       '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+       ;; (org-babel-load-file "~/.emacs.d/elisp/org-ref.org")
+       (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+       (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
+       (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations"))))
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
@@ -46,7 +57,7 @@
 	  (lambda ()
 	    (define-key python-mode-map (kbd "RET") 'newline-and-indent)
 	    (autopair-mode 1)
-	    (electric-indent-mode nil)
+	    (electric-indent-mode -1)
 	    (setq
 	     python-shell-interpreter "ipython"
 	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
@@ -100,7 +111,7 @@
 (setq org-todo-keywords
       '((sequence "TODO" "WORKING" "|" "DONE")))
 (setq org-log-done 'time)
-(add-hook 'org-mode (lambda () (auto-fill-mode 1)))
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (reftex-mode 1)))
 (setq org-default-notes-file "~/Dropbox/org/Notes.org")
 (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 (org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
@@ -112,10 +123,6 @@
 	    (auto-fill-mode 1)
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
-
-;;; SimpleMDE mode
-(add-to-list 'load-path "~/.emacs.d/elisp")
-(require 'simple-mde)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -130,6 +137,7 @@
  '(doc-view-continuous t)
  '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
+ '(org-export-with-email t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
