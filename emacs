@@ -22,8 +22,6 @@
 (global-set-key (kbd "C-x c x")   'helm-register)
 (global-set-key (kbd "C-h SPC")   'helm-all-mark-rings)
 (global-set-key (kbd "C-c x h g") 'helm-google-suggest)
-(require 'shell)
-(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
 (define-key helm-command-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-command-map (kbd "C-i") 'helm-execute-persistent-action)
@@ -36,6 +34,9 @@
       helm-scroll-amount                    8 
       helm-ff-file-name-history-use-recentf t)
 (helm-mode 1)
+
+(require 'shell)
+(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 
 ;;; helm swoop
 (require 'helm-swoop)
@@ -159,7 +160,7 @@
 	    (autopair-mode 1)
 	    (electric-indent-mode -1)
 	    (setq
-	     python-shell-interpreter "ipython3"
+	     python-shell-interpreter "ipython"
 	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
 	     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
 	     python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
