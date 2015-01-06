@@ -24,6 +24,78 @@
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
 
+;;; ido
+(require 'ido)
+(ido-mode t)
+
+;;; helm
+(require 'helm-config)
+(global-set-key (kbd "C-c h o")   'helm-occur)
+(global-set-key (kbd "M-y")       'helm-show-kill-ring)
+(global-set-key (kbd "C-h a")     'helm-apropos)
+(global-set-key (kbd "C-x c x")   'helm-register)
+(global-set-key (kbd "C-h SPC")   'helm-all-mark-rings)
+(global-set-key (kbd "C-c x h g") 'helm-google-suggest)
+(define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+(define-key helm-command-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-command-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-command-map (kbd "C-z")  'helm-select-action)
+(setq helm-locate-command "locate %s -e -A --regex %s")
+(setq helm-split-window-in-side-p           t 
+      helm-buffers-fuzzy-matching           t 
+      helm-move-to-line-cycle-in-source     t 
+      helm-ff-search-library-in-sexp        t 
+      helm-scroll-amount                    8 
+      helm-ff-file-name-history-use-recentf t)
+(helm-mode 1)
+
+(require 'shell)
+(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+
+;;; helm swoop
+(require 'helm-swoop)
+(global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
+(global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+(global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+(define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+(define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+(setq helm-multi-swoop-edit-save t)
+(setq helm-swoop-split-with-multiple-windows nil)
+(setq helm-swoop-move-to-line-cycle t)
+(setq helm-swoop-use-line-number-face t)
+
+;;; Paredit
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'minibuffer-inactive-mode-hook  #'enable-paredit-mode)
+
+;;; org mode
+(defun zin/org-cycle-current-headline ()
+  (interactive)
+  (outline-previous-heading)
+  (org-cycle))
+(setq org-todo-keywords
+      '((sequence "TODO" "WORKING" "|" "DONE")))
+(setq org-log-done 'time)
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (reftex-mode 1) (org-indent-mode -1)))
+(setq org-default-notes-file "~/Dropbox/org/Notes.org")
+(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+(org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
+(add-to-list 'org-structure-template-alist '("T" "#+TITLE: ?" "<title>?</title>"))
+(add-to-list 'org-structure-template-alist '("A" "#+AUTHOR: Edward Banner\n?" "<author>\n?</author>"))
+(add-to-list 'org-structure-template-alist '("D" "#+DATE: ?" "<date>?</date>"))
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (auto-fill-mode 1)
+	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
+(define-key global-map (kbd "C-c c") 'org-capture)
+
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
        (setq command-line-default-directory "/Users/ebanner")
@@ -39,14 +111,46 @@
        (set-face-attribute 'region nil :background "LightGoldenrod2")
        (set-frame-size (selected-frame) 87 53)
        (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
+       (openwith-mode t)
+       (setq openwith-associations (quote (("\\.pdf\\'" "atril" (file)) ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "mplayer" ("-idx" file)))))
+
        (require 'org)
-       (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
+       ;; (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
        (setq org-latex-pdf-process
-       '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+	     '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
        ;; (org-babel-load-file "~/.emacs.d/elisp/org-ref.org")
        (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
        (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
-       (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations"))))
+       (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
+       ;;; Make universal argument easier to press
+       (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
+
+       ;;; Java
+       (require 'cl)
+       (require 'eclim)
+       (global-eclim-mode)
+       (require 'eclimd)
+       (require 'company)
+       (require 'company-emacs-eclim)
+       (company-emacs-eclim-setup)
+       (global-company-mode t)
+       (setq eclimd-wait-for-process nil)
+       (start-eclimd "~/workspace")
+       ;;; Displaying compilation error messages in the echo area
+       (setq help-at-pt-display-when-idle t)
+       (setq help-at-pt-timer-delay 0.1)
+       (help-at-pt-set-timer)
+       ;;; regular auto-complete initialization
+       (require 'auto-complete-config)
+       (ac-config-default)
+       ;;; add the emacs-eclim source
+       (require 'ac-emacs-eclim-source)
+       (ac-emacs-eclim-config)
+       ;;; yasnippet
+       (require 'yasnippet)
+       (yas-global-mode 1)
+       (require 'speedbar)
+       (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line))
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
@@ -85,6 +189,12 @@
 	     python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
 	     python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
 (add-hook 'inferior-python-mode-hook (lambda () (autopair-mode 1)))
+;;; ctags
+(defun create-tags (dir-name)
+  "Create tags file."
+  (interactive "DDirectory: ")
+  (eshell-command 
+   (format "find %s -type f -name \"*.py\" | etags -" dir-name)))
 
 ;;; Jedi
 (require 'jedi)
@@ -98,20 +208,6 @@
 (setq jedi:server-args
       '("--sys-path" "/usr/lib/python3/dist-packages/"))
 
-;;; Paredit
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'minibuffer-inactive-mode-hook  #'enable-paredit-mode)
-
-;;; ido
-(require 'ido)
-(ido-mode t)
-
 ;;; Programming
 (add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
 (add-hook 'prog-mode-hook (lambda () (whole-line-or-region-mode 1)))
@@ -121,27 +217,6 @@
 (add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
 (add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
 (add-hook 'text-mode-hook (lambda () (whole-line-or-region-mode 1)))
-
-;;; org mode
-(defun zin/org-cycle-current-headline ()
-  (interactive)
-  (outline-previous-heading)
-  (org-cycle))
-(setq org-todo-keywords
-      '((sequence "TODO" "WORKING" "|" "DONE")))
-(setq org-log-done 'time)
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (reftex-mode 1)))
-(setq org-default-notes-file "~/Dropbox/org/Notes.org")
-(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-(org-babel-do-load-languages 'org-babel-load-languages '((python . t)))
-(add-to-list 'org-structure-template-alist '("T" "#+TITLE: ?" "<title>?</title>"))
-(add-to-list 'org-structure-template-alist '("A" "#+AUTHOR: Edward Banner\n?" "<author>\n?</author>"))
-(add-to-list 'org-structure-template-alist '("D" "#+DATE: ?" "<date>?</date>"))
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (auto-fill-mode 1)
-	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
-(define-key global-map (kbd "C-c c") 'org-capture)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -155,10 +230,15 @@
  '(dired-isearch-filenames t)
  '(display-buffer-reuse-frames t)
  '(doc-view-continuous t)
+ '(ecb-new-ecb-frame t)
+ '(eclim-eclipse-dirs (quote ("/opt/eclipse")))
  '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
  '(org-export-with-email t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(scroll-margin 2)
  '(search-whitespace-regexp nil)
- '(sentence-end-double-space nil))
+ '(sentence-end-double-space nil)
+ '(speedbar-default-position (quote left))
+ '(speedbar-use-images nil)
+ '(speedbar-verbosity-level 0))
