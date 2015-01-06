@@ -51,8 +51,9 @@
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
 
-;;; Make C-x awesome to press
+;;; Make C-x and M-x awesome to press
 (define-key key-translation-map (kbd "ESC") (kbd "C-x"))
+(define-key key-translation-map (kbd "C-<escape>") (kbd "M-x"))
 
 ;;; Scroll up and down buffer
 (global-set-key (kbd "M-n") 'scroll-up-line)
