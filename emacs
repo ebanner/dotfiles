@@ -10,8 +10,19 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;;; Make universal argument easier to press
-;; (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
+;;; Scrolling
+(setq scroll-margin 2)
+(setq scroll-step 1)
+;; (scroll-conservatively 10000)
+;;; Incremental search
+(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+(defun my-goto-match-beginning ()
+  (when (and isearch-forward isearch-other-end (not isearch-mode-end-hook-quit))
+    (goto-char isearch-other-end)))
+(defadvice isearch-exit (after my-goto-match-beginning activate)
+  "Go to beginning of match."
+  (when (and isearch-forward isearch-other-end)
+    (goto-char isearch-other-end)))
 
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
@@ -39,6 +50,13 @@
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
+
+;;; Make C-x awesome to press
+(define-key key-translation-map (kbd "ESC") (kbd "C-x"))
+
+;;; Scroll up and down buffer
+(global-set-key (kbd "M-n") 'scroll-up-line)
+(global-set-key (kbd "M-p") 'scroll-down-line)
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -134,10 +152,12 @@
  '(auto-revert-interval 1)
  '(dired-dwim-target t)
  '(dired-isearch-filenames t)
+ '(display-buffer-reuse-frames t)
  '(doc-view-continuous t)
  '(jedi:tooltip-method nil)
  '(nxml-sexp-element-flag t)
  '(org-export-with-email t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(scroll-margin 2)
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil))
