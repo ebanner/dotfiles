@@ -8,14 +8,49 @@
     <item>
         <name>Terminal Keybindings</name>
         <item>
-            <name>KANA to Right Control in Terminal</name>
+            <name>EISUU to Left Control in terminal</name>
+            <identifier>private.left_control_to_left_control_in_terminal</identifier>
+            <appendix>Tab when pressed in isolation</appendix>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::JIS_EISUU,
+                KeyCode::CONTROL_L,
+                KeyCode::TAB
+            </autogen>
+        </item>
+        <item>
+            <name>KANA to Right Control in terminal</name>
             <identifier>private.kana_to_right_control_in_terminal</identifier>
             <appendix>Puts right control right under the right thumb</appendix>
             <only>TERMINAL</only>
             <autogen>
-                __KeyToKey__
+                __KeyOverlaidModifier__
                 KeyCode::JIS_KANA,
-                KeyCode::CONTROL_R
+                KeyCode::CONTROL_R,
+                KeyCode::DELETE
+            </autogen>
+        </item>
+        <item>
+            <name>Left Command to Left Alt in terminal</name>
+            <identifier>private.left_command_to_left_alt_in_terminal</identifier>
+            <appendix>Makes Left alt accessible with the left thumb</appendix>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::COMMAND_L,
+                KeyCode::OPTION_L
+            </autogen>
+        </item>
+        <item>
+            <name>Right Command to Right Alt in terminal</name>
+            <identifier>private.right_command_to_right_alt_in_terminal</identifier>
+            <appendix>Makes Right alt accessible with the right thumb</appendix>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::COMMAND_R,
+                KeyCode::OPTION_R
             </autogen>
         </item>
     </item>
@@ -35,6 +70,292 @@
                 __KeyToKey__
                 KeyCode::JIS_KANA,
                 KeyCode::CONTROL_R
+            </autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Colemak</name>
+        <item>
+            <name>Q</name>
+            <identifier>private.Q</identifier>
+            <appendix>Colemak Q</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::Q,
+                KeyCode::Q
+            </autogen>
+        </item>
+        <item>
+            <name>W</name>
+            <identifier>private.W</identifier>
+            <appendix>Colemak W</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::W,
+                KeyCode::W
+            </autogen>
+        </item>
+        <item>
+            <name>E</name>
+            <identifier>private.E</identifier>
+            <appendix>Colemak F</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::E,
+                KeyCode::F
+            </autogen>
+        </item>
+        <item>
+            <name>R</name>
+            <identifier>private.R</identifier>
+            <appendix>Colemak P</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::R,
+                KeyCode::P
+            </autogen>
+        </item>
+        <item>
+            <name>T</name>
+            <identifier>private.T</identifier>
+            <appendix>Colemak G</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::T,
+                KeyCode::G
+            </autogen>
+        </item>
+        <item>
+            <name>Y</name>
+            <identifier>private.Y</identifier>
+            <appendix>Colemak J</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::Y,
+                KeyCode::J
+            </autogen>
+        </item>
+        <item>
+            <name>U</name>
+            <identifier>private.U</identifier>
+            <appendix>Colemak L</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::U,
+                KeyCode::L
+            </autogen>
+        </item>
+        <item>
+            <name>I</name>
+            <identifier>private.I</identifier>
+            <appendix>Colemak U</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::I,
+                KeyCode::U
+            </autogen>
+        </item>
+        <item>
+            <name>O</name>
+            <identifier>private.O</identifier>
+            <appendix>Colemak Y</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::O,
+                KeyCode::Y
+            </autogen>
+        </item>
+        <item>
+            <name>P-colon</name>
+            <identifier>private.P-colon</identifier>
+            <appendix>Colemak Colon</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::P,
+		ModifierFlag::SHIFT_L,
+                KeyCode::JIS_COLON
+            </autogen>
+        </item>
+        <item>
+            <name>P</name>
+            <identifier>private.P</identifier>
+            <appendix>Colemak SEMICOLON</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::P,
+                KeyCode::SHIFT_R,
+                KeyCode::SEMICOLON
+            </autogen>
+        </item>
+        <item>
+            <name>A</name>
+            <identifier>private.A</identifier>
+            <appendix>Colemak A</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::A,
+                KeyCode::A
+            </autogen>
+        </item>
+        <item>
+            <name>S</name>
+            <identifier>private.S</identifier>
+            <appendix>Colemak R</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::S,
+                KeyCode::R
+            </autogen>
+        </item>
+        <item>
+            <name>D</name>
+            <identifier>private.D</identifier>
+            <appendix>Colemak S</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::D,
+                KeyCode::S
+            </autogen>
+        </item>
+        <item>
+            <name>F</name>
+            <identifier>private.F</identifier>
+            <appendix>Colemak T</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::F,
+                KeyCode::T
+            </autogen>
+        </item>
+        <item>
+            <name>G</name>
+            <identifier>private.G</identifier>
+            <appendix>Colemak D</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::G,
+                KeyCode::D
+            </autogen>
+        </item>
+        <item>
+            <name>H</name>
+            <identifier>private.H</identifier>
+            <appendix>Colemak H</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::H,
+                KeyCode::H
+            </autogen>
+        </item>
+        <item>
+            <name>J</name>
+            <identifier>private.J</identifier>
+            <appendix>Colemak N</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::J,
+                KeyCode::N
+            </autogen>
+        </item>
+        <item>
+            <name>K</name>
+            <identifier>private.K</identifier>
+            <appendix>Colemak E</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::K,
+                KeyCode::E
+            </autogen>
+        </item>
+        <item>
+            <name>L</name>
+            <identifier>private.L</identifier>
+            <appendix>Colemak I</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::L,
+                KeyCode::I
+            </autogen>
+        </item>
+        <item>
+            <name>SEMICOLON</name>
+            <identifier>private.SEMICOLON</identifier>
+            <appendix>Colemak O</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::SEMICOLON,
+                KeyCode::O
+            </autogen>
+        </item>
+        <item>
+            <name>Z</name>
+            <identifier>private.Z</identifier>
+            <appendix>Colemak Z</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::Z,
+                KeyCode::Z
+            </autogen>
+        </item>
+        <item>
+            <name>X</name>
+            <identifier>private.X</identifier>
+            <appendix>Colemak X</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::X,
+                KeyCode::X
+            </autogen>
+        </item>
+        <item>
+            <name>C</name>
+            <identifier>private.C</identifier>
+            <appendix>Colemak C</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::C,
+                KeyCode::C
+            </autogen>
+        </item>
+        <item>
+            <name>V</name>
+            <identifier>private.V</identifier>
+            <appendix>Colemak V</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::V,
+                KeyCode::V
+            </autogen>
+        </item>
+        <item>
+            <name>B</name>
+            <identifier>private.B</identifier>
+            <appendix>Colemak B</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::B,
+                KeyCode::B
+            </autogen>
+        </item>
+        <item>
+            <name>N</name>
+            <identifier>private.N</identifier>
+            <appendix>Colemak K</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::N,
+                KeyCode::K
+            </autogen>
+        </item>
+        <item>
+            <name>M</name>
+            <identifier>private.M</identifier>
+            <appendix>Colemak M</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::M,
+                KeyCode::M
             </autogen>
         </item>
     </item>
@@ -91,27 +412,20 @@
                 KeyCode::OPTION_R
             </autogen>
         </item>
+	<item>
+            <name>Right Underscore to Escape</name>
+            <identifier>private.right_underscore_to_escape</identifier>
+            <appendix>Make extra key be an ESCAPE for use in emacs</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_UNDERSCORE,
+                KeyCode::ESCAPE
+            </autogen>
+        </item>
     </item>
 
     <item>
         <name>Leverage Japanese Layout</name>
-        <item>
-            <name>Fix Semicolon</name>
-            <identifier>private.fix_semicolon</identifier>
-            <appendix>Fixes semicolon</appendix>
-            <autogen>__KeyToKey__ KeyCode::SEMICOLON, ModifierFlag::SHIFT_L, KeyCode::SEMICOLON</autogen>
-        </item>
-        <item>
-            <name>Right Shift Awesomeness</name>
-            <identifier>private.right_shift_awesomeness</identifier>
-            <appendix>Right Shift becomes awesome</appendix>
-            <autogen>
-                __KeyOverlaidModifier__
-                KeyCode::SEMICOLON,
-                KeyCode::SHIFT_R,
-                KeyCode::JIS_COLON
-            </autogen>
-        </item>
         <item>
             <name>Control to Escape</name>
             <identifier>private.control_to_escape</identifier>
@@ -121,6 +435,28 @@
                 KeyCode::CONTROL_L,
                 KeyCode::CONTROL_L,
                 KeyCode::ESCAPE
+            </autogen>
+        </item>
+	<item>
+            <name>Fix Colon</name>
+            <identifier>private.fix_colon</identifier>
+            <appendix>Fix colon</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::SEMICOLON,
+		ModifierFlag::SHIFT_L,
+                KeyCode::JIS_COLON
+            </autogen>
+        </item>
+        <item>
+            <name>Right Shift Winnage</name>
+            <identifier>private.right_shift_winnage</identifier>
+            <appendix>Overlay semicolon with Shift</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::SEMICOLON,
+                KeyCode::SHIFT_R,
+                KeyCode::SEMICOLON
             </autogen>
         </item>
         <item>
