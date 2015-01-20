@@ -12,9 +12,3 @@ keycode 100 = BackSpace
 
 ! Muhenkan (overlaid with Control_L)
 keycode 102 = Tab
-
-! Hiragana-Katakana (overlaid with Alt_R)
-keycode 101 = Return
-
-! Make colon easier to press
-keycode  47 = colon semicolon colon semicolon
