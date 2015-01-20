@@ -10,6 +10,20 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;;; Scrolling
+(setq scroll-margin 2)
+(setq scroll-step 1)
+;; (scroll-conservatively 10000)
+;;; Incremental search
+(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+(defun my-goto-match-beginning ()
+  (when (and isearch-forward isearch-other-end (not isearch-mode-end-hook-quit))
+    (goto-char isearch-other-end)))
+(defadvice isearch-exit (after my-goto-match-beginning activate)
+  "Go to beginning of match."
+  (when (and isearch-forward isearch-other-end)
+    (goto-char isearch-other-end)))
+
 ;;; ido
 (require 'ido)
 (ido-mode t)
@@ -82,33 +96,6 @@
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
 
-;;; Java
-(require 'cl)
-(require 'eclim)
-(global-eclim-mode)
-(require 'eclimd)
-(require 'company)
-(require 'company-emacs-eclim)
-(company-emacs-eclim-setup)
-(global-company-mode t)
-(setq eclimd-wait-for-process nil)
-(start-eclimd "~/workspace")
-;;; Displaying compilation error messages in the echo area
-(setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.1)
-(help-at-pt-set-timer)
-;;; regular auto-complete initialization
-(require 'auto-complete-config)
-(ac-config-default)
-;;; add the emacs-eclim source
-(require 'ac-emacs-eclim-source)
-(ac-emacs-eclim-config)
-;;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
-(require 'speedbar)
-(define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line)
-
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
        (setq command-line-default-directory "/Users/ebanner")
@@ -136,10 +123,45 @@
        (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
        (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
        ;;; Make universal argument easier to press
-       (define-key key-translation-map (kbd "ESC") (kbd "C-u")))
+       (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
+
+       ;;; Java
+       (require 'cl)
+       (require 'eclim)
+       (global-eclim-mode)
+       (require 'eclimd)
+       (require 'company)
+       (require 'company-emacs-eclim)
+       (company-emacs-eclim-setup)
+       (global-company-mode t)
+       (setq eclimd-wait-for-process nil)
+       (start-eclimd "~/workspace")
+       ;;; Displaying compilation error messages in the echo area
+       (setq help-at-pt-display-when-idle t)
+       (setq help-at-pt-timer-delay 0.1)
+       (help-at-pt-set-timer)
+       ;;; regular auto-complete initialization
+       (require 'auto-complete-config)
+       (ac-config-default)
+       ;;; add the emacs-eclim source
+       (require 'ac-emacs-eclim-source)
+       (ac-emacs-eclim-config)
+       ;;; yasnippet
+       (require 'yasnippet)
+       (yas-global-mode 1)
+       (require 'speedbar)
+       (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line))
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
+
+;;; Make C-x and M-x awesome to press
+(define-key key-translation-map (kbd "ESC") (kbd "C-x"))
+(define-key key-translation-map (kbd "C-<escape>") (kbd "M-x"))
+
+;;; Scroll up and down buffer
+(global-set-key (kbd "M-n") 'scroll-up-line)
+(global-set-key (kbd "M-p") 'scroll-down-line)
 
 ;;; Use `ibuffer' instead of `list-buffers'
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -206,6 +228,7 @@
  '(auto-revert-interval 1)
  '(dired-dwim-target t)
  '(dired-isearch-filenames t)
+ '(display-buffer-reuse-frames t)
  '(doc-view-continuous t)
  '(ecb-new-ecb-frame t)
  '(eclim-eclipse-dirs (quote ("/opt/eclipse")))
@@ -213,6 +236,7 @@
  '(nxml-sexp-element-flag t)
  '(org-export-with-email t)
  '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(scroll-margin 2)
  '(search-whitespace-regexp nil)
  '(sentence-end-double-space nil)
  '(speedbar-default-position (quote left))
