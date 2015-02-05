@@ -412,16 +412,26 @@
                 KeyCode::OPTION_R
             </autogen>
         </item>
+        <item>
+            <name>Control to Yen in Emacs</name>
+            <identifier>private.control_to_yen_in_emacs</identifier>
+            <appendix>Control to Yen so we can map it to escape in Emacs</appendix>
+            <autogen>
+                __KeyToKey__
+		KeyCode::CONTROL_L,
+                KeyCode::JIS_YEN
+            </autogen>
+        </item>	
 	<item>
-            <name>Right Underscore to Escape</name>
-            <identifier>private.right_underscore_to_escape</identifier>
-            <appendix>Make extra key be an ESCAPE for use in emacs</appendix>
+            <name>Right Underscore to Yen in Emacs</name>
+            <identifier>private.right_underscore_to_yen_in_emacs</identifier>
+            <appendix>Right underscore to Yen so we can map it to escape in Emacs</appendix>
             <autogen>
                 __KeyToKey__
                 KeyCode::JIS_UNDERSCORE,
-                KeyCode::ESCAPE
+                KeyCode::JIS_YEN
             </autogen>
-        </item>
+        </item>	
     </item>
 
     <item>
