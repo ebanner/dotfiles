@@ -211,11 +211,7 @@
        (require 'yasnippet)
        (yas-global-mode 1)
        (require 'speedbar)
-       (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line))
-      
-      ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
-       (set-face-attribute 'default nil :height 110)
-       (set-frame-size (selected-frame) 88 58)))
+       (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
