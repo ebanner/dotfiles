@@ -416,6 +416,7 @@
             <name>Control to Yen in Emacs</name>
             <identifier>private.control_to_yen_in_emacs</identifier>
             <appendix>Control to Yen so we can map it to escape in Emacs</appendix>
+            <only>EMACS</only>
             <autogen>
                 __KeyToKey__
 		KeyCode::CONTROL_L,
