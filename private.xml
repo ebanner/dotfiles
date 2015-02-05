@@ -427,6 +427,7 @@
             <name>Right Underscore to Yen in Emacs</name>
             <identifier>private.right_underscore_to_yen_in_emacs</identifier>
             <appendix>Right underscore to Yen so we can map it to escape in Emacs</appendix>
+	    <only>EMACS</only>
             <autogen>
                 __KeyToKey__
                 KeyCode::JIS_UNDERSCORE,
@@ -448,6 +449,16 @@
                 KeyCode::ESCAPE
             </autogen>
         </item>
+	<item>
+            <name>Right Underscore to Escape</name>
+            <identifier>private.right_underscore_to_escape</identifier>
+            <appendix>Right underscore to Escape</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_UNDERSCORE,
+                KeyCode::ESCAPE
+            </autogen>
+        </item>	
 	<item>
             <name>Fix Colon</name>
             <identifier>private.fix_colon</identifier>
