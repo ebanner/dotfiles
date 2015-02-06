@@ -12,3 +12,8 @@ keycode 100 = BackSpace
 
 ! Muhenkan (overlaid with Control_L)
 keycode 102 = Tab
+
+! Remap this key as C-x in emacs
+keycode  97 = Escape NoSymbol Escape
+
+keycode 108 = Alt_L Meta_L Alt_L Meta_L

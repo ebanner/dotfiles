@@ -110,7 +110,7 @@
       ((string= system-name "edward-All-Series") ; Home
        (set-face-attribute 'region nil :background "LightGoldenrod2")
        (set-frame-size (selected-frame) 87 53)
-       (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
+       ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
        (openwith-mode t)
        (setq openwith-associations (quote (("\\.pdf\\'" "atril" (file)) ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "mplayer" ("-idx" file)))))
 
@@ -125,32 +125,33 @@
        ;;; Make universal argument easier to press
        (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
 
-       ;;; Java
-       (require 'cl)
-       (require 'eclim)
-       (global-eclim-mode)
-       (require 'eclimd)
-       (require 'company)
-       (require 'company-emacs-eclim)
-       (company-emacs-eclim-setup)
-       (global-company-mode t)
-       (setq eclimd-wait-for-process nil)
-       (start-eclimd "~/workspace")
-       ;;; Displaying compilation error messages in the echo area
-       (setq help-at-pt-display-when-idle t)
-       (setq help-at-pt-timer-delay 0.1)
-       (help-at-pt-set-timer)
-       ;;; regular auto-complete initialization
-       (require 'auto-complete-config)
-       (ac-config-default)
-       ;;; add the emacs-eclim source
-       (require 'ac-emacs-eclim-source)
-       (ac-emacs-eclim-config)
-       ;;; yasnippet
-       (require 'yasnippet)
-       (yas-global-mode 1)
-       (require 'speedbar)
-       (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line))
+       ;; ;;; Java
+       ;; (require 'cl)
+       ;; (require 'eclim)
+       ;; (global-eclim-mode)
+       ;; (require 'eclimd)
+       ;; (require 'company)
+       ;; (require 'company-emacs-eclim)
+       ;; (company-emacs-eclim-setup)
+       ;; (global-company-mode t)
+       ;; (setq eclimd-wait-for-process nil)
+       ;; (start-eclimd "~/workspace")
+       ;; ;;; Displaying compilation error messages in the echo area
+       ;; (setq help-at-pt-display-when-idle t)
+       ;; (setq help-at-pt-timer-delay 0.1)
+       ;; (help-at-pt-set-timer)
+       ;; ;;; regular auto-complete initialization
+       ;; (require 'auto-complete-config)
+       ;; (ac-config-default)
+       ;; ;;; add the emacs-eclim source
+       ;; (require 'ac-emacs-eclim-source)
+       ;; (ac-emacs-eclim-config)
+       ;; ;;; yasnippet
+       ;; (require 'yasnippet)
+       ;; (yas-global-mode 1)
+       ;; (require 'speedbar)
+       ;; (define-key speedbar-mode-map (kbd "TAB") 'speedbar-expand-line)
+       )
       ((string= system-name "infiniti.ischool.utexas.edu") ; iSchool
        (set-face-attribute 'default nil :height 110)
        (set-frame-size (selected-frame) 88 58)))
