@@ -13,8 +13,8 @@
 ;;; Scrolling
 (setq scroll-margin 2)
 (setq scroll-step 1)
-;; (scroll-conservatively 10000)
-;;; Incremental search
+
+;;; Incremental search tweak
 (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
 (defun my-goto-match-beginning ()
   (when (and isearch-forward isearch-other-end (not isearch-mode-end-hook-quit))
@@ -24,9 +24,45 @@
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end)))
 
+;;; Programming
+(add-hook 'prog-mode-hook (lambda () (electric-indent-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (whole-line-or-region-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (show-paren-mode 1)))
+
+;;; Text Mode
+(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook (lambda () (flyspell-mode 1)))
+(add-hook 'text-mode-hook (lambda () (whole-line-or-region-mode 1)))
+
+;;; Scroll up and down buffer
+(global-set-key (kbd "M-n") 'scroll-up-line)
+(global-set-key (kbd "M-p") 'scroll-down-line)
+
+;;; Use `ibuffer' instead of `list-buffers'
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;; Magit
+(global-set-key (kbd "C-c m") 'magit-status)
+
+;;; Docview mode reload PDFs automatigically when they change on disk
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+;;; Registers for jumping to files
+(set-register ?e '(file . "~/.emacs"))
+
 ;;; ido
 (require 'ido)
 (ido-mode t)
+
+;;; Paredit
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+(add-hook 'minibuffer-inactive-mode-hook  #'enable-paredit-mode)
 
 ;;; helm
 (require 'helm-config)
@@ -49,9 +85,6 @@
       helm-ff-file-name-history-use-recentf t)
 (helm-mode 1)
 
-(require 'shell)
-(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-
 ;;; helm swoop
 (require 'helm-swoop)
 (global-set-key (kbd "M-i") 'helm-swoop)
@@ -65,15 +98,9 @@
 (setq helm-swoop-move-to-line-cycle t)
 (setq helm-swoop-use-line-number-face t)
 
-;;; Paredit
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-(add-hook 'minibuffer-inactive-mode-hook  #'enable-paredit-mode)
+;;; Helm shell
+(require 'shell)
+(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 
 ;;; org mode
 (defun zin/org-cycle-current-headline ()
@@ -96,24 +123,61 @@
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
 
+;;; Python
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (define-key python-mode-map (kbd "RET") 'newline-and-indent)
+	    (autopair-mode 1)
+	    (electric-indent-mode -1)
+	    (setq
+	     python-shell-interpreter "ipython"
+	     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+	     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+	     python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+	     python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+	     python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")))
+(add-hook 'inferior-python-mode-hook (lambda () (autopair-mode 1)))
+
+;;; Python ctags
+(defun create-tags (dir-name)
+  "Create tags file."
+  (interactive "DDirectory: ")
+  (eshell-command 
+   (format "find %s -type f -name \"*.py\" | etags -" dir-name)))
+
+;;; Jedi
+(require 'jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'inferior-python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+(setq jedi:environment-root "jedi")  ; or any other name you like
+(setq jedi:environment-virtualenv
+      (append python-environment-virtualenv
+              '("--python" "/usr/bin/python3")))
+(setq jedi:server-args
+      '("--sys-path" "/usr/lib/python3/dist-packages/"))
+
 ;;; Location-specific settings
 (cond ((memq window-system '(mac ns))	; Mac
+       (define-key key-translation-map (kbd "¥") (kbd "C-x"))
        (setq command-line-default-directory "/Users/ebanner")
        (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
        (setq exec-path (append exec-path '("/usr/local/bin")))
        (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
        (setq exec-path (append exec-path '("/usr/texbin")))
-       (define-key key-translation-map (kbd "M-¥") (kbd "|"))
-       (define-key key-translation-map (kbd "M-|") (kbd "\\"))
+       (define-key key-translation-map (kbd "M-¥") (kbd "\\"))
+       (define-key key-translation-map (kbd "M-|") (kbd "|"))
        (set-face-attribute 'default nil :height 100)
        (set-frame-size (selected-frame) 95 52))
+      
       ((string= system-name "edward-All-Series") ; Home
+       ;;; Make C-x and M-x easy to press
+       (define-key key-translation-map (kbd "ESC") (kbd "C-x"))
        (set-face-attribute 'region nil :background "LightGoldenrod2")
        (set-frame-size (selected-frame) 87 53)
        ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
        (openwith-mode t)
        (setq openwith-associations (quote (("\\.pdf\\'" "atril" (file)) ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "mplayer" ("-idx" file)))))
-
        (require 'org)
        ;; (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
        (setq org-latex-pdf-process
@@ -122,6 +186,7 @@
        (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
        (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
        (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
+
        ;;; Make universal argument easier to press
        (define-key key-translation-map (kbd "ESC") (kbd "C-u"))
 
