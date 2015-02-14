@@ -57,17 +57,17 @@ nnoremap r gr
 " Clear highlighting from screen
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
+" Previous Buffer mapping
+nnoremap <Leader><Leader> <C-^>
+
 " Don't use Ex mode, use Q for formatting
-nnoremap Q gq
+nnoremap <Space> :
 
 " Y yanks until the end of the current line. Just like C and D.
 nnoremap Y y$
 
 " Visually select a line character-wise
 nnoremap <Leader>s v^o$h
-
-" Toggle folding of current fold with <Space>
-nnoremap <Space> za
 
 " Have gm do something more useful
 nnoremap gm :call SetCursorHalfway()<CR>
