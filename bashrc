@@ -6,12 +6,10 @@
 [[ $- != *i* ]] && return
 
 # Aliases
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias sudo='sudo '
 alias poweroff='systemctl poweroff'
-alias wli='wicd-curses'
 
 # Defines colors and sets the PS1 variable
 function set_prompt_style {
@@ -56,8 +54,4 @@ function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
 
-# Set the prompt
-set_prompt_style
-
-complete -c -f man  # tab completion
-set -o vi # Set vi-like editing mode of commands
+set -o emacs

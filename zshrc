@@ -33,12 +33,4 @@ function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
 
-# vi-mode quick <Esc>-/ fix (credit to marshaul)
-vi-search-fix() {
-    zle vi-cmd-mode
-    zle .vi-history-search-backward
-}
-
-autoload vi-search-fix
-zle -N vi-search-fix
-bindkey -M viins '\e/' vi-search-fix
+set -o emacs
