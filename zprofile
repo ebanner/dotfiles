@@ -6,7 +6,8 @@
 export EDITOR=vim
 export TERM=xterm
 
-# Setting PATH for Python 3.4
-# The orginal version is saved in .zprofile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-export PATH
+xmodmap -e "pointer = 3 2 1"
+setxkbmap -variant colemak us
+
+[[ -f ~/.Xmodmap.emacs ]] && xmodmap ~/.Xmodmap.emacs
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap

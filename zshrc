@@ -25,10 +25,6 @@ zstyle ':completion:*' menu select
 autoload -U promptinit
 promptinit
 
-# Aliases
-alias grep=ack
-alias c=cd
-
 # Set prompt
 prompt bart
 
