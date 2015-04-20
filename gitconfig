@@ -2,7 +2,7 @@
 	name = Edward Banner
 	email = edward.banner@gmail.com
 [core]
-	editor = emacs
+	editor = vim
 [push]
 	default = current
 [color]
