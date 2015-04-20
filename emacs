@@ -7,6 +7,7 @@
 
 (if (string= "lord-yupa.cs.utexas.edu" system-name)
     (progn  (add-to-list 'load-path "~/.emacs.d/lisp")
+	    (add-to-list 'load-path "~/.emacs.d/elisp")
 	    (require 'package)
 	    (package-initialize))
   (progn (require 'package)
@@ -18,6 +19,10 @@
 (add-to-list 'insert-pair-alist (list ?\$ ?\$))
 (global-set-key (kbd "M-$") 'insert-pair)
 (global-set-key (kbd "C-`") 'other-frame)
+
+;;; TA grading
+;; (load-file "~/.emacs.d/elisp/grading.el")
+(require 'grading)
 
 ;;; Visual
 (tool-bar-mode -1)
