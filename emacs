@@ -20,9 +20,12 @@
 (global-set-key (kbd "M-$") 'insert-pair)
 (global-set-key (kbd "C-`") 'other-frame)
 
-;;; TA grading
-;; (load-file "~/.emacs.d/elisp/grading.el")
+;;; Grading mode
 (require 'grading)
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (when (string= (file-name-nondirectory (buffer-file-name)) "rubric.org")
+	      (grading-mode))))
 
 ;;; Visual
 (tool-bar-mode -1)
