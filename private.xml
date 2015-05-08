@@ -53,6 +53,28 @@
                 KeyCode::OPTION_R
             </autogen>
         </item>
+        <item>
+            <name>Control to Up in Terminal</name>
+            <identifier>private.control_to_up_in_terminal</identifier>
+            <appendix>Control to Up so we can map it to C-x in Emacs</appendix>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+		KeyCode::CONTROL_L,
+                KeyCode::CURSOR_UP
+            </autogen>
+        </item>	
+	<item>
+            <name>Right Underscore to Yen in Terminal</name>
+            <identifier>private.right_underscore_to_yen_in_terminal</identifier>
+            <appendix>Right underscore to Yen so we can map it to escape in Terminal</appendix>
+	    <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_UNDERSCORE,
+                KeyCode::JIS_YEN
+            </autogen>
+        </item>	
     </item>
 
     <appdef>
@@ -73,9 +95,62 @@
             </autogen>
         </item>
     </item>
-
     <item>
         <name>Colemak</name>
+        <item>
+            <name>Three to Hash</name>
+            <identifier>private.three_to_hash</identifier>
+            <appendix>Gets Hash back to Three key</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_3,
+		ModifierFlag::SHIFT_L,
+                KeyCode::KEY_3,
+		ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
+            <name>Three to Return</name>
+            <identifier>private.Three_to_return</identifier>
+            <appendix>Binds 3 to Return</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_3,
+                KeyCode::RETURN
+            </autogen>
+        </item>
+        <item>
+            <name>Eight to Left Paren</name>
+            <identifier>private.Eight_to_left_paren</identifier>
+            <appendix>Gets Left Paren back to Eight key</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_8,
+		ModifierFlag::SHIFT_L,
+                KeyCode::KEY_8,
+		ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
+            <name>Eight to Return</name>
+            <identifier>private.eight_to_return</identifier>
+            <appendix>Binds 8 to Return</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_8,
+                KeyCode::RETURN
+            </autogen>
+        </item>	
+        <item>
+            <name>Tab to Return</name>
+            <identifier>private.tab_to_return</identifier>
+            <appendix>Binds Tab to Return</appendix>
+            <autogen>
+                __KeyToKey__
+                KeyCode::TAB,
+                KeyCode::RETURN
+            </autogen>
+        </item>	
         <item>
             <name>Q</name>
             <identifier>private.Q</identifier>
@@ -167,12 +242,12 @@
             </autogen>
         </item>
         <item>
-            <name>P-colon</name>
-            <identifier>private.P-colon</identifier>
-            <appendix>Colemak Colon</appendix>
+            <name>Colon</name>
+            <identifier>private.colon</identifier>
+            <appendix>QWERTY Colon</appendix>
             <autogen>
                 __KeyToKey__
-                KeyCode::P,
+                KeyCode::SEMICOLON,
 		ModifierFlag::SHIFT_L,
                 KeyCode::JIS_COLON
             </autogen>
@@ -407,9 +482,10 @@
             <appendix>Makes Right alt accessible with the right thumb</appendix>
             <only>EMACS</only>
             <autogen>
-                __KeyToKey__
+                __KeyOverlaidModifier__
                 KeyCode::COMMAND_R,
-                KeyCode::OPTION_R
+                KeyCode::OPTION_R,
+                KeyCode::JIS_YEN
             </autogen>
         </item>
         <item>
