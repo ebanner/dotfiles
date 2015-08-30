@@ -14,7 +14,7 @@ add Control = Control_L
 add Shift   = Shift_R
 
 ! Make up for number key loss
-keycode  68 = 3 F2
+keycode  67 = 3 F1
 keycode  71 = 7 F5
 keycode  72 = 8 F6
 keycode  74 = 9 F8
