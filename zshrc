@@ -3,11 +3,15 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+alias q=exit
+alias ls='ls --color'
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000000 # Number of lines to save in $HISTFILE
 SAVEHIST=10000000 # Number of lines of history to load up at invocation
-setopt autocd extendedglob nomatch notify append_history share_history
+REPORTTIME=10
+setopt autocd completeinword extendedglob extendedhistory interactivecomments nomatch notify append_history sharehistory
 unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
@@ -21,13 +25,15 @@ compinit
 # For autocomletion with an arrow-key driven interface
 zstyle ':completion:*' menu select
 
+# Tab completion should be case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Better completion for killall
+zstyle ':completion:*:killall:*' command 'ps -u $USER -o cmd'
+
 # Quick and easy way to set up colored prompt
 autoload -U promptinit
 promptinit
-
-# Aliases
-alias grep=ack
-alias c=cd
 
 # Set prompt
 prompt bart
@@ -37,4 +43,5 @@ function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
 
-set -o emacs
+set -o vi
+[[ $EMACS = t ]] && unsetopt zle
