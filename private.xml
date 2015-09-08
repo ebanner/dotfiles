@@ -207,13 +207,13 @@
             <autogen>
                 __KeyToKey__
                 KeyCode::KEY_9,
-                ModifierFlag::OPTION_L, KeyCode::KEY_9,
+                ModifierFlag::OPTION_L, KeyCode::KEY_9
             </autogen>
         </item>
         <item>
             <name>9 to Enter</name>
             <identifier>private.nine_to_enter</identifier>
-            <autogen> __KeyToKey__ KeyCode::KEY_9, KeyCode::ENTER, </autogen>
+            <autogen> __KeyToKey__ KeyCode::KEY_9, KeyCode::ENTER </autogen>
         </item>
         <item>
             <name>0 with Option</name>
