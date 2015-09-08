@@ -277,7 +277,7 @@
         <item>
             <name>Right Bracket</name>
             <identifier>private.right_bracket</identifier>
-            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGH T</autogen>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGHT </autogen>
         </item>
     </item>
 
