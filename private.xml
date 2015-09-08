@@ -1,103 +1,43 @@
 <?xml version="1.0"?>
 <root>
-
     <appdef>
         <appname>TERMINAL</appname>
         <equal>com.apple.Terminal</equal>
     </appdef>
-    
     <item>
-        <name>Terminal Keybindings</name>
+        <name>Terminal</name>
+        <item>
+            <name>KANA to Right Control</name>
+            <identifier>private.kana_to_right_control_TERMINAL</identifier>
+            <only>TERMINAL</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::JIS_KANA,
+                KeyCode::CONTROL_R
+            </autogen>
+        </item>
         <item>
             <name>3 to Control</name>
             <identifier>private.three_to_control</identifier>
-            <appendix>Three when pressed in isolation</appendix>
-            <only>TERMINAL</only>
+            <appendix>Still 3 when pressed in isolation</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_3,
-                KeyCode::CONTROL_L,
+                KeyCode::CONTROL_L,,
                 KeyCode::KEY_3
             </autogen>
         </item>
-        <item>
-            <name>EISUU to Left Control in terminal</name>
-            <identifier>private.left_control_to_left_control_in_terminal</identifier>
-            <appendix>Tab when pressed in isolation</appendix>
-            <only>TERMINAL</only>
-            <autogen>
-                __KeyOverlaidModifier__
-                KeyCode::JIS_EISUU,
-                KeyCode::CONTROL_L,
-                KeyCode::TAB
-            </autogen>
-        </item>
-        <item>
-            <name>KANA to Right Control in terminal</name>
-            <identifier>private.kana_to_right_control_in_terminal</identifier>
-            <appendix>Puts right control right under the right thumb</appendix>
-            <only>TERMINAL</only>
-            <autogen>
-                __KeyOverlaidModifier__
-                KeyCode::JIS_KANA,
-                KeyCode::CONTROL_R,
-                KeyCode::DELETE
-            </autogen>
-        </item>
-        <item>
-            <name>Left Command to Left Alt in terminal</name>
-            <identifier>private.left_command_to_left_alt_in_terminal</identifier>
-            <appendix>Makes Left alt accessible with the left thumb</appendix>
-            <only>TERMINAL</only>
-            <autogen>
-                __KeyToKey__
-                KeyCode::COMMAND_L,
-                KeyCode::OPTION_L
-            </autogen>
-        </item>
-        <item>
-            <name>Right Command to Right Alt in terminal</name>
-            <identifier>private.right_command_to_right_alt_in_terminal</identifier>
-            <appendix>Makes Right alt accessible with the right thumb</appendix>
-            <only>TERMINAL</only>
-            <autogen>
-                __KeyToKey__
-                KeyCode::COMMAND_R,
-                KeyCode::OPTION_R
-            </autogen>
-        </item>
-        <item>
-            <name>Control to Up in Terminal</name>
-            <identifier>private.control_to_up_in_terminal</identifier>
-            <appendix>Control to Up so we can map it to C-x in Emacs</appendix>
-            <only>TERMINAL</only>
-            <autogen>
-                __KeyToKey__
-		KeyCode::CONTROL_L,
-                KeyCode::CURSOR_UP
-            </autogen>
-        </item>	
-	<item>
-            <name>Right Underscore to Yen in Terminal</name>
-            <identifier>private.right_underscore_to_yen_in_terminal</identifier>
-            <appendix>Right underscore to Yen so we can map it to escape in Terminal</appendix>
-	    <only>TERMINAL</only>
-            <autogen>
-                __KeyToKey__
-                KeyCode::JIS_UNDERSCORE,
-                KeyCode::JIS_YEN
-            </autogen>
-        </item>	
     </item>
+
     <appdef>
         <appname>EMACS</appname>
         <equal>org.gnu.Emacs</equal>
     </appdef>
     <item>
-        <name>Emacs Keybindings</name>
+        <name>Emacs</name>
         <item>
-            <name>EISUU to Left Control in Emacs</name>
-            <identifier>private.left_control_to_left_control_in_emacs</identifier>
+            <name>EISUU to Left Control</name>
+            <identifier>private.left_control_to_left_control</identifier>
             <appendix>Tab when pressed in isolation</appendix>
             <only>EMACS</only>
             <autogen>
@@ -108,8 +48,8 @@
             </autogen>
         </item>
         <item>
-            <name>KANA to Right Control in Emacs</name>
-            <identifier>private.kana_to_right_control_in_emacs</identifier>
+            <name>KANA to Right Control</name>
+            <identifier>private.kana_to_right_control</identifier>
             <appendix>Puts right control right under the right thumb</appendix>
             <only>EMACS</only>
             <autogen>
@@ -120,8 +60,8 @@
             </autogen>
         </item>
         <item>
-            <name>Left Command to Left Alt in Emacs</name>
-            <identifier>private.left_command_to_left_alt_in_emacs</identifier>
+            <name>Left Command to Left Alt</name>
+            <identifier>private.left_command_to_left_alt</identifier>
             <appendix>Makes Left alt accessible with the left thumb</appendix>
             <only>EMACS</only>
             <autogen>
@@ -131,8 +71,8 @@
             </autogen>
         </item>
         <item>
-            <name>Right Command to Right Alt in Emacs</name>
-            <identifier>private.right_command_to_right_alt_in_emacs</identifier>
+            <name>Right Command to Right Alt</name>
+            <identifier>private.right_command_to_right_alt</identifier>
             <appendix>Makes Right alt accessible with the right thumb</appendix>
             <only>EMACS</only>
             <autogen>
@@ -143,8 +83,8 @@
             </autogen>
         </item>
         <item>
-            <name>Control to Yen in Emacs</name>
-            <identifier>private.control_to_yen_in_emacs</identifier>
+            <name>Control to Yen</name>
+            <identifier>private.control_to_yen</identifier>
             <appendix>Control to Yen so we can map it to escape in Emacs</appendix>
             <only>EMACS</only>
             <autogen>
@@ -154,8 +94,8 @@
             </autogen>
         </item>	
 	<item>
-            <name>Right Underscore to Yen in Emacs</name>
-            <identifier>private.right_underscore_to_yen_in_emacs</identifier>
+            <name>Right Underscore to Yen</name>
+            <identifier>private.right_underscore_to_yen</identifier>
             <appendix>Right underscore to Yen so we can map it to escape in Emacs</appendix>
 	    <only>EMACS</only>
             <autogen>
@@ -167,11 +107,39 @@
     </item>
 
     <item>
-        <name>Leverage Japanese Layout</name>
+        <name>Highest Row</name>
+        <item>
+            <name>Tilda</name>
+            <identifier>private.tilda</identifier>
+            <autogen> __KeyToKey__ KeyCode::ESCAPE, ModifierFlag::SHIFT_R, KeyCode::JIS_HAT, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>Backtick</name>
+            <identifier>private.backtick</identifier>
+            <autogen> __KeyToKey__ KeyCode::ESCAPE, KeyCode::JIS_ATMARK, ModifierFlag::SHIFT_L</autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Number Row</name>
+        <item>
+            <name>At</name>
+            <identifier>private.at</identifier>
+            <autogen>__KeyToKey__ KeyCode::KEY_2, ModifierFlag::SHIFT_R, KeyCode::JIS_ATMARK</autogen>
+        </item>
+        <item>
+            <name>2 to Tab</name>
+            <identifier>private.two_to_tab</identifier>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_2,
+                KeyCode::TAB
+            </autogen>
+        </item>
         <item>
             <name>3 to Command</name>
             <identifier>private.three_to_command</identifier>
-            <appendix>Three when pressed in isolation</appendix>
+            <appendix>Still 3 when pressed in isolation</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_3,
@@ -180,19 +148,9 @@
             </autogen>
         </item>
         <item>
-            <name>2 to Tab</name>
-            <identifier>private.two_to_tab</identifier>
-            <appendix>Make it Tab</appendix>
-            <autogen>
-                __KeyToKey__
-                KeyCode::KEY_2,
-                KeyCode::TAB
-            </autogen>
-        </item>
-        <item>
             <name>4 to Shift</name>
             <identifier>private.four_to_shift</identifier>
-            <appendix>Four when pressed in isolation</appendix>
+            <appendix>Still 4 when pressed in isolation</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_4,
@@ -201,9 +159,19 @@
             </autogen>
         </item>
         <item>
-            <name>7 to Control</name>
+            <name>Hat</name>
+            <identifier>private.hat</identifier>
+            <autogen> __KeyToKey__ KeyCode::KEY_6, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::JIS_HAT</autogen>
+        </item>
+        <item>
+            <name>Ampersand</name>
+            <identifier>private.ampersand</identifier>
+            <autogen> __KeyToKey__ KeyCode::KEY_7, ModifierFlag::SHIFT_L, KeyCode::KEY_6, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
+            <name>7 to Command</name>
             <identifier>private.seven_to_control</identifier>
-            <appendix>Seven when pressed in isolation</appendix>
+            <appendix>Still 7 when pressed in isolation</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_7,
@@ -212,26 +180,82 @@
             </autogen>
         </item>
         <item>
+            <name>Asterisk</name>
+            <identifier>private.asterisk</identifier>
+            <autogen> __KeyToKey__ KeyCode::KEY_8, ModifierFlag::SHIFT_L, KeyCode::JIS_COLON, ModifierFlag::SHIFT_L</autogen>
+        </item>
+        <item>
             <name>8 to Shift</name>
             <identifier>private.eight_to_shift</identifier>
-            <appendix>Eight when pressed in isolation</appendix>
+            <appendix>Still 8 when pressed in isolation</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_8,
-                KeyCode::SHIFT_L,
+                KeyCode::SHIFT_R,
                 KeyCode::KEY_8
             </autogen>
         </item>
         <item>
             <name>9 to Enter</name>
             <identifier>private.nine_to_enter</identifier>
-            <appendix>Nine when pressed in isolation</appendix>
             <autogen>
                 __KeyToKey__
                 KeyCode::KEY_9,
                 KeyCode::ENTER,
             </autogen>
         </item>
+        <item>
+            <name>Right Paren</name>
+            <identifier>private.right_paren</identifier>
+            <autogen> 
+                __KeyToKey__
+                KeyCode::KEY_0, ModifierFlag::SHIFT_L,
+                KeyCode::KEY_9, ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
+            <name>Left Paren</name>
+            <identifier>private.left_paren</identifier>
+            <autogen> 
+                __KeyToKey__
+                KeyCode::KEY_0,
+                KeyCode::KEY_8,
+                ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
+            <name>Underscore</name>
+            <identifier>private.underscore</identifier>
+            <autogen> __KeyToKey__ KeyCode::MINUS, ModifierFlag::SHIFT_L, KeyCode::JIS_UNDERSCORE</autogen>
+        </item>
+        <item>
+            <name>Plus</name>
+            <identifier>private.plus</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_HAT, ModifierFlag::SHIFT_L, KeyCode::KEYPAD_PLUS</autogen>
+        </item>
+        <item>
+            <name>Equals</name>
+            <identifier>private.equals</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_HAT, KeyCode::KEYPAD_EQUAL</autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Top Row</name>
+        <item>
+            <name>Fix Left Bracket</name>
+            <identifier>private.fix_left_bracket</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_ATMARK, KeyCode::JIS_BRACKET_LEFT</autogen>
+        </item>
+        <item>
+            <name>Fix Right Bracket</name>
+            <identifier>private.fix_right_bracket</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGHT</autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Home Row</name>
         <item>
             <name>Control to Escape</name>
             <identifier>private.control_to_escape</identifier>
@@ -244,19 +268,8 @@
             </autogen>
         </item>
 	<item>
-            <name>Right Underscore to Escape</name>
-            <identifier>private.right_underscore_to_escape</identifier>
-            <appendix>Right underscore to Escape</appendix>
-            <autogen>
-                __KeyToKey__
-                KeyCode::JIS_UNDERSCORE,
-                KeyCode::ESCAPE
-            </autogen>
-        </item>	
-	<item>
-            <name>Fix Colon</name>
-            <identifier>private.fix_colon</identifier>
-            <appendix>Fix colon</appendix>
+            <name>Colon</name>
+            <identifier>private.colon</identifier>
             <autogen>
                 __KeyToKey__
                 KeyCode::SEMICOLON,
@@ -265,138 +278,41 @@
             </autogen>
         </item>
         <item>
-            <name>Right Shift Winnage</name>
-            <identifier>private.right_shift_winnage</identifier>
-            <appendix>Overlay semicolon with Shift</appendix>
+            <name>Double Quote</name>
+            <identifier>private.double_quote</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_COLON, ModifierFlag::SHIFT_L, KeyCode::KEY_2, ModifierFlag::SHIFT_L </autogen>
+        </item>
+        <item>
+            <name>Single Quote</name>
+            <identifier>private.single_quote</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_COLON, KeyCode::KEY_7, ModifierFlag::SHIFT_L </autogen>
+        </item>
+        <item>
+            <name>Pipe</name>
+            <identifier>private.pipe</identifier>
+            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_RIGHT, ModifierFlag::SHIFT_L, KeyCode::JIS_YEN</autogen>
+        </item>
+    </item>
+
+    <item>
+        <name>Bottom Row</name>
+        <item>
+            <name>KANA to Right Command</name>
+            <identifier>private.kana_to_right_command</identifier>
             <autogen>
-                __KeyOverlaidModifier__
-                KeyCode::SEMICOLON,
-                KeyCode::SHIFT_R,
-                KeyCode::SEMICOLON
+                __KeyToKey__
+                KeyCode::JIS_KANA,
+                KeyCode::COMMAND_R
             </autogen>
         </item>
         <item>
             <name>EISUU to Left Command</name>
             <identifier>private.eisuu_to_left_command</identifier>
-            <appendix>Tab when pressed in isolation</appendix>
             <autogen>
-                __KeyOverlaidModifier__
+                __KeyToKey__
                 KeyCode::JIS_EISUU,
-                KeyCode::COMMAND_L,
-                KeyCode::TAB
-            </autogen>
-        </item>
-        <item>
-            <name>KANA to Right Command</name>
-            <identifier>private.kana_to_right_command</identifier>
-            <appendix>Backspace when pressed in isolation</appendix>
-            <autogen>
-                __KeyOverlaidModifier__
-                KeyCode::JIS_KANA,
-                KeyCode::COMMAND_R,
-                KeyCode::DELETE
+                KeyCode::COMMAND_L
             </autogen>
         </item>
     </item>
-    <item>
-        <name>Japanese Layout Idiosyncracies</name>
-        <item>
-            <name>Fix At</name>
-            <identifier>private.fix_at</identifier>
-            <appendix>Fixes At</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_2, ModifierFlag::SHIFT_R, KeyCode::JIS_ATMARK</autogen>
-        </item>
-        <item>
-            <name>Fix Right Bracket</name>
-            <identifier>private.fix_right_bracket</identifier>
-            <appendix>Fixes Right Bracket</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGHT</autogen>
-        </item>
-        <item>
-            <name>Fix Left Bracket</name>
-            <identifier>private.fix_left_bracket</identifier>
-            <appendix>Fixes Left Bracket</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_ATMARK, KeyCode::JIS_BRACKET_LEFT</autogen>
-        </item>
-        <item>
-            <name>Fix Hat</name>
-            <identifier>private.fix_hat</identifier>
-            <appendix>Fixes Hat</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_6, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::JIS_HAT</autogen>
-        </item>
-        <item>
-            <name>Fix Ampersand</name>
-            <identifier>private.fix_ampersand</identifier>
-            <appendix>Fixes Ampersand</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_7, ModifierFlag::SHIFT_L, KeyCode::KEY_6, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Asterisk</name>
-            <identifier>private.fix_asterisk</identifier>
-            <appendix>Fixes Asterisk</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_8, ModifierFlag::SHIFT_L, KeyCode::JIS_COLON, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Left Paren</name>
-            <identifier>private.fix_left_paren</identifier>
-            <appendix>Fixes Left Paren</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_9, ModifierFlag::SHIFT_L, KeyCode::KEY_8, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Right Paren</name>
-            <identifier>private.fix_right_paren</identifier>
-            <appendix>Fixes Right Paren</appendix>
-            <autogen> __KeyToKey__ KeyCode::KEY_0, ModifierFlag::SHIFT_L, KeyCode::KEY_9, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Underscore</name>
-            <identifier>private.fix_underscore</identifier>
-            <appendix>Fixes Underscore</appendix>
-            <autogen> __KeyToKey__ KeyCode::MINUS, ModifierFlag::SHIFT_L, KeyCode::JIS_UNDERSCORE</autogen>
-        </item>
-        <item>
-            <name>Fix Plus</name>
-            <identifier>private.fix_plus</identifier>
-            <appendix>Fixes Plus</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_HAT, ModifierFlag::SHIFT_L, KeyCode::KEYPAD_PLUS</autogen>
-        </item>
-        <item>
-            <name>Fix Equals</name>
-            <identifier>private.fix_equals</identifier>
-            <appendix>Fixes Equals</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_HAT, KeyCode::KEYPAD_EQUAL</autogen>
-        </item>
-        <item>
-            <name>Fix Pipe</name>
-            <identifier>private.fix_pipe</identifier>
-            <appendix>Fixes Pipe</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_RIGHT, ModifierFlag::SHIFT_L, KeyCode::JIS_YEN</autogen>
-        </item>
-        <item>
-            <name>Fix Tilda</name>
-            <identifier>private.fix_tilda</identifier>
-            <appendix>Fixes Tilda</appendix>
-            <autogen> __KeyToKey__ KeyCode::ESCAPE, ModifierFlag::SHIFT_R, KeyCode::JIS_HAT, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Backtick</name>
-            <identifier>private.fix_backtick</identifier>
-            <appendix>Fixes Backtick</appendix>
-            <autogen> __KeyToKey__ KeyCode::ESCAPE, KeyCode::JIS_ATMARK, ModifierFlag::SHIFT_L</autogen>
-        </item>
-        <item>
-            <name>Fix Double Quote</name>
-            <identifier>private.fix_double_quote</identifier>
-            <appendix>Fixes Double Quote</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_COLON, ModifierFlag::SHIFT_L, KeyCode::KEY_2, ModifierFlag::SHIFT_L </autogen>
-        </item>
-        <item>
-            <name>Fix Quote</name>
-            <identifier>private.fix_quote</identifier>
-            <appendix>Fixes Quotes</appendix>
-            <autogen> __KeyToKey__ KeyCode::JIS_COLON, KeyCode::KEY_7, ModifierFlag::SHIFT_L </autogen>
-        </item>
-    </item>
-    
-
 </root>
