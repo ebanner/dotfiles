@@ -243,13 +243,13 @@
     <item>
         <name>Top Row</name>
         <item>
-            <name>Fix Left Bracket</name>
-            <identifier>private.fix_left_bracket</identifier>
+            <name>Left Bracket</name>
+            <identifier>private.left_bracket</identifier>
             <autogen> __KeyToKey__ KeyCode::JIS_ATMARK, KeyCode::JIS_BRACKET_LEFT</autogen>
         </item>
         <item>
-            <name>Fix Right Bracket</name>
-            <identifier>private.fix_right_bracket</identifier>
+            <name>Right Bracket</name>
+            <identifier>private.right_bracket</identifier>
             <autogen> __KeyToKey__ KeyCode::JIS_BRACKET_LEFT, KeyCode::JIS_BRACKET_RIGHT</autogen>
         </item>
     </item>
