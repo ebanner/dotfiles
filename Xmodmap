@@ -1,33 +1,14 @@
 ! Left hand number hack
 keycode  11 = Tab at
-keycode  12 = Control_L numbersign
-keycode  13 = Shift_L dollar
-add Control = Control_L
-add Shift   = Shift_L
+keycode  12 = 3 numbersign
+keycode  13 = 4 dollar
 
 ! Right hand number hack
-keycode  16 = Control_L ampersand
-keycode  17 = Shift_R asterisk
+keycode  16 = 7 ampersand
+keycode  17 = 8 asterisk
 keycode  18 = Return Return
 keycode  19 = parenleft parenright
-add Control = Control_L
-add Shift   = Shift_R
-
-! Make up for number key loss
-keycode  68 = 3 F2
-keycode  71 = 7 F5
-keycode  72 = 8 F6
-keycode  74 = 9 F8
-keycode  75 = 0 F9
-
-! Japanese Keyboard
-keycode 100 = Control_L
-keycode 101 = Alt_L
-keycode 102 = Control_L
-add Control = Control_L
-add Control = Control_L
 
 ! Caps Lock
-keycode  66 = Control_L
+keycode  66 = Escape
 clear Lock
-add Control = Control_L
