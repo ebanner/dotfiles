@@ -25,15 +25,10 @@ set formatoptions+=r
 set infercase
 set linebreak
 set modelines=1
+set number
 
 if 703 <# v:version
     set formatoptions+=j
-endif
-
-if exists('+relativenumber')
-    set relativenumber
-else
-    set number
 endif
 
 if has('persistent_undo')
@@ -60,9 +55,6 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " Previous Buffer mapping
 nnoremap <Leader><Leader> <C-^>
-
-" Don't use Ex mode, use Q for formatting
-nnoremap <Space> :
 
 " Y yanks until the end of the current line. Just like C and D.
 nnoremap Y y$
