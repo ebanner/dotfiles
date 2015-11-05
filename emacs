@@ -159,8 +159,6 @@
 	    (auto-fill-mode 1)
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)
 	    (define-key org-mode-map (kbd "RET") 'org-return-indent)
-	    (define-key org-mode-map (kbd "M-i") 'org-mark-element)
-	    (define-key org-mode-map (kbd "M-h") 'backward-kill-word)
 	    (define-key org-mode-map (kbd "C-c TAB") 'zin/org-cycle-current-headline)))
 (define-key global-map (kbd "C-c c") 'org-capture)
 
