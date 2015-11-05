@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-DOTFILES_DIR = 'dotfiles/'
+DOTFILES_DIR = '.dotfiles/'
 BACKUP_DIR = '.' + 'dotfiles.backup/'
 DOTFILES = 'dotfiles'
 

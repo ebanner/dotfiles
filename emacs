@@ -8,7 +8,8 @@
     (progn  (add-to-list 'load-path "~/.emacs.d/lisp")
 	    (add-to-list 'load-path "~/.emacs.d/elisp")
 	    (require 'package)
-	    (package-initialize))
+	    (package-initialize)
+	    (require 'autopair-latex))
   (progn (require 'package)
 	 (package-initialize)
 	 (add-to-list 'load-path "~/.emacs.d/lisp")))
@@ -18,10 +19,17 @@
   (add-to-list 'load-path (concat "~/.emacs.d/" dir)))
 
 (require 'autopair-latex)
-
 (add-to-list 'insert-pair-alist (list ?\$ ?\$))
 (global-set-key (kbd "M-$") 'insert-pair)
 (global-set-key (kbd "C-`") 'other-frame)
+
+;;; Grading mode
+;(add-to-list 'load-path "~/.emacs.d/elisp")
+;; (require 'grading)
+;; (add-hook 'org-mode-hook
+;; 	  (lambda ()
+;; 	    (when (string= (file-name-nondirectory (buffer-file-name)) "rubric.org")
+;; 	      (grading-mode))))
 
 ;;; Visual
 (tool-bar-mode -1)
@@ -155,15 +163,14 @@
        ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
        (openwith-mode t)
        (setq openwith-associations (quote (("\\.pdf\\'" "atril" (file)) ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "mplayer" ("-idx" file)))))
-       (require 'org)
+       ;; (require 'org)
        ;; (org-babel-load-file "~/.emacs.d/elisp/research-toolkit.org")
-       (setq org-latex-pdf-process
-	     '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+       ;; (setq org-latex-pdf-process
+       ;; 	     '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
        ;; (org-babel-load-file "~/.emacs.d/elisp/org-ref.org")
-       (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-       (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
-       (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
-
+       ;; (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+       ;; (setq org-ref-default-bibliography (quote ("~/Classes/CS386/Project/citations")))
+       ;; (setq reftex-default-bibliography (quote ("~/Classes/CS386/Project/citations")
        ;;; Make universal argument easier to press
        (define-key key-translation-map (kbd "ESC") (kbd "C-u")))
       
