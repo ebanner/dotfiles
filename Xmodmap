@@ -14,7 +14,6 @@ keycode  66 = Escape
 clear Lock
 
 ! Make up for number hack inconveniences
-keycode  67 = 2
-keycode  68 = at
+keycode  67 = 2 at
 keycode  74 = 9
 keycode  75 = 0
