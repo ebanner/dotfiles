@@ -7,7 +7,8 @@
 
 alias q=exit
 alias ls='ls --color'
-
+alias grep='grep --color'
+alias ack=ack-grep
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000000 # Number of lines to save in $HISTFILE
@@ -43,6 +44,14 @@ prompt bart
 # cd's up to the directory into your current path
 function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
+}
+
+function ffind {
+    [[ $# -eq 1 ]] && find . -type f -name $1
+}
+
+function dfind {
+    [[ $# -eq 1 ]] && find . -type d -name $1
 }
 
 set -o vi
