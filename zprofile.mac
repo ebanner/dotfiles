@@ -1,0 +1,6 @@
+# Mac-specific environment variables
+
+PYTHONPATH=/Users/ebanner/Research/code/cochranenlp
+PYTHONPATH+=:/Users/ebanner/Research/code
+
+export PYTHONPATH
