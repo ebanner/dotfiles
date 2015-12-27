@@ -3,8 +3,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-[ -f ~/.zshrc.mac ] && . ~/.zshrc.mac
-
 alias q=exit
 alias ls='ls --color'
 alias grep='grep --color'
@@ -56,3 +54,6 @@ function dfind {
 
 set -o vi
 [[ $EMACS = t ]] && unsetopt zle
+
+# Override settings with mac zshrc
+[[ -f ~/.zshrc.mac ]] && source ~/.zshrc.mac
