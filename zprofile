@@ -4,3 +4,5 @@
 [ -f ~/.zshrc ] && . ~/.zshrc
 
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
+[[ $HOST -eq 'masenko' ]] && source ~/.zprofile.masenko
