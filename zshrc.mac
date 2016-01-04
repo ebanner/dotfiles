@@ -1,0 +1,5 @@
+# Mac-specific settings
+
+alias ls='ls'
+
+export PATH=~/anaconda/bin:$PATH

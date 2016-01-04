@@ -54,3 +54,6 @@ function dfind {
 
 set -o vi
 [[ $EMACS = t ]] && unsetopt zle
+
+# Override settings with mac zshrc
+[[ -f ~/.zshrc.mac ]] && source ~/.zshrc.mac

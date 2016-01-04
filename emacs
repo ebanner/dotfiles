@@ -152,7 +152,9 @@
        (define-key key-translation-map (kbd "M-¥") (kbd "\\"))
        (define-key key-translation-map (kbd "M-|") (kbd "|"))
        (set-face-attribute 'default nil :height 100)
-       (set-frame-size (selected-frame) 95 52))
+       (set-frame-size (selected-frame) 95 52)
+       (set-face-attribute 'default nil
+                :family "Inconsolata" :height 120 :weight 'normal))
       
       ((string= system-name "edward-All-Series") ; Home
        ;;; Make C-x and M-x easy to press
@@ -227,7 +229,10 @@
  '(ido-auto-merge-delay-time 2)
  '(nxml-sexp-element-flag t)
  '(org-export-with-email t)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.milkbox.net/packages/"))))
  '(projectile-indexing-method (quote native))
  '(scroll-margin 2)
  '(search-whitespace-regexp nil)

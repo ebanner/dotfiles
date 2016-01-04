@@ -26,11 +26,60 @@
     </item>
 
     <appdef>
+        <appname>FIREFOX</appname>
+        <equal>org.mozilla.firefox</equal>
+    </appdef>
+    <item>
+        <name>Firefox</name>
+        <item>
+            <name>3 to Control</name>
+            <identifier>private.three_to_control_in_firefox</identifier>
+            <only>FIREFOX</only>
+            <appendix>Still 3 when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_3,
+                KeyCode::CONTROL_L, KeyCode::KEY_3
+            </autogen>
+        </item>
+    </item>
+
+    <appdef>
+        <appname>CHROME</appname>
+        <equal>com.google.Chrome</equal>
+    </appdef>
+    <item>
+        <name>Chrome</name>
+        <item>
+            <name>3 to Control</name>
+            <identifier>private.three_to_control_in_chrome</identifier>
+            <only>CHROME</only>
+            <appendix>Still 3 when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_3,
+                KeyCode::CONTROL_L, KeyCode::KEY_3
+            </autogen>
+        </item>
+    </item>
+
+    <appdef>
         <appname>EMACS</appname>
         <equal>org.gnu.Emacs</equal>
     </appdef>
     <item>
         <name>Emacs</name>
+        <item>
+            <name>3 to Control</name>
+            <identifier>private.three_to_control_emacs</identifier>
+            <only>EMACS</only>
+            <appendix>Still 3 when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_3,
+                KeyCode::CONTROL_L, KeyCode::KEY_3
+            </autogen>
+        </item>
         <item>
             <name>EISUU to Left Control</name>
             <identifier>private.left_control_to_left_control</identifier>
@@ -211,9 +260,9 @@
             </autogen>
         </item>
         <item>
-            <name>9 to Enter</name>
-            <identifier>private.nine_to_enter</identifier>
-            <autogen> __KeyToKey__ KeyCode::KEY_9, KeyCode::ENTER </autogen>
+            <name>9 to Return</name>
+            <identifier>private.nine_to_return</identifier>
+            <autogen> __KeyToKey__ KeyCode::KEY_9, KeyCode::RETURN </autogen>
         </item>
         <item>
             <name>0 with Option</name>
@@ -257,7 +306,7 @@
             <autogen>
                 __KeyToKey__
                 KeyCode::JIS_HAT, ModifierFlag::SHIFT_L,
-                KeyCode::KEYPAD_PLUS
+                KeyCode::SEMICOLON, ModifierFlag::SHIFT_L
             </autogen>
         </item>
         <item>
