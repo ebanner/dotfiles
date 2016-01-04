@@ -11,7 +11,10 @@
 	    (package-initialize))
   (progn (require 'package)
 	 (package-initialize)
-	 (add-to-list 'load-path "~/.emacs.d/lisp")))
+	 (add-to-list 'load-path "~/.emacs.d/elisp")))
+
+;;; bibtex
+(setq org-latex-pdf-process (quote ("texi2dvi --pdf --clean --verbose --batch %f" "bibtex %b" "texi2dvi --pdf --clean --verbose --batch %f" "texi2dvi --pdf --clean --verbose --batch %f")))
 
 ;;; Add custom elisp code
 (dolist (dir  '("lisp" "elisp"))
@@ -106,6 +109,10 @@
          :empty-lines 1)
     ("a" "autonomous robots"
          entry (file+datetree "~/Journal/autonomous-robots.org")
+         "* %?"
+         :empty-lines 1)
+    ("p" "takeaways"
+         entry (file+datetree "~/Journal/takeaways.org")
          "* %?"
          :empty-lines 1)))
 (add-hook 'org-mode-hook 'org-hide-block-all)
