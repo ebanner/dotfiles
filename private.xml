@@ -134,6 +134,13 @@
 	    <only>EMACS</only>
             <autogen> __KeyToKey__ KeyCode::JIS_UNDERSCORE, KeyCode::JIS_YEN </autogen>
         </item>	
+        <item>
+            <name>Override 9</name>
+            <identifier>private.override_9</identifier>
+            <appendix>Make it so Alt-9 produces Alt-Return instead of 9</appendix>
+	    <only>EMACS</only>
+            <autogen> __KeyToKey__ KeyCode::KEY_9, ModifierFlag::OPTION_L, KeyCode::RETURN, ModifierFlag::OPTION_L</autogen>
+        </item>
     </item>
 
     <item>
