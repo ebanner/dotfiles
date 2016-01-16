@@ -7,4 +7,4 @@
 
 [ -f ~/.zprofile.mac ] && . ~/.zprofile.mac
 
-[[ $HOST -eq 'masenko' ]] && source ~/.zprofile.masenko
+[[ $HOST = 'masenko' ]] && source ~/.zprofile.masenko
