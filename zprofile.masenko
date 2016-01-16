@@ -1,0 +1,11 @@
+# cochranenlp
+PYTHONPATH=/home/ebanner/Research/code/cochranenlp:/home/ebanner/Research/code
+
+# cs393r project
+PYTHONPATH+=:/home/ebanner/Class/ml
+PYTHONPATH+=:/home/ebanner/Class/ml/lib
+
+# added by Anaconda3 2.3.0 installer
+PATH="/home/ebanner/.anaconda/bin:$PATH"
+
+export PATH PYTHONPATH

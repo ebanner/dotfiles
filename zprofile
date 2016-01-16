@@ -3,6 +3,8 @@
 # Get the aliases and functions
 [ -f ~/.zshrc ] && . ~/.zshrc
 
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
 [ -f ~/.zprofile.mac ] && . ~/.zprofile.mac
 
-[ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+[[ $HOST -eq 'masenko' ]] && source ~/.zprofile.masenko
