@@ -153,6 +153,9 @@ c.InteractiveShellApp.matplotlib = 'inline'
 # Deprecated, use PromptManager.in_template
 # c.TerminalInteractiveShell.prompt_in1 = 'In [\\#]: '
 
+# vi editing mode in terminal
+c.TerminalInteractiveShell.editing_mode = 'vi'
+
 # Enable deep (recursive) reloading by default. IPython can use the deep_reload
 # module which reloads changes in modules recursively (it replaces the reload()
 # function, so you don't need to change anything to use it). deep_reload()
