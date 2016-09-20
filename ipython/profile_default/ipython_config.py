@@ -40,6 +40,9 @@ c.InteractiveShellApp.exec_lines.append('%autoreload 2')
 # Use 'inline' backend for matplotlib
 c.InteractiveShellApp.matplotlib = 'inline'
 
+# Display images as svg
+c.InlineBackend.figure_format='svg'
+
 #------------------------------------------------------------------------------
 # TerminalIPythonApp configuration
 #------------------------------------------------------------------------------
