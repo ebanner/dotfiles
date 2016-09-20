@@ -112,6 +112,9 @@ c.InteractiveShellApp.matplotlib = 'inline'
 # A file to be run
 # c.TerminalIPythonApp.file_to_run = ''
 
+# Use no backend for terminal matplotlib to silence errors
+c.TerminalIPythonApp.matplotlib = None
+
 #------------------------------------------------------------------------------
 # TerminalInteractiveShell configuration
 #------------------------------------------------------------------------------
