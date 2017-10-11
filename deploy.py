@@ -1,3 +1,5 @@
+# Script to symlink all dotfiles. This directory must be at ~/.dotfiles!
+
 import os
 import subprocess
 import tempfile
@@ -38,7 +40,6 @@ if __name__ == '__main__':
             os.symlink(DOTFILES_DIR+dotfile, '.'+dotfile)
         except FileNotFoundError:
             pass
-
     # vim
     os.makedirs(HOME+'/.vim/autoload')
     dest, url = HOME+'/.vim/autoload/pathogen.vim', 'https://tpo.pe/pathogen.vim'
