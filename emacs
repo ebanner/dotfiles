@@ -13,6 +13,15 @@
 	 (package-initialize)
 	 (add-to-list 'load-path "~/.emacs.d/elisp")))
 
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (url (concat (if no-ssl "http" "https") "://melpa.org/packages/")))
+  (add-to-list 'package-archives (cons "melpa" url) t))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(package-initialize) ;; You might already have this line
+(setq inferior-lisp-program "/usr/local/bin/clisp")
+
+
 ;;; bibtex
 (setq org-latex-pdf-process (quote ("texi2dvi --pdf --clean --verbose --batch %f" "bibtex %b" "texi2dvi --pdf --clean --verbose --batch %f" "texi2dvi --pdf --clean --verbose --batch %f")))
 
@@ -76,11 +85,7 @@
 (require 'ido)
 (ido-mode t)
 
-(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
-(defun conditionally-enable-paredit-mode ()
-  "enable paredit-mode during eval-expression"
-  (if (eq this-command 'eval-expression)
-      (paredit-mode 1)))
+
 
 ;;; Paredit
 (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
@@ -91,6 +96,38 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 (add-hook 'minibuffer-inactive-mode-hook  'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
+(add-hook 'clojure-mode-hook          (lambda () (paredit-mode +1)))
+(add-hook 'slime-mode-hook            (lambda () (paredit-mode +1)))
+(add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1)))
+(add-hook 'comint-mode (lambda () (paredit-mode +1)))
+(add-to-list 'slime-contribs 'slime-fancy)
+
+;; Stop SLIME's REPL from grabbing DEL,
+;; which is annoying when backspacing over a '('
+(defun override-slime-repl-bindings-with-paredit ()
+  (define-key slime-repl-mode-map
+    (read-kbd-macro paredit-backward-delete-key) nil))
+(add-hook 'slime-repl-mode-hook 'override-slime-repl-bindings-with-paredit)
+(add-hook 'minibuffer-setup-hook 'conditionally-enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+(defun conditionally-enable-paredit-mode ()
+  "enable paredit-mode during eval-expression"
+  (if (eq this-command 'eval-expression)
+      (paredit-mode 1)))
+(defvar slime-repl-font-lock-keywords lisp-font-lock-keywords-2)
+(defun slime-repl-font-lock-setup ()
+  (setq font-lock-defaults
+        '(slime-repl-font-lock-keywords
+         ;; From lisp-mode.el
+         nil nil (("+-*/.<>=!?$%_&~^:@" . "w")) nil
+         (font-lock-syntactic-face-function
+         . lisp-font-lock-syntactic-face-function))))
+
+(add-hook 'slime-repl-mode-hook 'slime-repl-font-lock-setup)
 
 ;;; org mode
 (require 'org-mouse)
@@ -100,7 +137,7 @@
          "* %?"
          :empty-lines 1)
     ("m" "miscellaneous"
-         entry (file+datetree "~/Journal/misc.org")
+         entry (file+datetree "~/Documents/notes/notes.org")
          "* %?"
          :empty-lines 1)
     ("t" "teaching"
@@ -158,7 +195,7 @@
       
       ((string= system-name "edward-All-Series") ; Home
        ;;; Make C-x and M-x easy to press
-       (define-key key-translation-map (kbd "ESC") (kbd "C-x"))
+       ;; (define-key key-translation-map (kbd "ESC") (kbd "C-x"))
        (set-face-attribute 'region nil :background "LightGoldenrod2")
        (set-frame-size (selected-frame) 87 53)
        ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/org/")
@@ -233,6 +270,9 @@
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.milkbox.net/packages/"))))
+ '(package-selected-packages
+   (quote
+    (slime auctex cdlatex whole-line-or-region paredit-everywhere)))
  '(projectile-indexing-method (quote native))
  '(scroll-margin 2)
  '(search-whitespace-regexp nil)
@@ -247,4 +287,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "Ubuntu Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "unknown" :family "Ubuntu Mono")))))
