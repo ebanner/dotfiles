@@ -4,7 +4,6 @@
 [[ $- != *i* ]] && return
 
 alias q=exit
-alias ls='ls --color'
 alias grep='grep --color'
 alias ack=ack-grep
 # Lines configured by zsh-newuser-install
