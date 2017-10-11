@@ -5,7 +5,6 @@ import logging
 
 HOME = os.environ['HOME']
 DOTFILES_DIR = '{}/.dotfiles/'.format(HOME)
-BACKUP_DIR = '{}/.dotfiles.backup/'.format(HOME)
 
 
 def cd(dir):
