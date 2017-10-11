@@ -1,15 +1,11 @@
 import os
 import subprocess
-
-DOTFILES_DIR = '.dotfiles/'
-BACKUP_DIR = '.' + 'dotfiles.backup/'
-DOTFILES = 'dotfiles'
+import tempfile
+import logging
 
 HOME = os.environ['HOME']
-
-PATHOGEN_URL = 'https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim'
-
-DOTFILE_SEEN = False
+DOTFILES_DIR = '{}/.dotfiles/'.format(HOME)
+BACKUP_DIR = '{}/.dotfiles.backup/'.format(HOME)
 
 
 def cd(dir):
@@ -19,48 +15,34 @@ def cd(dir):
         print('Could not cd into {0}. Exiting.'.format(dir))
         exit(1)
 
+def read_dotfiles(dotfiles_path):
+    with open(dotfiles_path) as f:
+        dotfiles = [line.strip() for line in f.readlines()]
+    return dotfiles
+
+
 if __name__ == '__main__':
-    """Installs dotfiles to user's home directory
+    """Installs dotfiles to home directory
 
     Dotfiles already present are backed up then all dotfiles are symlinked from
     dotfiles/ into the user's home directory. Pathogen and other vim plugins are
-    installed if necessary.
+    also installed.
 
     """
     cd(HOME)
-
-    with open(DOTFILES_DIR + DOTFILES) as f:
-        dotfiles = [ line.strip() for line in f.readlines() ]
-
-    if not dotfiles:
-        print('Could not read {0}. Exiting.'.format(DOTFILES))
-        exit(2)
-
+    dotfiles = read_dotfiles(DOTFILES_DIR+'dotfiles')
+    tmpdir = tempfile.mkdtemp()
     for dotfile in dotfiles:
-        if os.path.isfile('.' + dotfile):
-            # Backup dotfile
-
-            if not DOTFILE_SEEN:
-                print('Existing dotfile(s) detected. Performing backup...')
-                DOTFILE_SEEN = True
-
-                if not os.path.exists(BACKUP_DIR):
-                    os.makedirs(BACKUP_DIR)
-
-            os.rename('.' + dotfile, BACKUP_DIR + dotfile)
-
         try:
-            os.symlink(DOTFILES_DIR + dotfile, '.' + dotfile)
-        except OSError:
-            os.remove('.' + dotfile)
-            os.symlink(DOTFILES_DIR + dotfile, '.' + dotfile)
+            logging.info('Moving {} to {}'.format(dotfile, tmpdir))
+            os.rename('.'+dotfile, tmpdir+dotfile)
+            os.symlink(DOTFILES_DIR+dotfile, '.'+dotfile)
+        except FileNotFoundError:
+            pass
 
-    cd(DOTFILES_DIR + 'vim')
-
-    if not os.path.isdir('autoload'):
-        # Install pathogen
-        os.makedirs('~/.vim/autoload')
-        subprocess.call(['curl', '-LSso', '~/.vim/autoload/pathogen.vim', PATHOGEN_URL])
-
-    # Pull in plugins as submodules
-    subprocess.call(['git', 'submodule', 'update', '--init'])
+    # vim
+    os.makedirs(HOME+'/.vim/autoload')
+    dest, url = HOME+'/.vim/autoload/pathogen.vim', 'https://tpo.pe/pathogen.vim'
+    subprocess.call(['curl', '-LSso', dest, url])
+    cd('.vim')
+    subprocess.call(['git', 'submodule', 'update', '--init']) # plugins
