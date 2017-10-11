@@ -81,6 +81,35 @@
             </autogen>
         </item>
         <item>
+            <name>0 with Option</name>
+            <identifier>private.0_with_option_emacs</identifier>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_0, ModifierFlag::OPTION_L,
+                KeyCode::KEY_0,
+            </autogen>
+        </item>
+        <item>
+            <name>0 to Alt</name>
+            <identifier>private.zero_to_alt</identifier>
+            <appendix>Still Right Paren when pressed in isolation</appendix>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_0,
+                KeyCode::OPTION_R,
+                KeyCode::KEY_8, ModifierFlag::SHIFT_L                
+            </autogen>
+        </item>
+        <item>
+            <name>Right Paren</name>
+            <identifier>private.right_paren_emas</identifier>
+            <autogen> 
+                __KeyToKey__
+                KeyCode::KEY_0, ModifierFlag::SHIFT_L,
+                KeyCode::KEY_9, ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
             <name>EISUU to Left Control</name>
             <identifier>private.left_control_to_left_control</identifier>
             <appendix>Tab when pressed in isolation</appendix>
