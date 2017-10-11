@@ -38,7 +38,7 @@ c.InteractiveShellApp.exec_lines.append('%autoreload 2')
 # c.InteractiveShellApp.file_to_run = ''
 
 # Use 'inline' backend for matplotlib
-c.InteractiveShellApp.matplotlib = 'inline'
+c.InteractiveShellApp.matplotlib = 'notebook'
 
 # Display images as svg
 c.InlineBackend.figure_format='svg'
