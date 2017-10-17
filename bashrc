@@ -53,3 +53,5 @@ function cd {
 function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
+
+set -o vi
