@@ -6,6 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Aliases
+alias ls='ls --color'
 alias grep='grep --color=auto'
 alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias sudo='sudo '
