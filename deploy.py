@@ -4,9 +4,12 @@ import os
 import subprocess
 import tempfile
 import logging
+logging.basicConfig(level=logging.INFO)
 
 HOME = os.environ['HOME']
+logging.info('Home dir ={}'.format(HOME))
 DOTFILES_DIR = '{}/.dotfiles/'.format(HOME)
+logging.info(DOTFILES_DIR)
 
 
 def cd(dir):
@@ -35,13 +38,20 @@ if __name__ == '__main__':
     tmpdir = tempfile.mkdtemp()
     for dotfile in dotfiles:
         try:
-            logging.info('Moving {} to {}'.format(dotfile, tmpdir))
             os.rename('.'+dotfile, tmpdir+dotfile)
+            logging.info('Moved {} to {}'.format(dotfile, tmpdir))
+        except:
+            pass
+        try:
             os.symlink(DOTFILES_DIR+dotfile, '.'+dotfile)
-        except FileNotFoundError:
+            logging.info('Linked {} to {}'.format(DOTFILES_DIR+dotfile, '.'+dotfile))
+        except:
             pass
     # vim
-    os.makedirs(HOME+'/.vim/autoload')
+    try:
+        os.makedirs(HOME+'/.vim/autoload')
+    except:
+        pass
     dest, url = HOME+'/.vim/autoload/pathogen.vim', 'https://tpo.pe/pathogen.vim'
     subprocess.call(['curl', '-LSso', dest, url])
     cd('.vim')

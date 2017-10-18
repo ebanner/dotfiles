@@ -6,6 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Aliases
+alias ls='ls --color'
 alias grep='grep --color=auto'
 alias clear='echo Use Ctrl-L instead you mangy jackrabbit!'
 alias sudo='sudo '
@@ -53,3 +54,5 @@ function cd {
 function up {
     [[ $# -eq 1 ]] && builtin cd $(awk -v dir=$1 'BEGIN { FS=dir } { print $1 }' <<< $PWD)$1
 }
+
+set -o vi
