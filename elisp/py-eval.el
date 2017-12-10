@@ -1,84 +1,19 @@
-(defun my/chomp (str)
+(defun other/chomp (str)
    "Trim leading and trailing whitespace from STR."
    (replace-regexp-in-string "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str))
 
-(defun my/eval-line ()
-  "Evaluate the current line"
-  ;; (ein:connect-eval-buffer)
-  (let* ((line (thing-at-point 'line t))
-         (line (my/chomp line)))
-    (ein:shared-output-eval-string line)
-    (sit-for 0.1)))
+(defun my/extract-variable (assignment-expression)
+  "Extract the variable name from `assignment-expression'
+(e.g. x = 3 -> x)"
+  (interactive "MAssignment expression: ")
+  (let* ((sub-exps (split-string assignment-expression " = "))
+         (variable (car sub-exps))
+         (variable (other/chomp variable)))
+    variable))
 
-(defun my/get-output ()
-  (with-current-buffer "*ein:shared-output*"
-    (let* ((output-text (buffer-substring-no-properties 1 (buffer-size)))
-           (lines (split-string output-text "\n")))
-      (nth 3 lines))))
-
-(defun my/put-output (output line-number)
-  "Evaluate a line of python and write its value to the *edward* buffer"
-  (get-buffer-create "*edward*")
-  (with-current-buffer "*edward*"
-    (progn (goto-line line-number)
-           (kill-line)
-           (insert output))))
-
-(defun my/do-eval ()
-  (interactive)
-  (my/eval-line)
-  (setq output (my/get-output))
-  (setq line-number (line-number-at-pos))
-  (print "output")
-  (print output)
-  (my/put-output output line-number))
-
-(defun my/send-line ()
-  (interactive)
-  (save-excursion
-    (mwim-beginning-of-code-or-line)
-    (set-mark (point))
-    (mwim-end-of-line-or-code)
-    (call-interactively 'kill-ring-save))
-  (with-current-buffer "*edward*"
-    (progn
-      (execute-extended-command nil "ein:worksheet-insert-cell-above")
-      (yank)
-      (execute-extended-command nil "ein:worksheet-execute-cell"))))
-(defun my/chomp (str)
-   "Trim leading and trailing whitespace from STR."
-   (replace-regexp-in-string "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str))
-
-(defun my/eval-line ()
-  "Evaluate the current line"
-  ;; (ein:connect-eval-buffer)
-  (let* ((line (thing-at-point 'line t))
-         (line (my/chomp line)))
-    (ein:shared-output-eval-string line)
-    (sit-for 0.1)))
-
-(defun my/get-output ()
-  (with-current-buffer "*ein:shared-output*"
-    (let* ((output-text (buffer-substring-no-properties 1 (buffer-size)))
-           (lines (split-string output-text "\n")))
-      (nth 3 lines))))
-
-(defun my/put-output (output line-number)
-  "Evaluate a line of python and write its value to the *edward* buffer"
-  (get-buffer-create "*edward*")
-  (with-current-buffer "*edward*"
-    (progn (goto-line line-number)
-           (kill-line)
-           (insert output))))
-
-(defun my/do-eval ()
-  (interactive)
-  (my/eval-line)
-  (setq output (my/get-output))
-  (setq line-number (line-number-at-pos))
-  (print "output")
-  (print output)
-  (my/put-output output line-number))
+(defun my/assignment-expression-p (expression)
+  "Return true if `expression' is an assignment expression (e.g. x = 3)"
+  (string-match-p (regexp-quote " = ") expression))
 
 (defun my/get-line (line-number)
   (interactive "nLine number: ")
@@ -91,32 +26,45 @@
     (kill-ring-save start end)
     (substring-no-properties (car kill-ring))))
 
-(defun my/eval-line (line &optional &rest a b c)
+(defun my/eval-expr (expr)
+  "Create new code cell in a EIN worksheet and evaluate `expr' in it"
   (interactive "MExpression: ")
-  (if (> (length line) 0)
+  (if (> (length expr) 0)
       (progn
-        (message (concat "Evaluating " line))
+        (message (concat "Evaluating " expr))
         (with-current-buffer "*edward*"
           (progn
             (execute-extended-command nil "ein:worksheet-insert-cell-above")
-            (insert line)
+            (insert expr)
             (execute-extended-command nil "ein:worksheet-execute-cell")
             (beginning-of-buffer)
             (execute-extended-command nil "ein:worksheet-goto-next-input"))))
-    (message "Skipping over blank line!")))
+    (message "Skipping over blank expr!")))
 
-;;; Global variables
-(setq *next-line-number-to-eval* 1)
+(defun my/get-expr (line-number)
+  "Return the line of text at `line-number' and expand it if it is an assignment expresssion for inspecting its value"
+  (interactive "nLine number: ")
+  (let ((line (my/get-line line-number)))
+    (if (my/assignment-expression-p line)
+        (let* ((variable (my/extract-variable line))
+               (expr (concat line "\n" variable)))
+          expr)
+      line)))
 
-;;; Main loop
-(defun my/check (&optional a b c)
+(defun my/loop (&optional a b c)
+  "Main Loop"
   (when (eq major-mode 'python-mode)
     (when (not (eq (line-number-at-pos) *next-line-number-to-eval*))
-      (let ((line (my/get-line *next-line-number-to-eval*)))
-        (my/eval-line line))
+      (let ((expr (my/get-expr *next-line-number-to-eval*)))
+        (my/eval-expr expr))
       (setq *next-line-number-to-eval* (line-number-at-pos)))
     (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
 
-(add-hook 'after-change-functions 'my/check)
+(defun my/eval-current-line ()
+  (interactive)
+  (let ((expr (my/get-expr (line-number-at-pos))))
+    (my/eval-expr expr)))
 
-
+;;; Global variables
+(setq *next-line-number-to-eval* 1)
+(add-hook 'after-change-functions 'my/loop)
