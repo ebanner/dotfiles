@@ -80,39 +80,43 @@
   (print output)
   (my/put-output output line-number))
 
-(setq *my/state* 'unmodified)
-(setq *my/line-number* nil)
-(defun my/check (&optional a b c)
-  (message "Hi there!")
-  (message "Hi there!")
-  (when (eq major-mode 'python-mode)
-    (progn
-      (message )
-      (if (eq *my/state* 'unmodified)
-          (progn
-            (setq *my/state* 'modified)
-            (setq *my/line-number* (line-number-at-pos))
-            (message (concat "State is now " (symbol-name *my/state*))))
-        (progn
-          (when (not (eq (line-number-at-pos) *my/line-number*))
-            (save-excursion
-              (my/send-line *my/line-number*)
-              (setq *my/state* 'unmodified)
-              (message (concat "State is now " (symbol-name *my/state*))))))))))
-
-(add-hook 'after-change-functions 'my/check)
-
-(defun my/send-line (line-number &optional &rest a b c)
-  (interactive)
+(defun my/get-line (line-number)
+  (interactive "nLine number: ")
   (save-excursion
     (goto-line line-number)
     (mwim-beginning-of-code-or-line)
     (setq start (point))
     (mwim-end-of-code-or-line)
     (setq end (point))
-    (kill-ring-save start end))
-  (with-current-buffer "*edward*"
-    (progn
-      (execute-extended-command nil "ein:worksheet-insert-cell-above")
-      (yank)
-      (execute-extended-command nil "ein:worksheet-execute-cell"))))
+    (kill-ring-save start end)
+    (substring-no-properties (car kill-ring))))
+
+(defun my/eval-line (line &optional &rest a b c)
+  (interactive "MExpression: ")
+  (if (> (length line) 0)
+      (progn
+        (message (concat "Evaluating " line))
+        (with-current-buffer "*edward*"
+          (progn
+            (execute-extended-command nil "ein:worksheet-insert-cell-above")
+            (insert line)
+            (execute-extended-command nil "ein:worksheet-execute-cell")
+            (beginning-of-buffer)
+            (execute-extended-command nil "ein:worksheet-goto-next-input"))))
+    (message "Skipping over blank line!")))
+
+;;; Global variables
+(setq *next-line-number-to-eval* 1)
+
+;;; Main loop
+(defun my/check (&optional a b c)
+  (when (eq major-mode 'python-mode)
+    (when (not (eq (line-number-at-pos) *next-line-number-to-eval*))
+      (let ((line (my/get-line *next-line-number-to-eval*)))
+        (my/eval-line line))
+      (setq *next-line-number-to-eval* (line-number-at-pos)))
+    (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
+
+(add-hook 'after-change-functions 'my/check)
+
+
