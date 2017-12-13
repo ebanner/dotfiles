@@ -34,11 +34,8 @@
         (message (concat "Evaluating " expr))
         (with-current-buffer "*edward*"
           (progn
-            (execute-extended-command nil "ein:worksheet-insert-cell-above")
-            (insert expr)
-            (execute-extended-command nil "ein:worksheet-execute-cell")
-            (beginning-of-buffer)
-            (execute-extended-command nil "ein:worksheet-goto-next-input"))))
+            (ein:cell-set-text cell expr)
+            (ein:worksheet-execute-cell ws cell))))
     (message "Skipping over blank expr!")))
 
 (defun my/get-expr (line-number)
@@ -65,6 +62,28 @@
   (let ((expr (my/get-expr (line-number-at-pos))))
     (my/eval-expr expr)))
 
+(defun my/ein:eval-current-line ()
+  (interactive)
+  (setq start (point))
+  (when (not mark-active)
+    (beginning-of-line)
+    (set-mark (point))
+    (end-of-line))
+  (call-interactively 'ein:connect-eval-region)
+  (setq mark-active nil)
+  (goto-char start))
+
+;; (add-hook 'ein:connect-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "<C-return>") (quote my/ein:eval-current-line))))
+
 ;;; Global variables
 (setq *next-line-number-to-eval* 1)
 (add-hook 'after-change-functions 'my/loop)
+
+;; (setq cell (ein:worksheet-get-current-cell :cell-p #'ein:codecell-p))
+;; (setq ws (ein:worksheet--get-ws-or-error))
+
+(setq print-level 1)
+(setq print-length 1)
+(setq print-circle t)
