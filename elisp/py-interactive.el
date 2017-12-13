@@ -52,26 +52,9 @@
   "Main Loop"
   (when (eq major-mode 'python-mode)
     (when (not (eq (line-number-at-pos) *next-line-number-to-eval*))
-      (let ((expr (my/get-expr *next-line-number-to-eval*)))
-        (my/eval-expr expr))
+      (my/eval-buffer)
       (setq *next-line-number-to-eval* (line-number-at-pos)))
     (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
-
-(defun my/eval-current-line ()
-  (interactive)
-  (let ((expr (my/get-expr (line-number-at-pos))))
-    (my/eval-expr expr)))
-
-(defun my/ein:eval-current-line ()
-  (interactive)
-  (setq start (point))
-  (when (not mark-active)
-    (beginning-of-line)
-    (set-mark (point))
-    (end-of-line))
-  (call-interactively 'ein:connect-eval-region)
-  (setq mark-active nil)
-  (goto-char start))
 
 ;; (add-hook 'ein:connect-mode-hook
 ;;           (lambda ()
@@ -87,3 +70,39 @@
 (setq print-level 1)
 (setq print-length 1)
 (setq print-circle t)
+
+;; (setq table (make-hash-table))
+;; (puthash 1 cell table)
+;; (gethash 1 table)
+;; (gethash 2 table)
+
+;; (defun my/get-lines ()
+;;   (interactive)
+;;   (let ((buffer-string (buffer-substring-no-properties 1 (buffer-size))))
+;;     (split-string buffer-string "\n")))
+
+(defun my/clear-cells ()
+  (with-current-buffer "*edward*"
+    (beginning-of-buffer)
+    (while t (setq not-done (call-interactively 'ein:worksheet-kill-cell)))))
+
+(defun my/number-of-lines ()
+  (save-excursion
+    (end-of-buffer)
+    (1- (line-number-at-pos))))
+
+(defun my/eval-exprs (exprs)
+  (with-current-buffer "*edward*"
+    (dolist (expr exprs)
+      (call-interactively 'ein:worksheet-insert-cell-below)
+      (insert expr)
+      (call-interactively 'ein:worksheet-execute-cell))))
+
+(defun my/eval-buffer ()
+  (interactive)
+  (condition-case exception
+      (my/clear-cells)
+    ('error))
+  (let* ((line-numbers (number-sequence 1 (my/number-of-lines)))
+         (exprs (mapcar (lambda (line) (my/get-expr line)) line-numbers)))
+    (my/eval-exprs exprs)))
