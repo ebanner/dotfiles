@@ -11,7 +11,9 @@ def annotate(*code):
     tree = ast.parse(code)
     stmts = [astor.to_source(stmt).rstrip() for stmt in tree.body]
     cell_commands = [f'epc_client.call_sync("""make-code-cell-and-eval""", ["""{stmt}"""])' for stmt in stmts]
-    commands = [f'{stmt}; {cell_command}' for stmt, cell_command in zip(stmts, cell_commands)]
+    nb_stmt = len(tree.body)
+    commands = [None]*(nb_stmt*3)
+    commands[0::3], commands[1::3], commands[2::3] = stmts, cell_commands, ['time.sleep(0.01)']*nb_stmt
     new_code = '\n'.join(commands)
     return new_code
 

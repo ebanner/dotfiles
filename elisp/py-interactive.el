@@ -43,6 +43,7 @@
 
 (defun my/make-code-cell-and-eval (expr)
   (interactive "MExpression: ")
+  (message "Inserting: %S" expr)
   (with-current-buffer "*edward*"
     (end-of-buffer)
     (call-interactively 'ein:worksheet-insert-cell-below)
@@ -79,7 +80,12 @@
     (deferred:nextc it
       (lambda (annotated-code)
         (message "Annotated code: %S" annotated-code)
-        (ein:shared-output-eval-string annotated-code)))))
+        (ein:shared-output-eval-string annotated-code)))
+    (deferred:error it
+      (lambda (err)
+        (cond
+         ((stringp err) (message "Error is %S" err))
+         ((eq 'epc-error (car err)) (message "Error is %S" (cadr err))))))))
 
 (defun my/process-buffer ()
   (interactive)
