@@ -9,6 +9,8 @@ def annotate(*code):
     """Annotate code with code to make and eval cells"""
     code = code[0]
     tree = ast.parse(code)
+    if len(tree.body) == 1 and isinstance(tree.body[0], ast.FunctionDef):
+        tree = tree.body[0] # throw out the function definition
     stmts = [astor.to_source(stmt).rstrip() for stmt in tree.body]
     cell_commands = [f'epc_client.call_sync("""make-code-cell-and-eval""", ["""{stmt}"""])' for stmt in stmts]
     nb_stmt = len(tree.body)

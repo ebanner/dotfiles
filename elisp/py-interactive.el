@@ -5,14 +5,15 @@
 (defun my/loop (&optional a b c)
   "Main Loop"
   (when (string= (buffer-name) "*client*")
-    (message "Change at %S!" (list a b c))
-    (message "Change is %S!" (buffer-substring-no-properties a b))
-    (message "Change has a length of %S" c)
+    ;; (message "Change at %S!" (list a b c))
+    ;; (message "Change is %S!" (buffer-substring-no-properties a b))
+    ;; (message "Change has a length of %S" c)
     (let ((line-no (line-number-at-pos)))
       (when (not (eq line-no *next-line-number-to-eval*))
         (setq *next-line-number-to-eval* line-no)
         (my/do-process)))
-    (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
+    ;; (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))
+    ))
 
 ;; (defun my/ein:eval-current-line ()
 ;;   (interactive)
@@ -47,7 +48,7 @@
 
 (defun my/make-code-cell-and-eval (expr)
   (interactive "MExpression: ")
-  (message "Inserting: %S" expr)
+  ;; (message "Inserting: %S" expr)
   (with-current-buffer "*edward*"
     (end-of-buffer)
     (call-interactively 'ein:worksheet-insert-cell-below)
@@ -64,8 +65,8 @@
       mngr 'make-code-cell-and-eval
       (lambda (&rest args)
         (let ((expr (car args)))
-          (message "MAKE-CODE-CELL-AND-EVAL got %S" args)
-          (message "TYPE = %S" (type-of args))
+          ;; (message "MAKE-CODE-CELL-AND-EVAL got %S" args)
+          ;; (message "TYPE = %S" (type-of args))
           (my/make-code-cell-and-eval expr)
           nil)))))
  9999)
@@ -83,7 +84,7 @@
     (epc:call-deferred my-epc 'annotate `(,code))
     (deferred:nextc it
       (lambda (annotated-code)
-        (message "Annotated code: %S" annotated-code)
+        ;; (message "Annotated code: %S" annotated-code)
         (ein:shared-output-eval-string annotated-code)))
     (deferred:error it
       (lambda (err)
@@ -110,7 +111,7 @@
 (defun my/do-process ()
   (interactive)
   (let ((code (my/get-code)))
-    (message "Doing code = %S" code)
+    ;; (message "Doing code = %S" code)
     (my/clear-cells)
     (my/annotate-make-cells-eval code)))
 
