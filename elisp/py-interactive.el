@@ -1,60 +1,25 @@
-(defun other/chomp (str)
-   "Trim leading and trailing whitespace from STR."
-   (replace-regexp-in-string "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str))
-
-(defun my/extract-variable (assignment-expression)
-  "Extract the variable name from `assignment-expression'
-(e.g. x = 3 -> x)"
-  (interactive "MAssignment expression: ")
-  (let* ((sub-exps (split-string assignment-expression " = "))
-         (variable (car sub-exps))
-         (variable (other/chomp variable)))
-    variable))
-
-(defun my/assignment-expression-p (expression)
-  "Return true if `expression' is an assignment expression (e.g. x = 3)"
-  (string-match-p (regexp-quote " = ") expression))
-
-(defun my/get-line (line-number)
-  (interactive "nLine number: ")
-  (save-excursion
-    (goto-line line-number)
-    (mwim-beginning-of-code-or-line)
-    (setq start (point))
-    (mwim-end-of-code-or-line)
-    (setq end (point))
-    (kill-ring-save start end)
-    (substring-no-properties (car kill-ring))))
-
-(defun my/eval-expr (expr)
-  "Create new code cell in a EIN worksheet and evaluate `expr' in it"
-  (interactive "MExpression: ")
-  (if (> (length expr) 0)
-      (progn
-        (message (concat "Evaluating " expr))
-        (with-current-buffer "*edward*"
-          (progn
-            (ein:cell-set-text cell expr)
-            (ein:worksheet-execute-cell ws cell))))
-    (message "Skipping over blank expr!")))
-
-(defun my/get-expr (line-number)
-  "Return the line of text at `line-number' and expand it if it is an assignment expresssion for inspecting its value"
-  (interactive "nLine number: ")
-  (let ((line (my/get-line line-number)))
-    (if (my/assignment-expression-p line)
-        (let* ((variable (my/extract-variable line))
-               (expr (concat line "\n" variable)))
-          expr)
-      line)))
-
 (defun my/loop (&optional a b c)
   "Main Loop"
-  (when (eq major-mode 'python-mode)
-    (when (not (eq (line-number-at-pos) *next-line-number-to-eval*))
-      (my/eval-buffer)
-      (setq *next-line-number-to-eval* (line-number-at-pos)))
+  (when (string= (buffer-name) "*client*")
+    (message "Change at %S!" (list a b c))
+    (message "Change is %S!" (buffer-substring-no-properties a b))
+    (message "Change has a length of %S" c)
+    (let ((line-no (line-number-at-pos)))
+      (when (not (eq line-no *next-line-number-to-eval*))
+        (setq *next-line-number-to-eval* line-no)
+        (my/process-buffer)))
     (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
+
+;; (defun my/ein:eval-current-line ()
+;;   (interactive)
+;;   (setq start (point))
+;;   (when (not mark-active)
+;;     (beginning-of-line)
+;;     (set-mark (point))
+;;     (end-of-line))
+;;   (call-interactively 'ein:connect-eval-region)
+;;   (setq mark-active nil)
+;;   (goto-char start))
 
 ;; (add-hook 'ein:connect-mode-hook
 ;;           (lambda ()
@@ -62,47 +27,65 @@
 
 ;;; Global variables
 (setq *next-line-number-to-eval* 1)
-(add-hook 'after-change-functions 'my/loop)
 
-;; (setq cell (ein:worksheet-get-current-cell :cell-p #'ein:codecell-p))
-;; (setq ws (ein:worksheet--get-ws-or-error))
-
+;;; prevent emacs from printing out recursive data structures
 (setq print-level 1)
 (setq print-length 1)
 (setq print-circle t)
 
-;; (setq table (make-hash-table))
-;; (puthash 1 cell table)
-;; (gethash 1 table)
-;; (gethash 2 table)
-
-;; (defun my/get-lines ()
-;;   (interactive)
-;;   (let ((buffer-string (buffer-substring-no-properties 1 (buffer-size))))
-;;     (split-string buffer-string "\n")))
-
 (defun my/clear-cells ()
+  (interactive)
   (with-current-buffer "*edward*"
     (beginning-of-buffer)
-    (while t (setq not-done (call-interactively 'ein:worksheet-kill-cell)))))
+    (condition-case exception
+        (while t (call-interactively 'ein:worksheet-kill-cell))
+      ('error))))
 
-(defun my/number-of-lines ()
+(defun my/make-code-cell-and-eval (expr)
+  (interactive "MExpression: ")
+  (with-current-buffer "*edward*"
+    (end-of-buffer)
+    (call-interactively 'ein:worksheet-insert-cell-below)
+    (insert expr)
+    (call-interactively 'ein:worksheet-execute-cell)))
+
+;;; elisp server
+(require 'cl)
+(require 'epcs)
+(epcs:server-start
+ (lambda (mngr)
+   (lexical-let ((mngr mngr))
+     (epc:define-method
+      mngr 'make-code-cell-and-eval
+      (lambda (&rest args)
+        (let ((expr (car args)))
+          (message "MAKE-CODE-CELL-AND-EVAL got %S" args)
+          (message "TYPE = %S" (type-of args))
+          (my/make-code-cell-and-eval expr)
+          nil)))))
+ 9999)
+
+(defun my/buffer-string ()
   (save-excursion
     (end-of-buffer)
-    (1- (line-number-at-pos))))
+    (buffer-substring-no-properties 1 (point))))
 
-(defun my/eval-exprs (exprs)
-  (with-current-buffer "*edward*"
-    (dolist (expr exprs)
-      (call-interactively 'ein:worksheet-insert-cell-below)
-      (insert expr)
-      (call-interactively 'ein:worksheet-execute-cell))))
+;;; python server
+(require 'epc)
+(setq my-epc (epc:start-epc "python" '("ast-server.py")))
+(defun my/annotate-make-cells-eval (code)
+  (deferred:$
+    (epc:call-deferred my-epc 'annotate `(,code))
+    (deferred:nextc it
+      (lambda (annotated-code)
+        (message "Annotated code: %S" annotated-code)
+        (ein:shared-output-eval-string annotated-code)))))
 
-(defun my/eval-buffer ()
+(defun my/process-buffer ()
   (interactive)
-  (condition-case exception
-      (my/clear-cells)
-    ('error))
-  (let* ((line-numbers (number-sequence 1 (my/number-of-lines)))
-         (exprs (mapcar (lambda (line) (my/get-expr line)) line-numbers)))
-    (my/eval-exprs exprs)))
+  (let* ((code (my/buffer-string)))
+    (message code)
+    (my/clear-cells)
+    (my/annotate-make-cells-eval code)))
+
+(add-hook 'after-change-functions 'my/loop)
