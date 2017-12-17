@@ -1,3 +1,7 @@
+(defun other/chomp (str)
+  "Trim leading and trailing whitespace from STR."
+  (replace-regexp-in-string "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str))
+
 (defun my/loop (&optional a b c)
   "Main Loop"
   (when (string= (buffer-name) "*client*")
@@ -7,7 +11,7 @@
     (let ((line-no (line-number-at-pos)))
       (when (not (eq line-no *next-line-number-to-eval*))
         (setq *next-line-number-to-eval* line-no)
-        (my/process-buffer)))
+        (my/do-process)))
     (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
 
 ;; (defun my/ein:eval-current-line ()
@@ -30,7 +34,7 @@
 
 ;;; prevent emacs from printing out recursive data structures
 (setq print-level 1)
-(setq print-length 1)
+(setq print-length 10)
 (setq print-circle t)
 
 (defun my/clear-cells ()
@@ -87,10 +91,26 @@
          ((stringp err) (message "Error is %S" err))
          ((eq 'epc-error (car err)) (message "Error is %S" (cadr err))))))))
 
-(defun my/process-buffer ()
+(defun defun-p (code)
+  (let* ((lines (split-string code "\n"))
+         (nonempty-lines (seq-filter (lambda (line) (> (length line) 0)) lines))
+         (first-line (other/chomp (car nonempty-lines))))
+    (string-prefix-p "def" first-line)))
+
+(defun my/get-code ()
   (interactive)
-  (let* ((code (my/buffer-string)))
-    (message code)
+  (save-excursion
+    (python-mark-defun)
+    (let ((code (buffer-substring-no-properties (region-beginning) (region-end))))
+      (call-interactively 'kill-ring-save)
+      (if (defun-p code)
+          code
+        (my/buffer-string)))))
+
+(defun my/do-process ()
+  (interactive)
+  (let ((code (my/get-code)))
+    (message "Doing code = %S" code)
     (my/clear-cells)
     (my/annotate-make-cells-eval code)))
 
