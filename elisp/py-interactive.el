@@ -32,7 +32,7 @@
 (defun my/clear-worksheets ()
   "Clear the cells in all the worksheets which correspond to regions"
   (interactive)
-  (let ((buffer-names (mapcar 'buffer-name (buffer-list)))
+  (let* ((buffer-names (mapcar 'buffer-name (buffer-list)))
         (worksheet-names (seq-filter (lambda (buffer-name) (string-prefix-p "context=" buffer-name)) buffer-names)))
     (dolist (worksheet-name worksheet-names)
       (my/clear-cells worksheet-name))))
