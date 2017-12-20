@@ -1,118 +1,171 @@
-(defun other/chomp (str)
-  "Trim leading and trailing whitespace from STR."
-  (replace-regexp-in-string "\\(\\`[[:space:]\n]*\\|[[:space:]\n]*\\'\\)" "" str))
-
-(defun my/loop (&optional a b c)
-  "Main Loop"
-  (when (string= (buffer-name) "*client*")
-    ;; (message "Change at %S!" (list a b c))
-    ;; (message "Change is %S!" (buffer-substring-no-properties a b))
-    ;; (message "Change has a length of %S" c)
-    (let ((line-no (line-number-at-pos)))
-      (when (not (eq line-no *next-line-number-to-eval*))
-        (setq *next-line-number-to-eval* line-no)
-        (my/do-process)))
-    ;; (message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))
-    ))
-
-;; (defun my/ein:eval-current-line ()
-;;   (interactive)
-;;   (setq start (point))
-;;   (when (not mark-active)
-;;     (beginning-of-line)
-;;     (set-mark (point))
-;;     (end-of-line))
-;;   (call-interactively 'ein:connect-eval-region)
-;;   (setq mark-active nil)
-;;   (goto-char start))
-
-;; (add-hook 'ein:connect-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "<C-return>") (quote my/ein:eval-current-line))))
-
-;;; Global variables
-(setq *next-line-number-to-eval* 1)
-
-;;; prevent emacs from printing out recursive data structures
-(setq print-level 1)
-(setq print-length 10)
-(setq print-circle t)
-
-(defun my/clear-cells ()
-  (interactive)
-  (with-current-buffer "*edward*"
-    (beginning-of-buffer)
-    (condition-case exception
-        (while t (call-interactively 'ein:worksheet-kill-cell))
-      ('error))))
-
-(defun my/make-code-cell-and-eval (expr)
-  (interactive "MExpression: ")
-  ;; (message "Inserting: %S" expr)
-  (with-current-buffer "*edward*"
-    (end-of-buffer)
-    (call-interactively 'ein:worksheet-insert-cell-below)
-    (insert expr)
-    (call-interactively 'ein:worksheet-execute-cell)))
-
-;;; elisp server
-(require 'cl)
-(require 'epcs)
-(epcs:server-start
- (lambda (mngr)
-   (lexical-let ((mngr mngr))
-     (epc:define-method
-      mngr 'make-code-cell-and-eval
-      (lambda (&rest args)
-        (let ((expr (car args)))
-          ;; (message "MAKE-CODE-CELL-AND-EVAL got %S" args)
-          ;; (message "TYPE = %S" (type-of args))
-          (my/make-code-cell-and-eval expr)
-          nil)))))
- 9999)
-
 (defun my/buffer-string ()
+  "Get the entire buffer as a string"
   (save-excursion
     (end-of-buffer)
     (buffer-substring-no-properties 1 (point))))
 
+;;; global variables
+(setq *next-line-number-to-eval* 1)
+(setq *my/debug* t)
+(setq *active-buffer-name* "context=foo")
+(setq *active-defun-name* "foo")
+
+;;; Prevent emacs from printing out recursive data structures
+(setq print-level 1)
+(setq print-length 10)
+(setq print-circle t)
+
+(defun my/message (&rest args)
+  (when *my/debug*
+    (apply #'message args)))
+
+(defun my/clear-cells (buffer-name)
+  "Pop over to the *cells* buffer and delete all the cells"
+  (interactive)
+  (when (get-buffer buffer-name)
+    (with-current-buffer buffer-name
+      (beginning-of-buffer)
+      (condition-case exception
+          (while t (call-interactively 'ein:worksheet-kill-cell))
+        ('error)))))
+
+(defun my/clear-worksheets ()
+  "Clear the cells in all the worksheets which correspond to regions"
+  (interactive)
+  (let ((buffer-names (mapcar 'buffer-name (buffer-list)))
+        (worksheet-names (seq-filter (lambda (buffer-name) (string-prefix-p "context=" buffer-name)) buffer-names)))
+    (dolist (worksheet-name worksheet-names)
+      (my/clear-cells worksheet-name))))
+
+;;; elisp server
+(require 'cl)
+(require 'epcs)
+(defun my/start-epcs ()
+  (interactive)
+  "Start elisp RPC server"
+  (defun my/make-code-cell-and-eval (expr buffer-name)
+    "Pop over to *cells* buffer and insert a new cell containing `expr' at the bottom and evaluate it
+This function is called from python code running in a jupyter kernel via RPC.
+`buffer-name' is the name of the buffer to insert the code cell which is of the form *func-name*"
+    (interactive "MExpression: ")
+    (my/message "Inserting: %S" expr)
+
+    (when (not (get-buffer buffer-name))
+      (my/create-new-worksheet buffer-name))
+
+    (with-current-buffer buffer-name
+      (end-of-buffer)
+      (call-interactively 'ein:worksheet-insert-cell-below)
+      (insert expr)
+      (call-interactively 'ein:worksheet-execute-cell)))
+
+  ;; elisp server callback
+  (let ((connect-function
+         (lambda (mngr)
+           (lexical-let ((mngr mngr))
+             (epc:define-method
+              mngr 'make-code-cell-and-eval
+              (lambda (&rest args)
+                (let ((expr (car args))
+                      (buffer-name (cadr args)))
+                  (my/message "MAKE-CODE-CELL-AND-EVAL expr = %S" expr)
+                  (my/message "MAKE-CODE-CELL-AND-EVAL buffer-name = %S" buffer-name)
+                  (my/make-code-cell-and-eval expr buffer-name)
+                  nil)))))))
+    (setq server-process (epcs:server-start connect-function 9999))))
+
+(defun my/stop-epcs ()
+  "Bring down the EPC server"
+  (epcs:server-stop server-process))
+
 ;;; python server
 (require 'epc)
-(setq my-epc (epc:start-epc "python" '("ast-server.py")))
+
 (defun my/annotate-make-cells-eval (code)
+  "This server receives code and annotates it with code to call out to the elisp server."
   (deferred:$
-    (epc:call-deferred my-epc 'annotate `(,code))
+    (my/message "Calling python AST server...")
+    (my/message "with code = %S" code)
+    (my/message "and active defun = %S" *active-defun-name*)
+    (epc:call-deferred py-epc 'annotate `(,code ,*active-defun-name*))
     (deferred:nextc it
       (lambda (annotated-code)
-        ;; (message "Annotated code: %S" annotated-code)
+        (my/message "Annotated code: %S" annotated-code)
         (ein:shared-output-eval-string annotated-code)))
     (deferred:error it
       (lambda (err)
         (cond
-         ((stringp err) (message "Error is %S" err))
-         ((eq 'epc-error (car err)) (message "Error is %S" (cadr err))))))))
+         ((stringp err) (my/message "Error is %S" err))
+         ((eq 'epc-error (car err)) (my/message "Error is %S" (cadr err))))))))
 
-(defun defun-p (code)
-  (let* ((lines (split-string code "\n"))
-         (nonempty-lines (seq-filter (lambda (line) (> (length line) 0)) lines))
-         (first-line (other/chomp (car nonempty-lines))))
-    (string-prefix-p "def" first-line)))
-
-(defun my/get-code ()
+(defun my/start-py-epc ()
   (interactive)
-  (save-excursion
-    (python-mark-defun)
-    (let ((code (buffer-substring-no-properties (region-beginning) (region-end))))
-      (call-interactively 'kill-ring-save)
-      (if (defun-p code)
-          code
-        (my/buffer-string)))))
+  (setq py-epc (epc:start-epc "python" '("/Users/ebanner/.dotfiles/elisp/ast-server.py"))))
+(defun my/stop-py-epc () (epc:stop-epc py-epc))
 
 (defun my/do-process ()
+  "Populate live-coding buffer
+First clear it out."
   (interactive)
-  (let ((code (my/get-code)))
-    ;; (message "Doing code = %S" code)
-    (my/clear-cells)
+  (let ((code (my/buffer-string)))
+    (my/set-active-context)
+    (my/message "Doing code = %S" code)
+    (if (string= *active-buffer-name* "N/A")
+        (my/clear-worksheets)
+      (my/clear-cells *active-buffer-name*))
     (my/annotate-make-cells-eval code)))
 
+(defun my/set-active-context ()
+  "Parse through the active frame and pick out the active buffer
+Set *active-buffer-name* and *active-defun-name* accordingly."
+
+  (defun my/get-buffer-names ()
+    "Get the buffer names in the active frame
+This function is used so we can pull out the worksheet name (i.e. name of the active function) to pass to the AST server"
+    (interactive)
+    (let* ((windows (window-list))
+           (buffers (mapcar 'window-buffer windows))
+           (buffer-names (mapcar 'buffer-name buffers)))
+      buffer-names))
+
+  (defun my/get-active-buffer-name ()
+    "Return the name of the active function.
+The active function will have a buffer in the active frame with the name context=func-name"
+    (let* ((buffer-names (my/get-buffer-names))
+           (active-buffer-singleton (seq-filter (lambda (buffer-name) (string-prefix-p "context=" buffer-name)) buffer-names))
+           (active-buffer-name (car active-buffer-singleton)))
+      (if (not active-buffer-name)
+          "N/A"
+        active-buffer-name)))
+
+  (setq *active-buffer-name* (my/get-active-buffer-name))
+  (setq *active-defun-name*
+        (if (not (string= *active-buffer-name* "N/A"))
+            (cadr (split-string *active-buffer-name* "context="))
+          "N/A")))
+
+(defun my/create-new-worksheet (buffer-name)
+  "Create a new worksheet in a notebook who has a buffer called *epc-client*"
+  (interactive "MFunction name: ")
+  (save-excursion
+    (save-window-excursion
+      (with-current-buffer "*epc-client*"
+        (call-interactively 'ein:notebook-worksheet-insert-next)
+        (rename-buffer (concat buffer-name))))))
+
+(defun my/loop (&optional a b c)
+  "Calls the main `my/do-process' function but only if the current buffer has a certain name"
+  (when (string= (buffer-name) "*client*")
+    (message "python-info-current-defun #1 = %S" (python-info-current-defun))
+    (my/message "Change at %S!" (list a b c))
+    (my/message "Change is %S!" (buffer-substring-no-properties a b))
+    (my/message "Change has a length of %S" c)
+    (let ((line-no (line-number-at-pos)))
+      (when (not (eq line-no *next-line-number-to-eval*))
+        (setq *next-line-number-to-eval* line-no)
+        (my/do-process)))
+    (my/message (concat "*next line number to eval* = " (number-to-string *next-line-number-to-eval*)))))
+
 (add-hook 'after-change-functions 'my/loop)
+(my/start-epcs)
+(my/start-py-epc)
