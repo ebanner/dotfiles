@@ -12,7 +12,7 @@
 
 ;;; Prevent emacs from printing out recursive data structures
 (setq print-level 1)
-(setq print-length 10)
+(setq print-length 1)
 (setq print-circle t)
 
 (defun my/message (&rest args)
@@ -43,10 +43,11 @@
 (defun my/start-epcs ()
   (interactive)
   "Start elisp RPC server"
-  (defun my/make-code-cell-and-eval (expr buffer-name)
+  (defun my/make-code-cell-and-eval (expr buffer-name cell-type)
     "Pop over to *cells* buffer and insert a new cell containing `expr' at the bottom and evaluate it
 This function is called from python code running in a jupyter kernel via RPC.
-`buffer-name' is the name of the buffer to insert the code cell which is of the form *func-name*"
+`buffer-name' is the name of the buffer to insert the code cell which is of the form *func-name*.
+`cell-type' is either 'code' or 'markdown' or '1'."
     (interactive "MExpression: ")
     (my/message "Inserting: %S" expr)
 
@@ -57,7 +58,13 @@ This function is called from python code running in a jupyter kernel via RPC.
       (end-of-buffer)
       (call-interactively 'ein:worksheet-insert-cell-below)
       (insert expr)
-      (call-interactively 'ein:worksheet-execute-cell)))
+      (if (string= cell-type "code")
+          (call-interactively 'ein:worksheet-execute-cell)
+        (let ((cell (ein:get-cell-at-point))
+              (ws (ein:worksheet--get-ws-or-error)))
+          (if (string= cell-type "markdown")
+              (ein:worksheet-change-cell-type ws cell "markdown")
+            (ein:worksheet-change-cell-type ws cell "heading" 1))))))
 
   ;; elisp server callback
   (let ((connect-function
@@ -67,16 +74,21 @@ This function is called from python code running in a jupyter kernel via RPC.
               mngr 'make-code-cell-and-eval
               (lambda (&rest args)
                 (let ((expr (car args))
-                      (buffer-name (cadr args)))
+                      (buffer-name (cadr args))
+                      (cell-type (nth 2 args)))
                   (my/message "MAKE-CODE-CELL-AND-EVAL expr = %S" expr)
                   (my/message "MAKE-CODE-CELL-AND-EVAL buffer-name = %S" buffer-name)
-                  (my/make-code-cell-and-eval expr buffer-name)
+                  (my/make-code-cell-and-eval expr buffer-name cell-type)
                   nil)))))))
     (setq server-process (epcs:server-start connect-function 9999))))
-
 (defun my/stop-epcs ()
   "Bring down the EPC server"
   (epcs:server-stop server-process))
+(defun my/restart-epcs ()
+  "Bring down the EPC server"
+  (interactive)
+  (my/stop-epcs)
+  (my/start-epcs))
 
 ;;; python server
 (require 'epc)
@@ -101,7 +113,13 @@ This function is called from python code running in a jupyter kernel via RPC.
 (defun my/start-py-epc ()
   (interactive)
   (setq py-epc (epc:start-epc "python" '("/Users/ebanner/.dotfiles/elisp/ast-server.py"))))
-(defun my/stop-py-epc () (epc:stop-epc py-epc))
+(defun my/stop-py-epc ()
+  (interactive)
+  (epc:stop-epc py-epc))
+(defun my/restart-py-epc ()
+  (interactive)
+  (my/stop-py-epc)
+  (my/start-py-epc))
 
 (defun my/do-process ()
   "Populate live-coding buffer
@@ -169,3 +187,4 @@ The active function will have a buffer in the active frame with the name context
 (add-hook 'after-change-functions 'my/loop)
 (my/start-epcs)
 (my/start-py-epc)
+
