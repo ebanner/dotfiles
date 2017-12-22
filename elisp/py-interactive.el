@@ -52,7 +52,8 @@ This function is called from python code running in a jupyter kernel via RPC.
     (my/message "Inserting: %S" expr)
 
     (when (not (get-buffer buffer-name))
-      (my/create-new-worksheet buffer-name))
+      (my/create-new-worksheet buffer-name)
+      (my/clear-cells buffer-name))
 
     (with-current-buffer buffer-name
       (end-of-buffer)

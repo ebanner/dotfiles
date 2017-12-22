@@ -114,23 +114,46 @@ def wrap_content(cell):
 
 @server.register_function
 def annotate(*code):
-    """Annotate code with code to make and eval cells"""
+    """Annotate code with code to make and eval cells
+
+    >>> s = '''
+    ... def foo():
+    ... print('foo!')
+    ...
+    ... def bar():
+    ... print('bar!')
+    ...
+    ... def biz():
+    ... print('biz!')
+    ... '''
+    >>> code = [s, 'N/A']
+
+    """
     code, active_funcname = code[0], code[1]
     tree = ast.parse(code)
-    if not active_funcname == 'N/A':
-        tree.body = [stmt for stmt in tree.body if isinstance(stmt, ast.FunctionDef) and stmt.name == active_funcname]
+    commands = []
+    if active_funcname == 'N/A': # just create worksheets
+        func_names = [stmt.name for stmt in tree.body if isinstance(stmt, ast.FunctionDef)]
+        func_names = ['outside'] + func_names
+        buffer_names = reversed([f'context={func_name}' for func_name in func_names])
+        s = 'epc_client.call_sync("""{0}""", ["""{1}""", """{2}""", """{3}"""])'
+        commands = [s.format('make-code-cell-and-eval', 'pass', buffer_name, 'code') for buffer_name in buffer_names]
+    else:
+        if active_funcname == 'outside':
+            tree.body = [stmt for stmt in tree.body if not isinstance(stmt, ast.FunctionDef)]
+        else:
+            tree.body = [stmt for stmt in tree.body if isinstance(stmt, ast.FunctionDef) and stmt.name == active_funcname]
+        cells = [cell for stmt in tree.body for cell in expand_function(stmt)]
+        print(cells)
+        cells = [expand_assign(cell) for cell in cells]
+        print(cells)
+        cells = [wrap_content(cell) for cell in cells]
+        print(cells)
 
-    cells = [cell for stmt in tree.body for cell in expand_function(stmt)]
-    print(cells)
-    cells = [expand_assign(cell) for cell in cells]
-    print(cells)
-    cells = [wrap_content(cell) for cell in cells]
-    print(cells)
-
-    nb_cell = len(cells)
-    commands = [None]*(nb_cell*3)
-    exprs, annotations = zip(*[(cell['code'], cell['content']) for cell in cells])
-    commands[0::3], commands[1::3], commands[2::3] = exprs, annotations, ['time.sleep(0.01)']*nb_cell
+        nb_cell = len(cells)
+        commands = [None]*(nb_cell*3)
+        exprs, annotations = zip(*[(cell['code'], cell['content']) for cell in cells])
+        commands[0::3], commands[1::3], commands[2::3] = exprs, annotations, ['time.sleep(0.01)']*nb_cell
     new_code = '\n'.join(commands)
     return new_code
 
