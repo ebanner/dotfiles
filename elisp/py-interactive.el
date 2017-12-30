@@ -122,6 +122,11 @@ This function is called from python code running in a jupyter kernel via RPC.
   (my/stop-py-epc)
   (my/start-py-epc))
 
+(defun my/restart-py-interactive ()
+  (interactive)
+  (my/restart-epcs)
+  (my/restart-py-epc))
+
 (defun my/do-process ()
   "Populate live-coding buffer
 First clear it out."
