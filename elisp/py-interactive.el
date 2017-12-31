@@ -9,10 +9,11 @@
 (setq *my/debug* t)
 (setq *active-buffer-name* "context=foo")
 (setq *active-defun-name* "foo")
+(setq *line-number-to-cell-map* (make-hash-table :test 'equal))
 
 ;;; Prevent emacs from printing out recursive data structures
-(setq print-level 1)
-(setq print-length 1)
+(setq print-level 2)
+(setq print-length 10)
 (setq print-circle t)
 
 (defun my/message (&rest args)
@@ -43,13 +44,14 @@
 (defun my/start-epcs ()
   (interactive)
   "Start elisp RPC server"
-  (defun my/make-code-cell-and-eval (expr buffer-name cell-type)
+  (defun my/make-code-cell-and-eval (expr buffer-name cell-type line-number)
     "Pop over to *cells* buffer and insert a new cell containing `expr' at the bottom and evaluate it
 This function is called from python code running in a jupyter kernel via RPC.
 `buffer-name' is the name of the buffer to insert the code cell which is of the form *func-name*.
 `cell-type' is either 'code' or 'markdown' or '1'."
     (interactive "MExpression: ")
     (my/message "Inserting: %S" expr)
+    (my/message "line-number = %S" line-number)
 
     (when (not (get-buffer buffer-name))
       (my/create-new-worksheet buffer-name)
@@ -59,13 +61,16 @@ This function is called from python code running in a jupyter kernel via RPC.
       (end-of-buffer)
       (call-interactively 'ein:worksheet-insert-cell-below)
       (insert expr)
-      (if (string= cell-type "code")
-          (call-interactively 'ein:worksheet-execute-cell)
-        (let ((cell (ein:get-cell-at-point))
-              (ws (ein:worksheet--get-ws-or-error)))
+      (let ((cell (ein:get-cell-at-point))
+            (ws (ein:worksheet--get-ws-or-error)))
+        (if (string= cell-type "code")
+            (progn
+              (call-interactively 'ein:worksheet-execute-cell)
+              (when (not (eq line-number -1))
+                (puthash line-number (ein:cell-location cell) *line-number-to-cell-map*)))
           (if (string= cell-type "markdown")
               (ein:worksheet-change-cell-type ws cell "markdown")
-            (ein:worksheet-change-cell-type ws cell "heading" 1))))))
+            (ein:worksheet-change-cell-type ws cell "heading" (string-to-int cell-type)))))))
 
   ;; elisp server callback
   (let ((connect-function
@@ -76,10 +81,10 @@ This function is called from python code running in a jupyter kernel via RPC.
               (lambda (&rest args)
                 (let ((expr (car args))
                       (buffer-name (cadr args))
-                      (cell-type (nth 2 args)))
-                  (my/message "MAKE-CODE-CELL-AND-EVAL expr = %S" expr)
-                  (my/message "MAKE-CODE-CELL-AND-EVAL buffer-name = %S" buffer-name)
-                  (my/make-code-cell-and-eval expr buffer-name cell-type)
+                      (cell-type (nth 2 args))
+                      (line-number (string-to-int (nth 3 args))))
+                  (my/message "(make-code-cell-and-eval %S %S %S %S)..." expr buffer-name cell-type line-number)
+                  (my/make-code-cell-and-eval expr buffer-name cell-type line-number)
                   nil)))))))
     (setq server-process (epcs:server-start connect-function 9999))))
 (defun my/stop-epcs ()
@@ -194,3 +199,16 @@ The active function will have a buffer in the active frame with the name context
 (my/start-epcs)
 (my/start-py-epc)
 
+(defun my/move-cell-window ()
+  (interactive)
+  (save-selected-window
+    (let ((window (get-buffer-window "context=vectorizerBulk"))
+          (cell-location (gethash (line-number-at-pos) *line-number-to-cell-map*)))
+      (when cell-location
+        (select-window window)
+        (goto-char cell-location)
+        (recenter 5)))))
+
+(defun my/start-auto-scrolling-mode ()
+  (interactive)
+  (add-hook 'post-command-hook #'my/move-cell-window :local))
