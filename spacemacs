@@ -111,9 +111,15 @@ It should only modify the values of Spacemacs settings."
    ;; (default 5)
    dotspacemacs-elpa-timeout 5
 
+   ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
+   ;; This is an advanced option and should not be changed unless you suspect
+   ;; performance issues due to garbage collection operations.
+   ;; (default '(100000000 0.1))
+   dotspacemacs-gc-cons '(100000000 0.1)
+
    ;; If non-nil then Spacelpa repository is the primary source to install
-   ;; a locked version of packages. If nil then Spacemacs will install the lastest
-   ;; version of packages from MELPA. (default nil)
+   ;; a locked version of packages. If nil then Spacemacs will install the
+   ;; lastest version of packages from MELPA. (default nil)
    dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
@@ -384,11 +390,6 @@ It should only modify the values of Spacemacs settings."
    ;; (default '("rg" "ag" "pt" "ack" "grep"))
    dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
 
-   ;; The default package repository used if no explicit repository has been
-   ;; specified with an installed package.
-   ;; Not used for now. (default nil)
-   dotspacemacs-default-package-repository nil
-
    ;; Format specification for setting the frame title.
    ;; %a - the `abbreviated-file-name', or `buffer-name'
    ;; %t - `projectile-project-name'
@@ -437,12 +438,11 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  "Configuration for user code:
+This function is called at the very end of Spacemacs startup, after layer
+configuration.
+Put your configuration code here, except for variables that should be set
+before packages are loaded."
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
   (defun my/ein:eval-code-dwim ()
@@ -470,16 +470,27 @@ Do a M-x local-set-key RET Control-<return> my/ein:eval-code-dwim"
   (require 'ein-multilang)
 
   ;; Emulate web-browser client shortcuts
-  (define-key ein:notebook-multilang-mode-map
-    (kbd "C-<return>") 'ein:worksheet-execute-cell)
-  (define-key
-    ein:notebook-multilang-mode-map (kbd "S-<return>") 'ein:worksheet-execute-cell-and-goto-next)
+  (define-key ein:notebook-multilang-mode-map (kbd "C-<return>") 'ein:worksheet-execute-cell)
+  (define-key ein:notebook-multilang-mode-map (kbd "S-<return>") 'ein:worksheet-execute-cell-and-goto-next)
 
   ;; Arrow through worksheets easily
   (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<right>") 'ein:notebook-worksheet-open-next-or-first)
   (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<left>") 'ein:notebook-worksheet-open-prev-or-last)
-  (setq ein:output-type-preference
-        '(javascript emacs-lisp svg png jpeg html text latex)))
+
+  ;; Run all cells above (including current)
+  (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<up>") 'pynt-run-all-cells-above)
+
+  ;; EIN cell text object
+  (evil-define-text-object ein:cell-inner-defun (count &optional beg end type)
+    (save-excursion
+      (let ((cell (ein:get-cell-at-point)))
+        (ein:cell-goto-line cell 1 :input)
+        (setq start (point))
+        (ein:cell-goto-line cell 1 :after-input)
+        (setq end (point))
+        (evil-range start end type :expanded t))))
+  (define-key evil-inner-text-objects-map "c" 'ein:cell-inner-defun)
+  (define-key evil-outer-text-objects-map "c" 'ein:cell-inner-defun))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -494,10 +505,18 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ein:jupyter-server-args (quote ("--no-browser")))
+ '(ein:output-type-preference
+   (quote
+    (javascript emacs-lisp svg png jpeg html text latex)))
+ '(emacs-lisp-mode-hook
+   (quote
+    (eldoc-mode elisp-slime-nav-mode auto-compile-mode overseer-enable-mode
+                (lambda nil
+                  (spacemacs|define-text-object ";" "elisp-comment" ";; " ""))
+                spacemacs//init-jump-handlers-emacs-lisp-mode spacemacs//init-company-emacs-lisp-mode company-mode paredit-mode)))
  '(package-selected-packages
    (quote
-    (smeargle mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit git-commit ghub with-editor yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection sql-indent spaceline-all-the-icons slim-mode shell-pop scss-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pippel pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nginx-mode neotree nameless mwim multi-term move-text minitest macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint js2-refactor js-doc isend-mode info+ indent-guide importmagic impatient-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio fuzzy flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav ein editorconfig dumb-jump drupal-mode dockerfile-mode docker diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-php company-anaconda column-enforce-mode coffee-mode clojure-snippets clojure-cheatsheet clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(pynt-start-jupyter-server-on-startup t)
+    (yasnippet-snippets yapfify yaml-mode xterm-color web-mode web-beautify unfill tagedit sql-indent smeargle slim-mode shell-pop scss-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rbenv rake pyvenv pytest pyenv-mode py-isort pug-mode pippel pip-requirements phpunit phpcbf php-extras php-auto-yasnippets nginx-mode mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow livid-mode live-py-mode js2-refactor js-doc isend-mode importmagic impatient-mode htmlize hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help epc ctable concurrent emmet-mode ein skewer-mode request-deferred websocket deferred js2-mode simple-httpd drupal-mode dockerfile-mode docker json-mode tablist magit-popup docker-tramp json-snatcher json-reformat cython-mode csv-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-php ac-php-core xcscope php-mode company-anaconda company coffee-mode clojure-snippets clojure-cheatsheet clj-refactor inflections edn multiple-cursors peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file neotree nameless move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(shell-mode-hook
    (quote
     (spacemacs/disable-vi-tilde-fringe spacemacs/force-yasnippet-off spacemacs/disable-hl-line-mode shell-comint-input-sender-hook
@@ -505,3 +524,10 @@ This function is called at the very end of Spacemacs initialization."
                                          (local-unset-key
                                           (kbd "M-r"))))))
  '(truncate-lines t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
