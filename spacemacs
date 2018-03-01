@@ -445,11 +445,13 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
-  (defun my/ein:eval-code-dwim ()
+  (defun ein:eval-code-dwim ()
     "Send code to be evaluated to the EIN kernel.
 
-Must have attached the current buffer to a EIN kernel to work.
-Do a M-x local-set-key RET Control-<return> my/ein:eval-code-dwim"
+If you've marked some code then send that over. Otherwise send
+over the current line.
+
+Must have attached the current buffer to a EIN kernel to work."
     (interactive)
     (setq start (point))
     (when (not mark-active)
@@ -459,12 +461,14 @@ Do a M-x local-set-key RET Control-<return> my/ein:eval-code-dwim"
     (call-interactively 'ein:connect-eval-region)
     (setq mark-active nil)
     (goto-char start))
+  (define-key ein:connect-mode-map (kbd "C-<return>") 'ein:eval-code-dwim)
 
-  ;; Figure out some day how to get this working!
-  ;; (add-hook 'ein:connect-mode-hook
-  ;;           (lambda ()
-  ;;             (local-set-key (kbd "<C-return>") (quote my/ein:eval-current-line))))
-
+  (custom-set-variables
+   '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/envs/py36/bin/jupyter")
+   '(ein:jupyter-server-args (quote ("--no-browser")))
+   '(ein:output-type-preference
+     (quote
+      (javascript emacs-lisp svg png jpeg html text latex))))
   (load-file "/Users/ebanner/Documents/pynt/pynt/pynt.el")
 
   (require 'ein-multilang)
@@ -504,6 +508,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/envs/py36/bin/jupyter")
  '(ein:jupyter-server-args (quote ("--no-browser")))
  '(ein:output-type-preference
    (quote
@@ -514,6 +519,12 @@ This function is called at the very end of Spacemacs initialization."
                 (lambda nil
                   (spacemacs|define-text-object ";" "elisp-comment" ";; " ""))
                 spacemacs//init-jump-handlers-emacs-lisp-mode spacemacs//init-company-emacs-lisp-mode company-mode paredit-mode)))
+ '(eshell-mode-hook
+   (quote
+    (tramp-eshell-directory-change spacemacs/disable-vi-tilde-fringe spacemacs/force-yasnippet-off spacemacs/init-eshell-xterm-color spacemacs/init-helm-eshell spacemacs//eshell-switch-company-frontend spacemacs/disable-hl-line-mode spacemacs//init-eshell eldoc-mode spacemacs//init-company-eshell-mode company-mode spacemacs/toggle-auto-completion-off paredit-mode)))
+ '(ielm-mode-hook
+   (quote
+    (eldoc-mode spacemacs//init-company-ielm-mode company-mode paredit-mode)) t)
  '(package-selected-packages
    (quote
     (yasnippet-snippets yapfify yaml-mode xterm-color web-mode web-beautify unfill tagedit sql-indent smeargle slim-mode shell-pop scss-mode sayid sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rbenv rake pyvenv pytest pyenv-mode py-isort pug-mode pippel pip-requirements phpunit phpcbf php-extras php-auto-yasnippets nginx-mode mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow livid-mode live-py-mode js2-refactor js-doc isend-mode importmagic impatient-mode htmlize hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy evil-magit magit git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help epc ctable concurrent emmet-mode ein skewer-mode request-deferred websocket deferred js2-mode simple-httpd drupal-mode dockerfile-mode docker json-mode tablist magit-popup docker-tramp json-snatcher json-reformat cython-mode csv-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-php ac-php-core xcscope php-mode company-anaconda company coffee-mode clojure-snippets clojure-cheatsheet clj-refactor inflections edn multiple-cursors peg cider-eval-sexp-fu cider queue clojure-mode chruby bundler inf-ruby auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file neotree nameless move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
