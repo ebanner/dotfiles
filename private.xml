@@ -92,18 +92,17 @@
         <item>
             <name>0 to Alt</name>
             <identifier>private.zero_to_alt</identifier>
-            <appendix>Still Right Paren when pressed in isolation</appendix>
+            <appendix>Map 0 to primarily be Alt</appendix>
             <autogen>
                 __KeyOverlaidModifier__
                 KeyCode::KEY_0,
-                KeyCode::OPTION_R,
-                KeyCode::KEY_8, ModifierFlag::SHIFT_L                
+                KeyCode::OPTION_R, KeyCode::KEY_8, ModifierFlag::SHIFT_L
             </autogen>
         </item>
         <item>
             <name>Right Paren</name>
             <identifier>private.right_paren_emas</identifier>
-            <autogen> 
+            <autogen>
                 __KeyToKey__
                 KeyCode::KEY_0, ModifierFlag::SHIFT_L,
                 KeyCode::KEY_9, ModifierFlag::SHIFT_L
@@ -155,20 +154,24 @@
             <appendix>Control to Yen so we can map it to escape in Emacs</appendix>
             <only>EMACS</only>
             <autogen> __KeyToKey__ KeyCode::CONTROL_L, KeyCode::JIS_YEN </autogen>
-        </item>	
-	<item>
+        </item>
+	      <item>
             <name>Right Underscore to Yen</name>
             <identifier>private.right_underscore_to_yen</identifier>
             <appendix>Right underscore to Yen so we can map it to escape in Emacs</appendix>
-	    <only>EMACS</only>
+	          <only>EMACS</only>
             <autogen> __KeyToKey__ KeyCode::JIS_UNDERSCORE, KeyCode::JIS_YEN </autogen>
-        </item>	
+        </item>
         <item>
             <name>Override 9</name>
             <identifier>private.override_9</identifier>
             <appendix>Make it so Alt-9 produces Alt-Return instead of 9</appendix>
-	    <only>EMACS</only>
-            <autogen> __KeyToKey__ KeyCode::KEY_9, ModifierFlag::OPTION_L, KeyCode::RETURN, ModifierFlag::OPTION_L</autogen>
+	          <only>EMACS</only>
+            <autogen>
+                __KeyToKey__
+                KeyCode::KEY_9, ModifierFlag::OPTION_L,
+                KeyCode::RETURN, ModifierFlag::OPTION_L
+            </autogen>
         </item>
     </item>
 
@@ -187,7 +190,7 @@
             <name>Backtick</name>
             <identifier>private.backtick</identifier>
             <autogen>
-                __KeyToKey__ 
+                __KeyToKey__
                 KeyCode::ESCAPE,
                 KeyCode::JIS_ATMARK, ModifierFlag::SHIFT_L
             </autogen>
@@ -208,7 +211,7 @@
         <item>
             <name>2 with FN</name>
             <identifier>private.2_with_fn</identifier>
-            <autogen> 
+            <autogen>
                 __KeyToKey__
                 KeyCode::KEY_2, ModifierFlag::FN,
                 KeyCode::KEY_2,
@@ -217,7 +220,11 @@
         <item>
             <name>2 to Tab</name>
             <identifier>private.two_to_tab</identifier>
-            <autogen> __KeyToKey__ KeyCode::KEY_2, KeyCode::TAB </autogen>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_2,
+                KeyCode::OPTION_L, KeyCode::TAB
+            </autogen>
         </item>
         <item>
             <name>3 to Command</name>
@@ -287,6 +294,15 @@
             </autogen>
         </item>
         <item>
+            <name>9 to Return</name>
+            <identifier>private.nine_to_return</identifier>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_9,
+                KeyCode::CONTROL_R, KeyCode::RETURN
+            </autogen>
+        </item>
+        <item>
             <name>9 with Option</name>
             <identifier>private.9_with_option</identifier>
             <autogen>
@@ -296,9 +312,13 @@
             </autogen>
         </item>
         <item>
-            <name>9 to Return</name>
-            <identifier>private.nine_to_return</identifier>
-            <autogen> __KeyToKey__ KeyCode::KEY_9, KeyCode::RETURN </autogen>
+            <name>F9 to 9</name>
+            <identifier>private.fnine_to_nine</identifier>
+            <autogen>
+                __KeyToKey__
+                KeyCode::F2, ModifierFlag::FN,
+                KeyCode::KEY_9
+            </autogen>
         </item>
         <item>
             <name>0 with Option</name>
@@ -310,9 +330,18 @@
             </autogen>
         </item>
         <item>
+            <name>0 to Alt</name>
+            <identifier>private.0_to_alt</identifier>
+            <autogen>
+                __KeyOverlaidModifier__
+                KeyCode::KEY_0,
+                KeyCode::OPTION_R, KeyCode::KEY_8, ModifierFlag::SHIFT_L
+            </autogen>
+        </item>
+        <item>
             <name>Right Paren</name>
             <identifier>private.right_paren</identifier>
-            <autogen> 
+            <autogen>
                 __KeyToKey__
                 KeyCode::KEY_0, ModifierFlag::SHIFT_L,
                 KeyCode::KEY_9, ModifierFlag::SHIFT_L
@@ -321,7 +350,7 @@
         <item>
             <name>Left Paren</name>
             <identifier>private.left_paren</identifier>
-            <autogen> 
+            <autogen>
                 __KeyToKey__
                 KeyCode::KEY_0,
                 KeyCode::KEY_8, ModifierFlag::SHIFT_L
@@ -349,6 +378,12 @@
             <name>Equals</name>
             <identifier>private.equals</identifier>
             <autogen> __KeyToKey__ KeyCode::JIS_HAT, KeyCode::KEYPAD_EQUAL </autogen>
+        </item>
+        <item>
+            <name>Yen to Backslash</name>
+            <identifier>private.yen_to_backslash</identifier>
+            <appendix>Map Yen to Backslash</appendix>
+            <autogen> __KeyToKey__ KeyCode::JIS_YEN, KeyCode::VK_JIS_BACKSLASH </autogen>
         </item>
     </item>
 
@@ -378,7 +413,7 @@
                 KeyCode::CONTROL_L, KeyCode::ESCAPE
             </autogen>
         </item>
-	<item>
+	      <item>
             <name>Colon</name>
             <identifier>private.colon</identifier>
             <autogen>
@@ -416,4 +451,5 @@
             <autogen> __KeyToKey__ KeyCode::JIS_EISUU, KeyCode::COMMAND_L </autogen>
         </item>
     </item>
+
 </root>
