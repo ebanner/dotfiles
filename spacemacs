@@ -445,13 +445,12 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
+  (require 'ein-connect)
   (defun ein:eval-code-dwim ()
     "Send code to be evaluated to the EIN kernel.
 
 If you've marked some code then send that over. Otherwise send
-over the current line.
-
-Must have attached the current buffer to a EIN kernel to work."
+over the current line."
     (interactive)
     (setq start (point))
     (when (not mark-active)
@@ -464,12 +463,20 @@ Must have attached the current buffer to a EIN kernel to work."
   (define-key ein:connect-mode-map (kbd "C-<return>") 'ein:eval-code-dwim)
 
   (custom-set-variables
-   '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/envs/py36/bin/jupyter")
+   '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/bin/jupyter")
    '(ein:jupyter-server-args (quote ("--no-browser")))
    '(ein:output-type-preference
      (quote
       (javascript emacs-lisp svg png jpeg html text latex))))
   (load-file "/Users/ebanner/Documents/pynt/pynt/pynt.el")
+  (defun pynt-load-pynt-mode ()
+    (when (not (string-match-p (regexp-quote "ein:") (buffer-name)))
+      (condition-case nil
+          (progn
+            (projectile-project-root)
+            (pynt-mode))
+        (error nil))))
+  (add-hook 'python-mode-hook 'pynt-load-pynt-mode)
 
   (require 'ein-multilang)
 
@@ -494,7 +501,24 @@ Must have attached the current buffer to a EIN kernel to work."
         (setq end (point))
         (evil-range start end type :expanded t))))
   (define-key evil-inner-text-objects-map "c" 'ein:cell-inner-defun)
-  (define-key evil-outer-text-objects-map "c" 'ein:cell-inner-defun))
+  (define-key evil-outer-text-objects-map "c" 'ein:cell-inner-defun)
+
+  ;; $PATH
+  (setenv "PATH" (concat "/Users/ebanner/.anaconda/bin" ":" (getenv "PATH")))
+
+  ;; Clojure(script)
+  (add-hook 'clojurescript-mode-hook 'enable-paredit-mode)
+  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+
+  ;; Figwheel
+  (require 'cider)
+  (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+  (define-key cider-mode-map (kbd "C-x C-e")
+    (lambda ()
+      (interactive)
+      (save-selected-window
+        (cider-insert-last-sexp-in-repl :eval))))
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
