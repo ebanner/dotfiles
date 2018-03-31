@@ -463,6 +463,7 @@ over the current line."
   (define-key ein:connect-mode-map (kbd "C-<return>") 'ein:eval-code-dwim)
 
   (custom-set-variables
+   '(ein:jupyter-default-notebook-directory "/Users/ebanner/")
    '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/bin/jupyter")
    '(ein:jupyter-server-args (quote ("--no-browser")))
    '(ein:output-type-preference
@@ -471,11 +472,7 @@ over the current line."
   (load-file "/Users/ebanner/Documents/pynt/pynt/pynt.el")
   (defun pynt-load-pynt-mode ()
     (when (not (string-match-p (regexp-quote "ein:") (buffer-name)))
-      (condition-case nil
-          (progn
-            (projectile-project-root)
-            (pynt-mode))
-        (error nil))))
+      (pynt-mode)))
   (add-hook 'python-mode-hook 'pynt-load-pynt-mode)
 
   (require 'ein-multilang)
@@ -517,8 +514,7 @@ over the current line."
     (lambda ()
       (interactive)
       (save-selected-window
-        (cider-insert-last-sexp-in-repl :eval))))
-  )
+        (cider-insert-last-sexp-in-repl :eval)))))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -532,7 +528,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/envs/py36/bin/jupyter")
+ '(ein:jupyter-default-notebook-directory "/Users/ebanner/")
+ '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/bin/jupyter")
  '(ein:jupyter-server-args (quote ("--no-browser")))
  '(ein:output-type-preference
    (quote
