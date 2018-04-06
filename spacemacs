@@ -443,7 +443,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq zoomy-target-frame-height 22)
+  (setq zoomy-target-frame-height 22
+        zoomy-zoom-delta 1)
   (defun zoomy-zoom-frame ()
     "Iteratively zoom the frame to the desired size.
 
@@ -455,7 +456,8 @@ The zooming stops when the frame height is no longer greater than
     (while (> (frame-height) zoomy-target-frame-height)
       (message "Frame Height = %s" (frame-height))
       (sit-for 0.1)
-      (spacemacs/zoom-frm-in)
+      (dotimes (- zoomy-zoom-delta)
+        (spacemacs/zoom-frm-in))
       (spacemacs/toggle-fullscreen-frame-off)
       (sit-for 0.1)
       (spacemacs/toggle-fullscreen-frame-on)))
