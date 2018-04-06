@@ -74,7 +74,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(ein epc isend-mode)
+   dotspacemacs-additional-packages '(pynt isend-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -443,8 +443,26 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (setq zoomy-target-frame-height 22)
+  (defun zoomy-zoom-frame ()
+    "Iteratively zoom the frame to the desired size.
 
+The zooming stops when the frame height is no longer greater than
+`zoomy-target-frame-height'. TODO find a good value for
+`zoomy-zoom-frame-height'."
+    (interactive)
+    (spacemacs/toggle-fullscreen-frame-on)
+    (while (> (frame-height) zoomy-target-frame-height)
+      (message "Frame Height = %s" (frame-height))
+      (sit-for 0.1)
+      (spacemacs/zoom-frm-in)
+      (spacemacs/toggle-fullscreen-frame-off)
+      (sit-for 0.1)
+      (spacemacs/toggle-fullscreen-frame-on)))
+
+  (add-hook 'python-mode-hook '(lambda () (modify-syntax-entry ?_ "w")))
+
+  ;; Buffer shortcuts.
   (require 'ein-connect)
   (defun ein:eval-code-dwim ()
     "Send code to be evaluated to the EIN kernel.
@@ -462,33 +480,15 @@ over the current line."
     (goto-char start))
   (define-key ein:connect-mode-map (kbd "C-<return>") 'ein:eval-code-dwim)
 
-  (custom-set-variables
-   '(ein:jupyter-default-notebook-directory "/Users/ebanner/")
-   '(ein:jupyter-default-server-command "/Users/ebanner/.anaconda/bin/jupyter")
-   '(ein:jupyter-server-args (quote ("--no-browser")))
-   '(ein:output-type-preference
-     (quote
-      (javascript emacs-lisp svg png jpeg html text latex))))
-  (load-file "/Users/ebanner/Documents/pynt/pynt/pynt.el")
-  (defun pynt-load-pynt-mode ()
-    (when (not (string-match-p (regexp-quote "ein:") (buffer-name)))
-      (pynt-mode)))
-  (add-hook 'python-mode-hook 'pynt-load-pynt-mode)
-
+  ;; Notebook shortcuts.
   (require 'ein-multilang)
-
-  ;; Emulate web-browser client shortcuts
   (define-key ein:notebook-multilang-mode-map (kbd "C-<return>") 'ein:worksheet-execute-cell)
   (define-key ein:notebook-multilang-mode-map (kbd "S-<return>") 'ein:worksheet-execute-cell-and-goto-next)
-
-  ;; Arrow through worksheets easily
   (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<right>") 'ein:notebook-worksheet-open-next-or-first)
   (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<left>") 'ein:notebook-worksheet-open-prev-or-last)
-
-  ;; Run all cells above (including current)
   (evil-define-key 'normal ein:notebook-multilang-mode-map (kbd "<up>") 'pynt-run-all-cells-above)
 
-  ;; EIN cell text object
+  ;; EIN cell text object.
   (evil-define-text-object ein:cell-inner-defun (count &optional beg end type)
     (save-excursion
       (let ((cell (ein:get-cell-at-point)))
@@ -499,6 +499,16 @@ over the current line."
         (evil-range start end type :expanded t))))
   (define-key evil-inner-text-objects-map "c" 'ein:cell-inner-defun)
   (define-key evil-outer-text-objects-map "c" 'ein:cell-inner-defun)
+
+  ;; (require 'pynt)
+
+  (defun jekyll-timestamp ()
+    (interactive)
+    (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
+
+  (defun insert-date ()
+    (interactive)
+    (format-time-string "%Y-%m-%d"))
 
   ;; $PATH
   (setenv "PATH" (concat "/Users/ebanner/.anaconda/bin" ":" (getenv "PATH")))
