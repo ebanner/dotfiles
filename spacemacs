@@ -57,6 +57,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      neotree
+     scheme
      ;; org
      (shell :variables
             shell-default-height 30
@@ -443,7 +444,34 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq zoomy-target-frame-height 22
+  (require 'scheme)
+  (defun geiser-dump-code ()
+    (interactive)
+    (save-excursion (backward-sexp)
+                    (setq bosexp (point))
+                    (forward-sexp)
+                    (setq eosexp (point)))
+    (let ((code (buffer-substring-no-properties bosexp eosexp)))
+      (with-current-buffer geiser-repl--repl
+        (insert code)
+        (geiser-repl--maybe-send))))
+  ;; (evil-define-key 'insert scheme-mode-map (kbd "C-x C-e" 'geiser-dump-code))
+  (require 'geiser)
+  (add-hook 'geiser-mode-hook
+            (lambda ()
+              (unbind-key (kbd "C-x C-e") geiser-mode-map)
+              (bind-key (kbd "C-x C-e") 'geiser-dump-code geiser-mode-map)))
+  (add-hook 'geiser-repl-mode-hook
+            (lambda ()
+              (condition-case nil
+                  (unbind-key (kbd "M-r") geiser-repl-mode-map)
+                (error nil t))))
+  (define-key scheme-mode-map (kbd "C-x C-e") 'geiser-dump-code)
+  (setq zoomy-target-frame-height
+        ;40                               logging buffers
+        ;30                              ; three windows
+        ;20                              ; three windows
+        19
         zoomy-zoom-delta 1)
   (defun zoomy-zoom-frame ()
     "Iteratively zoom the frame to the desired size.
