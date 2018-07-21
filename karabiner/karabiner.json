@@ -231,6 +231,27 @@
                         ]
                     },
                     {
+                        "description": "Post Nine if Nine is pressed with left_control.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "9",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "9"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Post return_or_enter if 9 is pressed alone and right_control otherwise.",
                         "manipulators": [
                             {
