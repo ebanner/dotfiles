@@ -21,3 +21,13 @@ Probably the most unorthodox configuration I perform is modifying my keyboard la
 This layout is optimized to decrease the amount of typing done by the pinkies. It takes all the most frequently pressed keys by the pinkies (i.e. `Control`, `Alt`, `Enter`, and `Tab`) and puts them in the top row. This allows these keys to be pressed by the ring, middle, and index fingers.
 
 I made this layout because I was getting pinky fatigue when using jupyter notebooks (hitting `Shift-Enter` a lot) and also emacs (hitting `Control` and `Alt`) a lot. I have been using this variants of this layout for over a year now and find it very enjoyable.
+
+#### Example key
+
+![Keyboard layout](../assets/3.png?raw=true)
+
+The semantics of this key are as follows.
+
+- You get `#` when you press `Shift` followed by this key and then let go of this key.
+- You get `3` when you press this key alone (i.e. press it and let go without pressing another key).
+- This key acts as `Ctrl-<key>` when you hold it down and hit another key `<key>`.
