@@ -31,3 +31,9 @@ The semantics of this key are as follows.
 - You get `#` when you press `Shift` followed by this key and then let go of this key.
 - You get `3` when you press this key alone (i.e. press it and let go without pressing another key).
 - This key acts as `Ctrl-<key>` when you hold it down and hit another key `<key>`.
+
+#### Another example
+
+![Keyboard layout](../assets/2.png?raw=true)
+
+The `2` in the upper-right-hand corner can be read as "you can get a `2` out of this key somehow". It just so happens in this case, if you hit this key while holding `fn` (not pictured in this keyboard), then you will get a `2`.
