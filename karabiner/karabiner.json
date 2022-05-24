@@ -488,7 +488,7 @@
                     }
                 }
             ],
-            "name": "Special",
+            "name": "Custom",
             "selected": true,
             "simple_modifications": [],
             "virtual_hid_keyboard": {
