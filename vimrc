@@ -23,6 +23,7 @@ set infercase
 set linebreak
 set modelines=1
 set number
+set shortmess-=S
 " set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set splitbelow
 set diffopt+=vertical
