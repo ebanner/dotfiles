@@ -45,6 +45,7 @@ This function should only modify configuration layer settings."
      helm
      ;; lsp
      ;; markdown
+     json
      multiple-cursors
      ;; org
      ;; (shell :variables
