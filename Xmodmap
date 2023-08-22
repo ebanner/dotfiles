@@ -1,19 +1,42 @@
 ! Left hand number hack
 keycode  11 = Tab at
-keycode  12 = 3 numbersign
-keycode  13 = 4 dollar
+keycode  12 = Control_L numbersign
+keycode  13 = Shift_L dollar
+add Control = Control_L
+add Shift   = Shift_L
+
 
 ! Right hand number hack
-keycode  16 = 7 ampersand
-keycode  17 = 8 asterisk
+keycode  16 = Control_L asterisk
+keycode  17 = Shift_R ampersand
 keycode  18 = Return Return
 keycode  19 = parenleft parenright
+add Control = Control_L
+add Shift   = Shift_R
 
 ! Caps Lock
 keycode  66 = Escape
 clear Lock
 
-! Make up for number hack inconveniences
-keycode  67 = 2 at
-keycode  74 = 9
-keycode  75 = 0
+! Keypad
+keycode  80 = 8 asterisk 8 asterisk
+
+keycode  87 = 1 exclam 1 exclam
+keycode  88 = 2 at 2 at
+keycode  89 = 3 numbersign 3 numbersign
+
+keycode  83 = 4 dollar 4 dollar
+keycode  84 = 5 percent 5 percent
+keycode  85 = 6 asciicircum 6 asciicircum
+
+keycode  79 = 7 ampersand 7 ampersand
+keycode  80 = 8 asterisk 8 asterisk
+keycode  81 = 9 parenleft 9 parenleft
+
+keycode  90 = 0 parenright 0 parenright
+
+! Make right alt into control
+remove mod1 = Alt_R
+keycode 108 = Control_R
+add Control = Control_R
+
