@@ -36,7 +36,20 @@ keycode  81 = 9 parenleft 9 parenleft
 keycode  90 = 0 parenright 0 parenright
 
 ! Make right alt into control
-remove mod1 = Alt_R
+remove Mod1 = Alt_R
 keycode 108 = Control_R
 add Control = Control_R
 
+! Remap super to control
+remove Mod4 = Super_L
+keycode 133 = Control_L
+add Control = Control_L
+
+remove Mod4 = Super_R
+keycode 134 = Control_R
+add Control = Control_R
+
+! Remap control to super
+remove Control = Control_L
+keycode  37 = Super_L
+add Mod4 = Super_L
