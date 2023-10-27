@@ -11,6 +11,14 @@ A lot of the config files are for old programs that I do not use anymore. The pr
   - `zprofile`
   - `zshrc`
 
+## Installation
+
+```bash
+$ git clone https://github.com/ebanner/dotfiles.git ~/.dotfiles
+$ cd ~/.dotfiles
+$ python3 deploy.sh
+```
+
 ## Keyboard layout
 
 Probably the most unorthodox configuration I perform is modifying my keyboard layout (configuration in [`/karabiner`](karabiner)).
