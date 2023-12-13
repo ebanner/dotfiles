@@ -33,4 +33,4 @@ I made this layout because I was getting pinky fatigue when using jupyter notebo
 ## Notes
 
 - Use Option as Meta key in OSX Terminal
-- Put `karabiner.json` in `~/.config/karabiner/`
+- Put `karabiner_complex_modifications.json` in `~/.config/karabiner/assets/complex_modifications`
