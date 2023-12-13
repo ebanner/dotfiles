@@ -16,7 +16,7 @@ A lot of the config files are for old programs that I do not use anymore. The pr
 ```bash
 $ git clone https://github.com/ebanner/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
-$ python3 deploy.sh
+$ python3 deploy.py
 ```
 
 ## Keyboard layout
