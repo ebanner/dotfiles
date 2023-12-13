@@ -2,7 +2,7 @@
   "title": "Coding mappings",
   "rules": [
       {
-          "description": "2 with right option",
+          "description": "Coding → 2 with right option",
           "manipulators": [
               {
                   "from": {
@@ -33,7 +33,7 @@
           ]
       },
       {
-          "description": "2 to tab if pressed alone and left_option otherwise",
+          "description": "Coding → 2 to tab if pressed alone and left_option otherwise",
           "manipulators": [
               {
                   "from": {
@@ -69,7 +69,7 @@
           ]
       },
       {
-          "description": "3 if pressed alone and left_control otherwise",
+          "description": "Coding → 3 if pressed alone and left_control otherwise",
           "manipulators": [
               {
                   "from": {
@@ -105,7 +105,7 @@
           ]
       },
       {
-          "description": "4 if pressed alone and left_shift otherwise",
+          "description": "Coding → 4 if pressed alone and left_shift otherwise",
           "manipulators": [
               {
                   "from": {
@@ -136,7 +136,7 @@
           ]
       },
       {
-          "description": "7 if pressed alone and right_control otherwise",
+          "description": "Coding → 7 if pressed alone and right_control otherwise",
           "manipulators": [
               {
                   "from": {
@@ -172,7 +172,7 @@
           ]
       },
       {
-          "description": "8 if pressed alone and right_shift otherwise",
+          "description": "Coding → 8 if pressed alone and right_shift otherwise",
           "manipulators": [
               {
                   "from": {
@@ -203,7 +203,7 @@
           ]
       },
       {
-          "description": "9 with fn",
+          "description": "Coding → 9 with fn",
           "manipulators": [
               {
                   "from": {
@@ -234,7 +234,7 @@
           ]
       },
       {
-          "description": "9 to return_or_enter if pressed alone and right_control otherwise",
+          "description": "Coding → 9 to return_or_enter if pressed alone and right_control otherwise",
           "manipulators": [
               {
                   "from": {
@@ -270,7 +270,7 @@
           ]
       },
       {
-          "description": "0 with fn",
+          "description": "Coding → 0 with fn",
           "manipulators": [
               {
                   "from": {
@@ -301,7 +301,7 @@
           ]
       },
       {
-          "description": "shift+0 to close_paren",
+          "description": "Coding → shift+0 to close_paren",
           "manipulators": [
               {
                   "from": {
@@ -335,7 +335,7 @@
           ]
       },
       {
-          "description": "0 to open_paren if pressed alone and right_option otherwise",
+          "description": "Coding → 0 to open_paren if pressed alone and right_option otherwise",
           "manipulators": [
               {
                   "from": {
@@ -374,7 +374,7 @@
           ]
       },
       {
-          "description": "caps_lock to escape if pressed alone and left_control otherwise",
+          "description": "Coding → caps_lock to escape if pressed alone and left_control otherwise",
           "manipulators": [
               {
                   "from": {
