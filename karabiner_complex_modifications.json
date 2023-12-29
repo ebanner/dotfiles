@@ -23,8 +23,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -59,8 +58,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -95,8 +93,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -126,8 +123,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -162,8 +158,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -193,8 +188,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -224,8 +218,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -260,8 +253,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -291,8 +283,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -325,8 +316,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -364,8 +354,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
@@ -395,8 +384,7 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal",
-                          "com.microsoft.VSCode"
+                          "com.apple.Terminal"
                       ]
                       }
                   ],
