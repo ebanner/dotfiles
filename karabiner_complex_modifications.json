@@ -23,7 +23,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -58,7 +59,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -93,7 +95,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -123,7 +126,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -158,7 +162,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -188,7 +193,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -218,7 +224,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -253,7 +260,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -283,7 +291,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -316,7 +325,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -354,7 +364,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
@@ -384,7 +395,8 @@
                       "type": "frontmost_application_if",
                       "bundle_identifiers": [
                           "org.gnu.Emacs",
-                          "com.apple.Terminal"
+                          "com.apple.Terminal",
+                          "org.mozilla.firefox"
                       ]
                       }
                   ],
