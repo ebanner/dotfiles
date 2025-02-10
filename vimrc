@@ -7,7 +7,7 @@ set smartcase
 set hlsearch
 set ignorecase
 set hidden
-set mouse=a
+set mouse=
 set expandtab
 set textwidth=80
 set expandtab
