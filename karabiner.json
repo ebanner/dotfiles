@@ -55,7 +55,7 @@
                         ]
                     },
                     {
-                        "description": "Coding → 3 if pressed alone and left_control otherwise",
+                        "description": "Coding → 3 if pressed alone and left_command otherwise",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -74,7 +74,7 @@
                                     "key_code": "3",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "left_control" }],
+                                "to": [{ "key_code": "left_command" }],
                                 "to_if_alone": [{ "key_code": "3" }],
                                 "type": "basic"
                             }
