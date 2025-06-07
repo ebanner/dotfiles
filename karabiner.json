@@ -55,7 +55,7 @@
                         ]
                     },
                     {
-                        "description": "Coding → 3 if pressed alone and left_command otherwise",
+                        "description": "Coding → 3 if pressed alone and left_control otherwise",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -63,9 +63,30 @@
                                         "bundle_identifiers": [
                                             "org.gnu.Emacs",
                                             "com.apple.Terminal",
-                                            "org.mozilla.firefox",
                                             "com.microsoft.VSCode",
                                             "com.todesktop.230313mzl4w4u92"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "3",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [{ "key_code": "3" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Coding → 3 if pressed alone and left_command otherwise for firefox",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "org.mozilla.firefox"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
