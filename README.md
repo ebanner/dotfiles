@@ -14,8 +14,7 @@ A lot of the config files are for old programs that I do not use anymore. The pr
 ## Installation
 
 ```bash
-$ git clone https://github.com/ebanner/dotfiles.git ~/.dotfiles
-$ cd ~/.dotfiles
+$ stow --dotfiles --target=$HOME .
 $ python3 deploy.py
 ```
 
