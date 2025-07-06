@@ -3,14 +3,6 @@ Dotfiles
 
 Configuration files for various utilities
 
-A lot of the config files are for old programs that I do not use anymore. The programs I actively still use are the following.
-
-- Emacs (`spacemacs`)
-- Karabiner (`private.xml`)
-- zsh
-  - `zprofile`
-  - `zshrc`
-
 ## Installation
 
 ```bash
@@ -36,7 +28,3 @@ This layout is optimized to decrease the amount of typing done by the pinkies. I
 
 I made this layout because I was getting pinky fatigue when using jupyter notebooks (hitting `Shift-Enter` a lot) and also emacs (hitting `Control` and `Alt`) a lot. I have been using this variants of this layout for over a year now and find it very enjoyable.
 
-## Notes
-
-- Use Option as Meta key in OSX Terminal
-- Put `karabiner_complex_modifications.json` in `~/.config/karabiner/assets/complex_modifications`
