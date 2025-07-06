@@ -1,19 +1,20 @@
 Dotfiles
 ========
 
-Configuration files for various utilities
+Configuration files for various utilities. Managed with
+[GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Installation
 
 ```bash
-$ python3 install.py # install/clone vim packages via git submodules
 $ stow --dotfiles --target=$HOME .
+$ python3 install.py # install vim plugins
 ```
 
 ## Other commands
 
 ```bash
-$ stow --dotfiles --target=$HOME . --simulate --verbose=3 # debugging
+$ stow --dotfiles --target=$HOME --simulate --verbose=3 . # debugging
 $ stow --delete --dotfiles --target=$HOME . # unstow
 ```
 
